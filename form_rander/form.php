@@ -54,7 +54,7 @@ $this->_pager->rander(count($rows));
 echo "<table id='mainGridTable' class='gridtable'>";
 echo "<thead>";
 echo "<tr>
-<th><input name='tablechoice1' type='checkbox'/></th>
+<th class='noPrint'><input name='tablechoice1' type='checkbox'/></th>
 <th class='$printNoClass'>序号</th>";
 
 //循环列头
@@ -87,7 +87,7 @@ foreach ($rows as $rkey => $rvalue) {
 
     echo "
     <tr>
-    <td><input type='checkbox' name='choice'/></td>
+    <td class='noPrint'><input type='checkbox' name='choice'/></td>
     ";
     //序号列
     $rowNumber += 1;
