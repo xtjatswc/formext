@@ -26,3 +26,8 @@ formExt.doNextPage = function(){
     pageIndex = pageIndex + 1;
     this.pageIndexCtrl.value = pageIndex;
 }
+
+//打印
+formExt.doPrint = function(){
+    window.print();
+}

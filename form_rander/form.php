@@ -52,9 +52,9 @@ echo "<tr><th>序号</th>";
 foreach ($this->_listColumnCfg as $ckey => $cvalue) {
     $width = empty($cvalue["width"]) ? "" : "width:".$cvalue['width'].";";
     $isDisplay = $cvalue["isDisplay"] == "1" ? "" : "display:none;";
-    echo "<th  style='$width $isDisplay'><nobr>";
+    echo "<th  style='$width $isDisplay'>";
     echo $cvalue["displayName"];
-    echo "</nobr></th>";
+    echo "</th>";
 }
 echo "</tr>";
 
@@ -141,6 +141,7 @@ echo "</table>";
             <title><?php echo  $this->_pageCfg["Title"] ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" type="text/css" media="screen" href="form_rander\style.css" />
+            <link rel="stylesheet" type="text/css" media="print" href="form_rander\style-print.css" />
             <script src="form_rander\jquery-3.3.1.min.js"></script>
             <script src="form_rander\form.js"></script>
         </head>

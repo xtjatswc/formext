@@ -10,17 +10,19 @@ $form->_pageCfg = array(
 );
 
 $form->_listColumnCfg = array(
-    'PatientHospitalize_DBKey' => array('isDisplay' => '1','displayName' => 'PatientHospitalize_DBKey','width' => '','maxLength' => ''),
+    'PatientHospitalize_DBKey' => array('isDisplay' => '1','displayName' => 'ID','width' => '','maxLength' => ''),
     'PatientName' => array('isDisplay' => '1','displayName' => '患者姓名','width' => '','maxLength' => ''),
-    'PATIENT_DBKEY' => array('isDisplay' => '1','displayName' => 'PATIENT_DBKEY','width' => '','maxLength' => ''),
-    'Department_DBKey' => array('isDisplay' => '1','displayName' => 'Department_DBKey','width' => '','maxLength' => ''),
+    'PATIENT_DBKEY' => array('isDisplay' => '1','displayName' => '患者ID','width' => '','maxLength' => ''),
+    'Department_DBKey' => array('isDisplay' => '1','displayName' => 'Department_DBKey','width' => '20%','maxLength' => ''),
     'BedNumber_DBKey' => array('isDisplay' => '1','displayName' => 'BedNumber_DBKey','width' => '','maxLength' => ''),
     'HospitalizationNumber' => array('isDisplay' => '1','displayName' => 'HospitalizationNumber','width' => '','maxLength' => ''),
-    'InHospitalData' => array('isDisplay' => '1','displayName' => 'InHospitalData','width' => '','maxLength' => ''),
+    'InHospitalData' => array('isDisplay' => '1','displayName' => 'InHospitalData','width' => '20%','maxLength' => ''),
     'OutHospitalData' => array('isDisplay' => '1','displayName' => 'OutHospitalData','width' => '','maxLength' => ''),
     'TherapyStartTime' => array('isDisplay' => '1','displayName' => 'TherapyStartTime','width' => '','maxLength' => ''),
     'LastScreeningDate' => array('isDisplay' => '1','displayName' => 'LastScreeningDate','width' => '','maxLength' => ''),
     'NextScreeningDate' => array('isDisplay' => '1','displayName' => 'NextScreeningDate','width' => '','maxLength' => ''),
+        /*
+
     'Height' => array('isDisplay' => '1','displayName' => 'Height','width' => '','maxLength' => ''),
     'Weight' => array('isDisplay' => '1','displayName' => 'Weight','width' => '','maxLength' => ''),
     'MedicalHistory' => array('isDisplay' => '1','displayName' => 'MedicalHistory','width' => '','maxLength' => '60'),
@@ -39,7 +41,7 @@ $form->_listColumnCfg = array(
     'NutrientDoctor_DBKey' => array('isDisplay' => '1','displayName' => 'NutrientDoctor_DBKey','width' => '','maxLength' => ''),
     'ClinicalDiagnosis' => array('isDisplay' => '1','displayName' => 'ClinicalDiagnosis','width' => '','maxLength' => ''),
     'ClinicalTreatment' => array('isDisplay' => '1','displayName' => 'ClinicalTreatment','width' => '','maxLength' => ''),
-
+*/
 );
 
 $form->_listDisplayCfg = array(

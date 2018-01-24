@@ -32,6 +32,7 @@ class pager
             <input id="hidPageIndex" name="hidPageIndex" type="hidden" value="<?php echo $this->_pageIndex ?>"/>
             <input type="submit" value="下一页" onclick="return formExt.doNextPage()"  <?php echo $nextDisabled ?>/>
             <input type="submit" value="查询"/>
+            <input type="button" value="打印"  onclick="formExt.doPrint()"/>
         </div>
         <?php
     }

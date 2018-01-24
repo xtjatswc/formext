@@ -14,7 +14,7 @@ class searcher
             return;
         }
 ?>
-        <fieldset>
+        <fieldset class="searchBox">
             <legend>查询条件</legend>
 <?php
                 foreach ($this->_searchCfg as $key => $value) {
