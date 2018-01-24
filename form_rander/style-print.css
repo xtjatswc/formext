@@ -33,3 +33,7 @@ table.gridtable td {
 fieldset.searchBox{
 	display: none;
 }
+
+.noPrint{
+	display: none;
+}

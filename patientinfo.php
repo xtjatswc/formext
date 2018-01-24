@@ -7,6 +7,7 @@ $form = new form_rander\form($db);
 
 $form->_pageCfg = array(
     'Title' => "住院患者信息",
+    'isPrintNo' => "1", //是否打印序号列
 );
 
 $form->_listColumnCfg = array(

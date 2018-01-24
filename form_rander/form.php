@@ -44,9 +44,15 @@ class form
         $rows = $this->_db->fetch_all($sql);
 
 //显示分页
+//是否打印序号列
+$printNoClass = "";
+if($this->_pageCfg["isPrintNo"] == "0"){
+    $printNoClass = "noPrint";
+}
+
 $this->_pager->rander(count($rows));
 echo "<table class='gridtable'>";
-echo "<tr><th>序号</th>";
+echo "<tr><th class='$printNoClass'>序号</th>";
 
 //循环列头
 foreach ($this->_listColumnCfg as $ckey => $cvalue) {
@@ -70,7 +76,7 @@ foreach ($rows as $rkey => $rvalue) {
     echo "<tr>";
     //序号列
     $rowNumber += 1;
-    echo "<td>".($rowNumber + $this->_pager->_pageSize * $this->_pager->_pageIndex)."</td>";
+    echo "<td class='$printNoClass'>".($rowNumber + $this->_pager->_pageSize * $this->_pager->_pageIndex)."</td>";
 
     //循环列
     foreach ($this->_listColumnCfg as $ckey => $cvalue) {
