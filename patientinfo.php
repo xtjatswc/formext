@@ -39,7 +39,7 @@ $form->_searcher->_searchCfg = array(
     'PatientName' => array('labelName' => '患者姓名','randerText' => " and b.PatientName like '{value}%' ",'dataType' => 'string',  'defaultValue' => '','format' => '', 'break' => '0'),
 );
 
-$sql = 'select a.*, b.PatientName from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] order by  a.InHospitalData desc '.$form->_pager->getLimit();
+$sql = 'select a.*, b.PatientName,case when a.PatientHospitalize_DBKey > 139804 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] order by  a.InHospitalData desc '.$form->_pager->getLimit();
 
 $rows = $form->randerForm($sql);
 //$form->getColumns($rows);

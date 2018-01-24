@@ -85,9 +85,17 @@ $rowNumber = 0;
 //循环行
 foreach ($rows as $rkey => $rvalue) {
 
+    //判断该行是否应该默认选中
+    $rowChecked = "";
+    if(array_key_exists("isChecked", $rvalue)){
+        if($rvalue["isChecked"] == 1){
+            $rowChecked = "checked='checked'";
+        }
+    }
+
     echo "
     <tr>
-    <td class='noPrint'><input type='checkbox' name='choice'/></td>
+    <td class='noPrint'><input type='checkbox' $rowChecked name='choice'/></td>
     ";
     //序号列
     $rowNumber += 1;
