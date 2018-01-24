@@ -7,42 +7,22 @@ $form = new form_rander\form($db);
 
 $form->_pageCfg = array(
     'Title' => "住院患者信息",
-    'isPrintNo' => "1", //是否打印序号列
+    'isPrintNo' => "0", //是否打印序号列
 );
 
 $form->_listColumnCfg = array(
-    'PatientHospitalize_DBKey' => array('isDisplay' => '1','displayName' => 'ID','width' => '','maxLength' => ''),
-    'PatientName' => array('isDisplay' => '1','displayName' => '患者姓名','width' => '','maxLength' => ''),
-    'PATIENT_DBKEY' => array('isDisplay' => '1','displayName' => '患者ID','width' => '','maxLength' => ''),
-    'Department_DBKey' => array('isDisplay' => '1','displayName' => 'Department_DBKey','width' => '20%','maxLength' => ''),
-    'BedNumber_DBKey' => array('isDisplay' => '1','displayName' => 'BedNumber_DBKey','width' => '','maxLength' => ''),
-    'HospitalizationNumber' => array('isDisplay' => '1','displayName' => 'HospitalizationNumber','width' => '','maxLength' => ''),
-    'InHospitalData' => array('isDisplay' => '1','displayName' => 'InHospitalData','width' => '20%','maxLength' => ''),
-    'OutHospitalData' => array('isDisplay' => '1','displayName' => 'OutHospitalData','width' => '','maxLength' => ''),
-    'TherapyStartTime' => array('isDisplay' => '1','displayName' => 'TherapyStartTime','width' => '','maxLength' => ''),
-    'LastScreeningDate' => array('isDisplay' => '1','displayName' => 'LastScreeningDate','width' => '','maxLength' => ''),
-    'NextScreeningDate' => array('isDisplay' => '1','displayName' => 'NextScreeningDate','width' => '','maxLength' => ''),
-        /*
-
-    'Height' => array('isDisplay' => '1','displayName' => 'Height','width' => '','maxLength' => ''),
-    'Weight' => array('isDisplay' => '1','displayName' => 'Weight','width' => '','maxLength' => ''),
-    'MedicalHistory' => array('isDisplay' => '1','displayName' => 'MedicalHistory','width' => '','maxLength' => '60'),
-    'PastMedicalHistory' => array('isDisplay' => '1','displayName' => 'PastMedicalHistory','width' => '','maxLength' => ''),
-    'ChiefComplaint' => array('isDisplay' => '1','displayName' => 'ChiefComplaint','width' => '','maxLength' => ''),
-    'NutritionChiefComplaint' => array('isDisplay' => '1','displayName' => 'NutritionChiefComplaint','width' => '','maxLength' => ''),
-    'NutritionCondition' => array('isDisplay' => '1','displayName' => 'NutritionCondition','width' => '','maxLength' => ''),
-    'PhysicalActivityLevel' => array('isDisplay' => '1','displayName' => 'PhysicalActivityLevel','width' => '','maxLength' => ''),
-    'PregnantCondition' => array('isDisplay' => '1','displayName' => 'PregnantCondition','width' => '','maxLength' => ''),
-    'Staging' => array('isDisplay' => '1','displayName' => 'Staging','width' => '','maxLength' => ''),
-    'RiskStratification' => array('isDisplay' => '1','displayName' => 'RiskStratification','width' => '','maxLength' => ''),
-    'TherapyStatus' => array('isDisplay' => '1','displayName' => 'TherapyStatus','width' => '','maxLength' => ''),
-    'ClinicalDietOrders' => array('isDisplay' => '1','displayName' => 'ClinicalDietOrders','width' => '','maxLength' => ''),
-    'OutHospitalSummary' => array('isDisplay' => '1','displayName' => 'OutHospitalSummary','width' => '','maxLength' => ''),
-    'Clinicist_DBKey' => array('isDisplay' => '1','displayName' => 'Clinicist_DBKey','width' => '','maxLength' => ''),
-    'NutrientDoctor_DBKey' => array('isDisplay' => '1','displayName' => 'NutrientDoctor_DBKey','width' => '','maxLength' => ''),
-    'ClinicalDiagnosis' => array('isDisplay' => '1','displayName' => 'ClinicalDiagnosis','width' => '','maxLength' => ''),
-    'ClinicalTreatment' => array('isDisplay' => '1','displayName' => 'ClinicalTreatment','width' => '','maxLength' => ''),
-*/
+    'PatientHospitalize_DBKey' => array('isDisplay' => '1','displayName' => 'PatientHospitalize_DBKey','width' => '','maxLength' => '','isPrint' => '1'),
+    'PATIENT_DBKEY' => array('isDisplay' => '1','displayName' => 'PATIENT_DBKEY','width' => '','maxLength' => '','isPrint' => '1'),
+    'Disease_DBKEY' => array('isDisplay' => '1','displayName' => 'Disease_DBKEY','width' => '','maxLength' => '','isPrint' => '0'),
+    'Department_DBKey' => array('isDisplay' => '1','displayName' => 'Department_DBKey','width' => '','maxLength' => '','isPrint' => '1'),
+    'BedNumber_DBKey' => array('isDisplay' => '1','displayName' => 'BedNumber_DBKey','width' => '','maxLength' => '','isPrint' => '1'),
+    'HospitalizationNumber' => array('isDisplay' => '1','displayName' => 'HospitalizationNumber','width' => '','maxLength' => '','isPrint' => '1'),
+    'InHospitalData' => array('isDisplay' => '1','displayName' => 'InHospitalData','width' => '','maxLength' => '','isPrint' => '1'),
+    'PregnantCondition' => array('isDisplay' => '1','displayName' => 'PregnantCondition','width' => '','maxLength' => '','isPrint' => '1'),
+    'Staging' => array('isDisplay' => '1','displayName' => 'Staging','width' => '','maxLength' => '','isPrint' => '0'),
+    'RiskStratification' => array('isDisplay' => '1','displayName' => 'RiskStratification','width' => '','maxLength' => '','isPrint' => '1'),
+    'TherapyStatus' => array('isDisplay' => '1','displayName' => 'TherapyStatus','width' => '','maxLength' => '','isPrint' => '1'),
+    'ClinicalDietOrders' => array('isDisplay' => '1','displayName' => 'ClinicalDietOrders','width' => '','maxLength' => '','isPrint' => '1'),
 );
 
 $form->_listDisplayCfg = array(

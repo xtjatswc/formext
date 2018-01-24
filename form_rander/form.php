@@ -26,9 +26,9 @@ class form
 
         $columus = array_keys($rows[0]);
 
-        echo "\$listColumnCfg = array(</br>";
+        echo "\$form->_listColumnCfg = array(</br>";
         foreach ($columus as $key => $value) {
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;'$value' => array('isDisplay' => '1','displayName' => '$value','width' => '','maxLength' => ''),</br>";
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;'$value' => array('isDisplay' => '1','displayName' => '$value','width' => '','maxLength' => '','isPrint' => '1'),</br>";
         }
         echo "</br>);";
     }
@@ -58,7 +58,13 @@ echo "<tr><th class='$printNoClass'>序号</th>";
 foreach ($this->_listColumnCfg as $ckey => $cvalue) {
     $width = empty($cvalue["width"]) ? "" : "width:".$cvalue['width'].";";
     $isDisplay = $cvalue["isDisplay"] == "1" ? "" : "display:none;";
-    echo "<th  style='$width $isDisplay'>";
+    //是否打印列
+    $printThClass = "";
+    if($cvalue["isPrint"] == "0"){
+        $printThClass = "noPrint";
+    }
+
+    echo "<th class='$printThClass' style='$width $isDisplay'>";
     echo $cvalue["displayName"];
     echo "</th>";
 }
@@ -87,7 +93,13 @@ foreach ($rows as $rkey => $rvalue) {
 
         //是否显示列
         $isDisplay = $cvalue["isDisplay"] == "1" ? "" : "display:none;";
-        echo "<td style='$isDisplay'>";
+        //是否打印列
+        $printTdClass = "";
+        if($cvalue["isPrint"] == "0"){
+            $printTdClass = "noPrint";
+        }
+        
+        echo "<td class='$printTdClass' style='$isDisplay'>";
 
         //列别名
         $value = $this->displayValue($rvalue[$ckey], $ckey);
