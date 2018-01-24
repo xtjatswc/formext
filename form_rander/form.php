@@ -53,7 +53,9 @@ if($this->_pageCfg["isPrintNo"] == "0"){
 $this->_pager->rander(count($rows));
 echo "<table id='mainGridTable' class='gridtable'>";
 echo "<thead>";
-echo "<tr><th class='$printNoClass'>序号</th>";
+echo "<tr>
+<th><input name='tablechoice1' type='checkbox'/></th>
+<th class='$printNoClass'>序号</th>";
 
 //循环列头
 foreach ($this->_listColumnCfg as $ckey => $cvalue) {
@@ -69,8 +71,10 @@ foreach ($this->_listColumnCfg as $ckey => $cvalue) {
     echo $cvalue["displayName"];
     echo "</th>";
 }
-echo "</tr>";
-echo "</thead>";
+echo "</tr>
+    </thead>
+    <tbody>
+";
 
 if(!empty($rows)){
     //取真实列
@@ -81,7 +85,10 @@ $rowNumber = 0;
 //循环行
 foreach ($rows as $rkey => $rvalue) {
 
-    echo "<tr>";
+    echo "
+    <tr>
+    <td><input type='checkbox' name='choice'/></td>
+    ";
     //序号列
     $rowNumber += 1;
     echo "<td class='$printNoClass'>".($rowNumber + $this->_pager->_pageSize * $this->_pager->_pageIndex)."</td>";
@@ -115,7 +122,7 @@ foreach ($rows as $rkey => $rvalue) {
     echo "</tr>";
     
 }
-echo "</table>";
+echo "</tbody></table>";
 
 ?>
 </form>
