@@ -33,6 +33,7 @@ class pager
             <input type="submit" value="下一页" onclick="return formExt.doNextPage()"  <?php echo $nextDisabled ?>/>
             <input type="submit" value="查询"/>
             <input type="button" value="打印"  onclick="formExt.doPrint()"/>
+            <input type="button" value="导出excel"  onclick="formExt.exportExcel()"/>
         </div>
         <?php
     }

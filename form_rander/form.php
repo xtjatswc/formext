@@ -51,7 +51,7 @@ if($this->_pageCfg["isPrintNo"] == "0"){
 }
 
 $this->_pager->rander(count($rows));
-echo "<table class='gridtable'>";
+echo "<table id='mainGridTable' class='gridtable'>";
 echo "<thead>";
 echo "<tr><th class='$printNoClass'>序号</th>";
 
@@ -163,6 +163,7 @@ echo "</table>";
             <link rel="stylesheet" type="text/css" media="screen" href="form_rander\style.css" />
             <link rel="stylesheet" type="text/css" media="print" href="form_rander\style-print.css" />
             <script src="form_rander\jquery-3.3.1.min.js"></script>
+            <script src="form_rander\jquery.table2excel.js"></script>
             <script src="form_rander\form.js"></script>
         </head>
         <body>
