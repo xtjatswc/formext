@@ -34,3 +34,13 @@ input.condition{
 	margin-bottom:3px;
 	width: 130px;
 }
+
+.gridtable { border-top: 1px solid #009286; border-right: 1px solid #009286; border-bottom: 1px solid #009286;}  
+.gridtable thead tr{background:url(../images/topBar_bg.gif); font-weight:bold; text-align:center;}  
+.gridtable tbody tr td{text-align:left; margin:0px; padding:8px; white-space:nowrap;}  
+.gridtable .null{margin:0px; padding:0px;}  
+.gridtable tbody tr{line-height: 120%;}  
+.gridtable .even{ background:#E1F4EE;}     /* 偶数行样式 E1F4EE*/  
+.gridtable .odd{ background:#E1F4EE;}      /* 奇数行样式 E1F4EE*/  
+.gridtable .over{background:#CCCC99;}      /* 鼠标掠过行样式 CCCC99*/  
+.gridtable .selected{ background:#6F4DFF;color:#ffffff;} /* 选中行样式 BFDFFF*/  
