@@ -52,6 +52,7 @@ if($this->_pageCfg["isPrintNo"] == "0"){
 
 $this->_pager->rander(count($rows));
 echo "<table class='gridtable'>";
+echo "<thead>";
 echo "<tr><th class='$printNoClass'>序号</th>";
 
 //循环列头
@@ -69,6 +70,7 @@ foreach ($this->_listColumnCfg as $ckey => $cvalue) {
     echo "</th>";
 }
 echo "</tr>";
+echo "</thead>";
 
 if(!empty($rows)){
     //取真实列

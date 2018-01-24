@@ -9,6 +9,9 @@ table.gridtable {
 	margin: 1mm;
 	width: 100%;
 }
+table.gridtable thead{
+	display:table-header-group;
+}
 table.gridtable th {
 	border-width: 0.5mm;
 	padding: 1mm;
