@@ -178,11 +178,11 @@ echo "</tbody></table>";
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <title><?php echo  $this->_pageCfg["Title"] ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" type="text/css" media="screen" href="form_rander\style.css" />
-            <link rel="stylesheet" type="text/css" media="print" href="form_rander\style-print.css" />
-            <script src="form_rander\jquery-3.3.1.min.js"></script>
-            <script src="form_rander\jquery.table2excel.js"></script>
-            <script src="form_rander\form.js"></script>
+            <link rel="stylesheet" type="text/css" media="screen" href="form_rander\css\style.css" />
+            <link rel="stylesheet" type="text/css" media="print" href="form_rander\css\style-print.css" />
+            <script src="form_rander\js\jquery-3.3.1.min.js"></script>
+            <script src="form_rander\js\jquery.table2excel.js"></script>
+            <script src="form_rander\js\form.js"></script>
             <script type="text/javascript">
             <?php 
                  $deleteSql = str_replace(array("\r\n", "\r", "\n"), " ", $this->_pageCfg["deleteSql"]);    
