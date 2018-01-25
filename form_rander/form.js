@@ -90,7 +90,7 @@ formExt.deleteRecords = function(){
 
     formExt.deleteSql = String.format(formExt.deleteSql, str);
     $.post("form_rander/exec.php", { sql:formExt.deleteSql },function(data){
-        alert("Data Loaded: " + data);
+        $records.parents("tr").remove();
     });
 }
 
