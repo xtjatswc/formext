@@ -9,7 +9,8 @@ $form->_pageCfg = array(
     'Title' => "住院患者信息",
     'isPrintNo' => "0", //是否打印序号列
     'primaryKey' => "PatientHospitalize_DBKey", //主键，复选框对应的值
-    'deleteSql' => "delete a.*,b.* from patienthospitalizebasicinfo  a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where PatientHospitalize_DBKey in ({0})", //删除sql
+    'deleteSql' => "delete a.*,b.* from patienthospitalizebasicinfo  a
+                    inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where PatientHospitalize_DBKey in ({0})", //删除sql
 );
 
 $form->_listColumnCfg = array(

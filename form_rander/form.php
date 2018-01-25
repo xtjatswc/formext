@@ -184,7 +184,10 @@ echo "</tbody></table>";
             <script src="form_rander\jquery.table2excel.js"></script>
             <script src="form_rander\form.js"></script>
             <script type="text/javascript">
-            formExt.deleteSql = "<?php echo $this->_pageCfg["deleteSql"] ?>";        
+            <?php 
+                 $deleteSql = str_replace(array("\r\n", "\r", "\n"), " ", $this->_pageCfg["deleteSql"]);    
+                 echo 'formExt.deleteSql = "'.$deleteSql.'"';
+            ?>    
             </script>
         </head>
         <body>
