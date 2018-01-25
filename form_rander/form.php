@@ -171,6 +171,7 @@ echo "</tbody></table>";
     }
 
     private function header(){
+        $version = $this->_pageCfg["version"];
         ?>
         <html>
         <head>
@@ -178,11 +179,11 @@ echo "</tbody></table>";
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <title><?php echo  $this->_pageCfg["Title"] ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" type="text/css" media="screen" href="form_rander\css\style.css" />
-            <link rel="stylesheet" type="text/css" media="print" href="form_rander\css\style-print.css" />
+            <link rel="stylesheet" type="text/css" media="screen" href="form_rander\css\style.css?v=<?php echo $version?>" />
+            <link rel="stylesheet" type="text/css" media="print" href="form_rander\css\style-print.css?v=<?php echo $version?>" />
             <script src="form_rander\js\jquery-3.3.1.min.js"></script>
-            <script src="form_rander\js\jquery.table2excel.js"></script>
-            <script src="form_rander\js\form.js"></script>
+            <script src="form_rander\js\jquery.table2excel.js?v=<?php echo $version?>"></script>
+            <script src="form_rander\js\form.js?v=<?php echo $version?>"></script>
             <script type="text/javascript">
             <?php 
                  $deleteSql = str_replace(array("\r\n", "\r", "\n"), " ", $this->_pageCfg["deleteSql"]);    
