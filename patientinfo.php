@@ -1,7 +1,7 @@
 
 
 <?php
-require __DIR__."/form_rander/autoload.php";
+require "autoload.php";
 
 $form = new form_rander\form($db);
 
