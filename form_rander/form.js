@@ -1,4 +1,17 @@
 
+
+String.format = function() {
+    if( arguments.length == 0 )
+        return null;
+
+    var str = arguments[0]; 
+    for(var i=1;i<arguments.length;i++) {
+        var re = new RegExp('\\{' + (i-1) + '\\}','gm');
+        str = str.replace(re, arguments[i]);
+    }
+    return str;
+}
+
 var formExt = {};
 
 $(function($){
@@ -57,11 +70,33 @@ formExt.getTime = function(){
     return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
 }
 
+//删除选中记录
+formExt.deleteRecords = function(){
+    var $records = $("#mainGridTable> tbody>tr td:first-child :checkbox:checked");
+    var str="";
+    $records.each(function(){
+        str += $(this).val() + ",";
+    });
+    str = str.substring(0, str.length - 1);
+
+    if(str == ""){
+        alert("请选中要删除的记录！")
+        return;
+    }
+
+    if(!confirm("确定删除选中的" + $records.length + "条记录吗？")){
+        return;
+    }
+
+    formExt.deleteSql = String.format(formExt.deleteSql, str);
+    $.post("form_rander/exec.php", { sql:formExt.deleteSql },function(data){
+        alert("Data Loaded: " + data);
+    });
+}
+
 /*   
 jQuery实现点击复选框即高亮显示选中行 全选、反选   
 */  
-
-
 $(function($){
     $.fn.extend({  
         "alterBgColor": function (options) {  

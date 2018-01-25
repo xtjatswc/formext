@@ -93,9 +93,12 @@ foreach ($rows as $rkey => $rvalue) {
         }
     }
 
+    //主键
+    $checkBoxValue = $rvalue[$this->_pageCfg["primaryKey"]];
+
     echo "
     <tr>
-    <td class='noPrint'><input type='checkbox' $rowChecked name='choice'/></td>
+    <td class='noPrint'><input type='checkbox' $rowChecked name='checkbox_".$this->_pageCfg["primaryKey"]."' value='$checkBoxValue'/></td>
     ";
     //序号列
     $rowNumber += 1;
@@ -180,6 +183,9 @@ echo "</tbody></table>";
             <script src="form_rander\jquery-3.3.1.min.js"></script>
             <script src="form_rander\jquery.table2excel.js"></script>
             <script src="form_rander\form.js"></script>
+            <script type="text/javascript">
+            formExt.deleteSql = "<?php echo $this->_pageCfg["deleteSql"] ?>";        
+            </script>
         </head>
         <body>
         <form method="post" action="">

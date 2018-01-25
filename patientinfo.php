@@ -8,6 +8,8 @@ $form = new form_rander\form($db);
 $form->_pageCfg = array(
     'Title' => "住院患者信息",
     'isPrintNo' => "0", //是否打印序号列
+    'primaryKey' => "PatientHospitalize_DBKey", //主键，复选框对应的值
+    'deleteSql' => "delete a.*,b.* from patienthospitalizebasicinfo  a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where PatientHospitalize_DBKey in ({0})", //删除sql
 );
 
 $form->_listColumnCfg = array(
@@ -39,7 +41,7 @@ $form->_searcher->_searchCfg = array(
     'PatientName' => array('labelName' => '患者姓名','randerText' => " and b.PatientName like '{value}%' ",'dataType' => 'string',  'defaultValue' => '','format' => '', 'break' => '0'),
 );
 
-$sql = 'select a.*, b.PatientName,case when a.PatientHospitalize_DBKey > 139804 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] order by  a.InHospitalData desc '.$form->_pager->getLimit();
+$sql = 'select a.*, b.PatientName,case when a.PatientHospitalize_DBKey > 135659 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] order by  a.InHospitalData desc '.$form->_pager->getLimit();
 
 $rows = $form->randerForm($sql);
 //$form->getColumns($rows);
