@@ -10,14 +10,14 @@ table.gridtable {
 }
 table.gridtable th {
 	border-width: 1px;
-	padding: 5px;
+	padding: 2px;
 	border-style: solid;
 	border-color: #666666;
 	background-color: #dedede;
 }
 table.gridtable td {
 	border-width: 1px;
-	padding: 5px;
+	padding: 2px;
 	border-style: solid;
 	border-color: #666666;
 	white-space:nowrap;

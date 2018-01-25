@@ -7,7 +7,7 @@ $form = new form_rander\form($db);
 
 $form->_pageCfg = array(
     'Title' => "住院患者信息",
-    'version' => "2", //系统版本，变动时，js等缓存文件也会刷新
+    'version' => "5", //系统版本，变动时，js等缓存文件也会刷新
     'isPrintNo' => "0", //是否打印序号列
     'primaryKey' => "PatientHospitalize_DBKey", //主键，复选框对应的值
     'deleteSql' => "delete a.*,b.* from patienthospitalizebasicinfo  a
@@ -17,7 +17,7 @@ $form->_pageCfg = array(
 $form->_listColumnCfg = array(
     'PatientHospitalize_DBKey' => array('isDisplay' => '1','displayName' => 'PatientHospitalize_DBKey','width' => '','maxLength' => '','isPrint' => '1'),
     'PATIENT_DBKEY' => array('isDisplay' => '1','displayName' => 'PATIENT_DBKEY','width' => '','maxLength' => '','isPrint' => '1'),
-    'Disease_DBKEY' => array('isDisplay' => '1','displayName' => 'Disease_DBKEY','width' => '','maxLength' => '','isPrint' => '0'),
+    'PatientName' => array('isDisplay' => '1','displayName' => 'PatientName','width' => '','maxLength' => '','isPrint' => '0'),
     'Department_DBKey' => array('isDisplay' => '1','displayName' => 'Department_DBKey','width' => '','maxLength' => '','isPrint' => '1'),
     'BedNumber_DBKey' => array('isDisplay' => '1','displayName' => 'BedNumber_DBKey','width' => '','maxLength' => '','isPrint' => '1'),
     'HospitalizationNumber' => array('isDisplay' => '1','displayName' => 'HospitalizationNumber','width' => '','maxLength' => '','isPrint' => '1'),

@@ -119,14 +119,13 @@ foreach ($rows as $rkey => $rvalue) {
             $printTdClass = "noPrint";
         }
         
-        echo "<td class='$printTdClass' style='$isDisplay'>";
+        echo "<td contentEditable='true' class='$printTdClass' style='$isDisplay'>";
 
         //列别名
         $value = $this->displayValue($rvalue[$ckey], $ckey);
 
         //长度截取
         $value = $this->subLength($value, $cvalue["maxLength"]);
-
         echo $value;
         echo "</td>";
     }
