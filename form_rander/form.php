@@ -51,11 +51,13 @@ if($this->_pageCfg["isPrintNo"] == "0"){
 }
 
 $this->_pager->rander(count($rows));
-echo "<table id='mainGridTable' class='gridtable'>";
-echo "<thead>";
-echo "<tr>
-<th class='noPrint'><input name='tablechoice1' type='checkbox'/></th>
-<th class='$printNoClass'>序号</th>";
+echo "
+<table id='mainGridTable' class='gridtable'>
+    <thead>
+<tr>
+    <th class='noPrint'><input name='tablechoice1' type='checkbox'/></th>
+    <th class='$printNoClass'>序号</th>
+";
 
 //循环列头
 foreach ($this->_listColumnCfg as $ckey => $cvalue) {
@@ -69,9 +71,11 @@ foreach ($this->_listColumnCfg as $ckey => $cvalue) {
 
     echo "<th class='$printThClass' style='$width $isDisplay'>";
     echo $cvalue["displayName"];
-    echo "</th>";
+    echo "</th>
+    ";
 }
-echo "</tr>
+echo "
+</tr>
     </thead>
     <tbody>
 ";
@@ -97,12 +101,13 @@ foreach ($rows as $rkey => $rvalue) {
     $checkBoxValue = $rvalue[$this->_pageCfg["primaryKey"]];
 
     echo "
-    <tr>
+<tr>
     <td class='noPrint'><input type='checkbox' $rowChecked name='checkbox_".$this->_pageCfg["primaryKey"]."' value='$checkBoxValue'/></td>
     ";
     //序号列
     $rowNumber += 1;
-    echo "<td class='$printNoClass'>".($rowNumber + $this->_pager->_pageSize * $this->_pager->_pageIndex)."</td>";
+    echo "<td class='$printNoClass'>".($rowNumber + $this->_pager->_pageSize * $this->_pager->_pageIndex)."</td>
+    ";
 
     //循环列
     foreach ($this->_listColumnCfg as $ckey => $cvalue) {
@@ -145,14 +150,19 @@ foreach ($rows as $rkey => $rvalue) {
         //长度截取
         $value = $this->subLength($value, $cvalue["width"]);
         echo $value;
-        echo "</td>";
+        echo "</td>
+    ";
     }
-    echo "</tr>";
+    echo "
+</tr>
+    ";
     
 }
-echo "</tbody></table>";
+echo "</tbody>
+</table>";
 
 ?>
+
 </form>
 </body>
 </html>
@@ -189,27 +199,26 @@ echo "</tbody></table>";
     private function header(){
         $version = $this->_pageCfg["version"];
         ?>
-        <html>
-        <head>
-            <meta charset="utf-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <title><?php echo  $this->_pageCfg["Title"] ?></title>
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" type="text/css" media="screen" href="form_rander\css\style.css?v=<?php echo $version?>" />
-            <link rel="stylesheet" type="text/css" media="print" href="form_rander\css\style-print.css?v=<?php echo $version?>" />
-            <script src="form_rander\js\jquery-3.3.1.min.js"></script>
-            <script src="form_rander\js\jquery.table2excel.js?v=<?php echo $version?>"></script>
-            <script src="form_rander\js\form.js?v=<?php echo $version?>"></script>
-            <script type="text/javascript">
-            <?php 
-                 $deleteSql = str_replace(array("\r\n", "\r", "\n"), " ", $this->_pageCfg["deleteSql"]);    
-                 echo 'formExt.deleteSql = "'.$deleteSql.'"';
-            ?>    
-            </script>
-        </head>
-        <body>
-        <form method="post" action="">
-        
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><?php echo  $this->_pageCfg["Title"] ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="form_rander\css\style.css?v=<?php echo $version?>" />
+    <link rel="stylesheet" type="text/css" media="print" href="form_rander\css\style-print.css?v=<?php echo $version?>" />
+    <script src="form_rander\js\jquery-3.3.1.min.js"></script>
+    <script src="form_rander\js\jquery.table2excel.js?v=<?php echo $version?>"></script>
+    <script src="form_rander\js\form.js?v=<?php echo $version?>"></script>
+    <script type="text/javascript">
+    <?php 
+            $deleteSql = str_replace(array("\r\n", "\r", "\n"), " ", $this->_pageCfg["deleteSql"]);    
+            echo 'formExt.deleteSql = "'.$deleteSql.'"';
+    ?>    
+    </script>
+</head>
+<body>
+<form method="post" action="">
         <?php        
     }
 

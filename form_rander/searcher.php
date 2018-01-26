@@ -14,8 +14,9 @@ class searcher
             return;
         }
 ?>
-        <fieldset class="searchBox">
-            <legend>查询条件</legend>
+
+<fieldset class="searchBox">
+    <legend>查询条件</legend>
 <?php
                 foreach ($this->_searchCfg as $key => $value) {
                     $inputValue = "";
@@ -26,15 +27,16 @@ class searcher
                         $inputValue = $this->getDefaultValue($value);
                     }
 ?>
-                    <label for="where_<?php echo $key?>"><?php echo $value["labelName"]?></label>
-                    <input class="condition" id="where_<?php echo $key?>" name="where_<?php echo $key?>" type="text" value="<?php echo $inputValue ?>"/>
+    <label for="where_<?php echo $key?>"><?php echo $value["labelName"]?></label>
+    <input class="condition" id="where_<?php echo $key?>" name="where_<?php echo $key?>" type="text" value="<?php echo $inputValue ?>"/>
 <?php
                     if($value["break"] == "1"){
-                        echo "<br/>";
+                        echo "    <br/>
+";
                     }
                 }
 ?>
-        </fieldset>
+</fieldset>
 
 <?php
     }
