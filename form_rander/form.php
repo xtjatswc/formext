@@ -119,9 +119,25 @@ foreach ($rows as $rkey => $rvalue) {
             $printTdClass = "noPrint";
         }
         //是否允许编辑列
-        $contentEditable = $cvalue["allowEdit"] == "1" ? "contentEditable='true'" : "";
+        $contentEditable = "";
+        $editSql = "";
+        if($cvalue["allowEdit"] == "1"){
+            $contentEditable = "contentEditable='true'";
+            $editSqlKey = $cvalue["editSqlKey"];
+            if(!empty($editSqlKey) && array_key_exists($editSqlKey, $this->_pageCfg)){
+                $editSql = $this->_pageCfg[$editSqlKey];
+                //替换
+                $editSql = str_replace("{columnName}", $ckey, $editSql);
+                $editKey = $cvalue["editKey"];
+                $editKeyArray = explode(",", $editKey);
+                foreach ($editKeyArray as $editTheKey => $editTheValue) {
+                    $editSql = str_replace("{".$editTheValue."}",  $rvalue[$editTheValue], $editSql);                   
+                }
+                $editSql = 'editSql="'.$editSql.'"';
+            }
+        }
         
-        echo "<td $contentEditable class='$printTdClass' style='$isDisplay'>";
+        echo "<td $contentEditable $editSql class='$printTdClass' style='$isDisplay'>";
 
         //列别名
         $value = $this->displayValue($rvalue[$ckey], $ckey);

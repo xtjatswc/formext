@@ -30,6 +30,9 @@ $(function($){
         $p = $(this).children("p");
         $p.addClass("breviary");
         $p.prop("title", $(this).text());
+
+        //保存
+        
     });
 
 });
