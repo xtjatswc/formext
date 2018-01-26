@@ -7,12 +7,13 @@ $form = new form_rander\form($db);
 
 $form->_pageCfg = array(
     'Title' => "住院患者信息",
-    'version' => "5", //系统版本，变动时，js等缓存文件也会刷新
+    'version' => "6", //系统版本，变动时，js等缓存文件也会刷新
     'isPrintNo' => "0", //是否打印序号列
     'primaryKey' => "PatientHospitalize_DBKey", //主键，复选框对应的值
     'deleteSql' => "delete a.*,b.* from patienthospitalizebasicinfo  a
                     inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where PatientHospitalize_DBKey in ({0})", //删除sql
     'editSql1' => "update patientbasicinfo set {columnName} = '{0}' where PATIENT_DBKEY = {PATIENT_DBKEY} and PatientNo = '{PatientNo}'",
+    'editSql2' => "update patienthospitalizebasicinfo set {columnName} = '{0}' where PatientHospitalize_DBKey = {PatientHospitalize_DBKey}",
 );
 
 $form->_listColumnCfg = array(
@@ -29,7 +30,7 @@ $form->_listColumnCfg = array(
     'NextScreeningDate' => array('isDisplay' => '1','displayName' => 'NextScreeningDate','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'Height' => array('isDisplay' => '1','displayName' => 'Height','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'Weight' => array('isDisplay' => '1','displayName' => 'Weight','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
-    'MedicalHistory' => array('isDisplay' => '1','displayName' => 'MedicalHistory','width' => '150px','maxLength' => '10','isPrint' => '0','allowEdit' => '1','editKey' => '', 'editSqlKey' => ''),
+    'MedicalHistory' => array('isDisplay' => '1','displayName' => 'MedicalHistory','width' => '150px','maxLength' => '10','isPrint' => '0','allowEdit' => '1','editKey' => 'PatientHospitalize_DBKey', 'editSqlKey' => 'editSql2'),
     'PastMedicalHistory' => array('isDisplay' => '1','displayName' => 'PastMedicalHistory','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'ChiefComplaint' => array('isDisplay' => '1','displayName' => 'ChiefComplaint','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
  
