@@ -28,7 +28,7 @@ class form
 
         echo "\$form->_listColumnCfg = array(</br>";
         foreach ($columus as $key => $value) {
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;'$value' => array('isDisplay' => '1','displayName' => '$value','width' => '','maxLength' => '','isPrint' => '1'),</br>";
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;'$value' => array('isDisplay' => '1','displayName' => '$value','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),</br>";
         }
         echo "</br>);";
     }
@@ -125,7 +125,7 @@ foreach ($rows as $rkey => $rvalue) {
         $value = $this->displayValue($rvalue[$ckey], $ckey);
 
         //长度截取
-        $value = $this->subLength($value, $cvalue["maxLength"]);
+        $value = $this->subLength($value, $cvalue["width"]);
         echo $value;
         echo "</td>";
     }
@@ -159,10 +159,9 @@ echo "</tbody></table>";
     }
 
     //长度截取
-    private function subLength($value, $maxLength){
-        if(!empty($maxLength) && strlen($value) > $maxLength){
-            $newValue = substr($value, 0, $maxLength)."……";
-            $newValue = "<div title='$value'>$newValue</div>";
+    private function subLength($value, $width){
+        if(!empty($width)){
+            $newValue = "<div title='$value'><p class='breviary' style='width:$width'>$value</p></div>";
             return $newValue;
         }
 

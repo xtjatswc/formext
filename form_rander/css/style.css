@@ -20,8 +20,10 @@ table.gridtable td {
 	padding: 2px;
 	border-style: solid;
 	border-color: #666666;
-	white-space:nowrap;
 }
+
+/*段落超出长度后，会隐藏后面部分并加上省略号width: 100px; */
+p.breviary{overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
 
 .pager{
 	margin-top:3px;

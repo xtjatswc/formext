@@ -17,8 +17,18 @@ var formExt = {};
 $(function($){
     formExt.pageIndexCtrl = $("#hidPageIndex")[0];
 
+    $("td").focusin(function() {
+        //console.log("focusin：" + $(this).html());
+
+        $(this).find("div > p").removeClass("breviary");
+
+    });
+
     $("td").focusout(function() {
-        console.log($(this).html());
+        //console.log("focusout：" + $(this).html());
+
+        $(this).find("div > p").addClass("breviary");
+
     });
 
 });

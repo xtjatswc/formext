@@ -9,7 +9,7 @@
 }
 
 $db = new form_rander\dbhelper();
-$db->connect('pdo', 'mysql', '127.0.0.1', 'root', 'root', 'cnis', 3306);
+$db->connect('pdo', 'mysql', '127.0.0.1', 'root', 'root', 'cnis_wz', 3306);
 
 
 
