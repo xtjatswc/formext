@@ -20,15 +20,16 @@ $(function($){
     $("td").focusin(function() {
         //console.log("focusin：" + $(this).html());
 
-        $(this).find("div > p").removeClass("breviary");
+        $(this).children("p").removeClass("breviary");
 
     });
 
     $("td").focusout(function() {
         //console.log("focusout：" + $(this).html());
 
-        $(this).find("div > p").addClass("breviary");
-
+        $p = $(this).children("p");
+        $p.addClass("breviary");
+        $p.prop("title", $(this).text());
     });
 
 });

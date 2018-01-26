@@ -118,8 +118,10 @@ foreach ($rows as $rkey => $rvalue) {
         if($cvalue["isPrint"] == "0"){
             $printTdClass = "noPrint";
         }
+        //是否允许编辑列
+        $contentEditable = $cvalue["allowEdit"] == "1" ? "contentEditable='true'" : "";
         
-        echo "<td contentEditable='true' class='$printTdClass' style='$isDisplay'>";
+        echo "<td $contentEditable class='$printTdClass' style='$isDisplay'>";
 
         //列别名
         $value = $this->displayValue($rvalue[$ckey], $ckey);
@@ -161,7 +163,7 @@ echo "</tbody></table>";
     //长度截取
     private function subLength($value, $width){
         if(!empty($width)){
-            $newValue = "<div title='$value'><p class='breviary' style='width:$width'>$value</p></div>";
+            $newValue = "<p title='$value' class='breviary' style='width:$width'>$value</p>";
             return $newValue;
         }
 
