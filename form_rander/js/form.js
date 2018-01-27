@@ -33,8 +33,14 @@ $(function($){
 
         sql = sql.format(newValue);
         $.post("form_rander/exec.php", { sql:sql },function(data){
-            console.log(data);
-        });        
+            if(data.success){
+                console.log("保存成功！")
+            }else{
+                console.log("保存失败！")
+                console.log(sql)
+                console.log(data.msg);
+            }
+        }, "json");        
     });
 
 });
@@ -111,6 +117,13 @@ formExt.deleteRecords = function(){
     formExt.deleteSql = formExt.deleteSql.format(str);
 
     $.post("form_rander/exec.php", { sql:formExt.deleteSql },function(data){
-        $records.parents("tr").remove();
-    });
+        if(data.success){
+            console.log("删除成功！");
+            $records.parents("tr").remove();
+        }else{
+            console.log("删除失败！");
+            console.log(formExt.deleteSql);
+            console.log(data.msg);
+        }
+    },"json");
 }
