@@ -21,34 +21,7 @@ class dbhelper
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
                     ]);
                 }
-                if ($engine == 'postgres')
-                {
-                    $sql = new PDO('pgsql:host=' . $host . ';port=' . $port . ';dbname=' . $database, $username, $password);
-                    $sql->query('SET NAMES UTF8');
-                }
                 break;
-
-            case 'mysqli':
-                $sql = new mysqli($host, $username, $password, $database, $port);
-                mysqli_set_charset($sql, "utf8");
-                if ($sql->connect_errno)
-                {
-                    die('SQL Connection failed: ' . $sql->connect_error);
-                }
-                break;
-
-            case 'wordpress':
-                global $wpdb;
-                $engine = 'mysql';
-                $wpdb->show_errors = false;
-                $wpdb->suppress_errors = false;
-                $sql = $wpdb;
-                break;
-
-            case 'joomla':
-                // TODO
-                break;
-
         }
         $sql->driver = $driver;
         $sql->engine = $engine;
@@ -62,18 +35,6 @@ class dbhelper
 
             case 'pdo':
                 $this->sql = null;
-                break;
-
-            case 'mysqli':
-                $this->sql->close();
-                break;
-
-            case 'wordpress':
-                // TODO
-                break;
-
-            case 'joomla':
-                // TODO
                 break;
 
         }
@@ -101,30 +62,6 @@ class dbhelper
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 break;
 
-            case 'mysqli':
-                // do not use mysqlnd
-                $result = $this->sql->query($query);
-                while ($row = $result->fetch_assoc())
-                {
-                    $data[] = $row;
-                }
-                break;
-
-            case 'wordpress':
-                if( !empty($params) )
-                {
-                    $data = $this->sql->get_results($this->sql->prepare($query, $params));
-                }
-                else
-                {
-                    $data = $this->sql->get_results($query);
-                }
-                break;
-
-            case 'joomla':
-                // TODO
-                break;
-
         }
 
         return $data;
@@ -150,25 +87,6 @@ class dbhelper
                     throw new \Exception($errors[2]);
                 }
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
-                break;
-
-            case 'mysqli':
-                $data = $this->sql->query($query)->fetch_assoc();
-                break;
-
-            case 'wordpress':
-                if( !empty($params) )
-                {
-                    $data = $this->sql->get_row($this->sql->prepare($query, $params));
-                }
-                else
-                {
-                    $data = $this->sql->get_row($query);
-                }
-                break;
-
-            case 'joomla':
-                // TODO
                 break;
 
         }
@@ -207,25 +125,6 @@ class dbhelper
                 }
                 break;
 
-            case 'mysqli':
-                // TODO
-                break;
-
-            case 'wordpress':
-                if( !empty($params) )
-                {
-                    $data = $this->sql->get_col($this->sql->prepare($query, $params));
-                }
-                else
-                {
-                    $data = $this->sql->get_col($query);
-                }
-                break;
-
-            case 'joomla':
-                // TODO
-                break;
-
         }
 
         return $data;
@@ -262,10 +161,7 @@ class dbhelper
                 }
                 break;
 
-            case 'mysqli':
-                // TODO
-                break;
-        }
+            }
 
         return $data;
     }
@@ -298,31 +194,6 @@ class dbhelper
                 $data = current($data);
                 break;
 
-            case 'mysqli':
-                $data = $this->sql->query($query)->fetch_object();
-                if (empty($data))
-                {
-                    return null;
-                }
-                $data = (Array)$data;
-                $data = current($data);
-                break;
-
-            case 'wordpress':
-                if( !empty($params) )
-                {
-                    $data = $this->sql->get_var($this->sql->prepare($query, $params));
-                }
-                else
-                {
-                    $data = $this->sql->get_var($query);
-                }
-                break;
-
-            case 'joomla':
-                // TODO
-                break;
-
         }
 
         return $data;
@@ -348,25 +219,6 @@ class dbhelper
                     throw new \Exception($errors[2]);
                 }
                 return $stmt->rowCount();
-                break;
-
-            case 'mysqli':
-                $this->sql->query($query);
-                break;
-
-            case 'wordpress':
-                if( !empty($params) )
-                {
-                    $data = $this->sql->query($this->sql->prepare($query, $params));
-                }
-                else
-                {
-                    $data = $this->sql->query($query);
-                }
-                break;
-
-            case 'joomla':
-                // TODO
                 break;
 
         }
@@ -449,18 +301,6 @@ class dbhelper
                 }
                 break;
 
-            case 'mysqli':
-                $last_insert_id = mysqli_insert_id($this->sql);
-                break;
-
-            case 'wordpress':
-                $last_insert_id = $this->fetch_var("SELECT LAST_INSERT_ID();");
-                break;
-
-            case 'joomla':
-                // TODO
-                break;
-
         }
 
         return $last_insert_id;
@@ -474,18 +314,6 @@ class dbhelper
 
             case 'pdo':
                 $total_count = $this->fetch_var("SELECT FOUND_ROWS();");
-                break;
-
-            case 'mysqli':
-                $total_count = $this->fetch_var("SELECT FOUND_ROWS();");
-                break;
-
-            case 'wordpress':
-                $total_count = $this->fetch_var("SELECT FOUND_ROWS();");
-                break;
-
-            case 'joomla':
-                // TODO
                 break;
 
         }
@@ -668,25 +496,6 @@ class dbhelper
                 }
             }
             $params = array_values($params);
-        }
-
-        // WordPress: replace ? with %s
-        if( $this->sql->driver == 'wordpress' )
-        {
-            foreach($params as $params__key=>$params__value)
-            {
-                // replace first occurence
-                $directive = '%s';
-                if( is_int($params__value) || ctype_digit((string)$params__value) ) { $directive = '%d'; }
-                else if( is_float($params__value) ) { $directive = '%f'; }                
-                $return = substr_replace($return, $directive, strpos($return, '?'), strlen('?'));
-            }
-        }
-        
-        // WordPress: pass stripslashes_deep to all parameters (wordpress always adds slashes to them)
-        if( $this->sql->driver == 'wordpress' )
-        {
-            $params = stripslashes_deep($params);
         }
 
         return [$return, $params];
