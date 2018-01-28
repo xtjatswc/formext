@@ -28,9 +28,9 @@ $(function($){
         //取值
         var newValue = "";
         if($p.length == 1){
-            newValue = $p.html();
+            newValue = $p.text();
         }else{
-            newValue = $td.html();
+            newValue = $td.text();
         }
 
         var para = {":value" : newValue};

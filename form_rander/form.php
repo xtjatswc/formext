@@ -184,7 +184,8 @@ echo "</tbody>
     //长度截取
     private function subLength($value, $width){
         if(!empty($width)){
-            $newValue = "<p title='$value' class='breviary' style='width:$width'>$value</p>";
+            $entitiesValue = htmlentities($value, ENT_QUOTES,"UTF-8");  //原样输出
+            $newValue = "<p title='$entitiesValue' class='breviary' style='width:$width'>$entitiesValue</p>";
             return $newValue;
         }
 
