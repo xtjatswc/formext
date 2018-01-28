@@ -107,7 +107,8 @@ foreach ($rows as $rkey => $rvalue) {
     ";
     //序号列
     $rowNumber += 1;
-    echo "<td class='$printNoClass'>".($rowNumber + $this->_pager->_pageSize * $this->_pager->_pageIndex)."</td>
+    $rowSN = $rowNumber + $this->_pager->_pageSize * $this->_pager->_pageIndex;
+    echo "<td class='$printNoClass'>".$rowSN."</td>
     ";
 
     //循环列
@@ -136,8 +137,9 @@ foreach ($rows as $rkey => $rvalue) {
 
         }
         $columnName = 'columnName="'.$ckey.'"';
+        $tdId = 'id="'.$ckey.$rowSN.'"';
         
-        echo "<td $columnName $contentEditable $editSqlKey $editKey class='$printTdClass' style='$isDisplay'>";
+        echo "<td $tdId $columnName $contentEditable $editSqlKey $editKey class='$printTdClass' style='$isDisplay'>";
 
         //列别名
         $value = $this->displayValue($rvalue[$ckey], $ckey);

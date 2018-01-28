@@ -28,7 +28,7 @@ $form->_listColumnCfg = array(
     'Department_DBKey' => array('isDisplay' => '1','displayName' => 'Department_DBKey','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'BedNumber_DBKey' => array('isDisplay' => '1','displayName' => 'BedNumber_DBKey','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'HospitalizationNumber' => array('isDisplay' => '1','displayName' => 'HospitalizationNumber','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
-    'InHospitalData' => array('isDisplay' => '1','displayName' => 'InHospitalData','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
+    'InHospitalData' => array('isDisplay' => '1','displayName' => 'InHospitalData','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'PatientHospitalize_DBKey', 'editSqlKey' => 'editSql2'),
     'PatientNo' => array('isDisplay' => '1','displayName' => 'PatientNo','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'Age' => array('isDisplay' => '1','displayName' => 'Age','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'PATIENT_DBKEY,PatientNo', 'editSqlKey' => 'editSql1'),
     'LastScreeningDate' => array('isDisplay' => '1','displayName' => 'LastScreeningDate','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
