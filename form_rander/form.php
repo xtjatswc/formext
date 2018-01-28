@@ -4,7 +4,7 @@ namespace form_rander;
 class form
 {
     public $_listColumnCfg;
-    public $_pageCfg;
+    public static $_pageCfg;
     public $_sqlCfg;
     public $_listDisplayCfg;
     public $_pager;
@@ -47,7 +47,7 @@ class form
 //显示分页
 //是否打印序号列
 $printNoClass = "";
-if($this->_pageCfg["isPrintNo"] == "0"){
+if(self::$_pageCfg["isPrintNo"] == "0"){
     $printNoClass = "noPrint";
 }
 
@@ -99,11 +99,11 @@ foreach ($rows as $rkey => $rvalue) {
     }
 
     //主键
-    $checkBoxValue = $rvalue[$this->_pageCfg["primaryKey"]];
+    $checkBoxValue = $rvalue[self::$_pageCfg["primaryKey"]];
 
     echo "
 <tr>
-    <td class='noPrint'><input type='checkbox' $rowChecked name='checkbox_".$this->_pageCfg["primaryKey"]."' value='$checkBoxValue'/></td>
+    <td class='noPrint'><input type='checkbox' $rowChecked name='checkbox_".self::$_pageCfg["primaryKey"]."' value='$checkBoxValue'/></td>
     ";
     //序号列
     $rowNumber += 1;
@@ -193,13 +193,13 @@ echo "</tbody>
     }
 
     private function header(){
-        $version = $this->_pageCfg["version"];
+        $version = self::$_pageCfg["version"];
         ?>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php echo  $this->_pageCfg["Title"] ?></title>
+    <title><?php echo  self::$_pageCfg["Title"] ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="form_rander\css\style.css?v=<?php echo $version?>" />
     <link rel="stylesheet" type="text/css" media="print" href="form_rander\css\style-print.css?v=<?php echo $version?>" />

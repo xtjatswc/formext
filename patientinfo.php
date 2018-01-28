@@ -5,11 +5,12 @@ require "autoload.php";
 
 $form = new form_rander\form($db);
 
-$form->_pageCfg = array(
+form_rander\form::$_pageCfg = array(
     'Title' => "住院患者信息",
     'version' => "6", //系统版本，变动时，js等缓存文件也会刷新
     'isPrintNo' => "0", //是否打印序号列
     'primaryKey' => "PatientHospitalize_DBKey", //主键，复选框对应的值
+    'EnableDel' => "1", //是否启用删除按钮
 );
 
 $form->_sqlCfg = array(

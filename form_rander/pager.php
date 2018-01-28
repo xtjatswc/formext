@@ -34,7 +34,11 @@ class pager
     <input type="submit" value="查询"/>
     <input type="button" value="打印"  onclick="formExt.doPrint()"/>
     <input type="button" value="导出excel"  onclick="formExt.exportExcel()"/>
-    <input type="button" value="删除"  onclick="formExt.deleteRecords()"/>
+    <?php 
+    if(form::$_pageCfg["EnableDel"] == "1"){
+        echo '<input type="button" value="删除"  onclick="formExt.deleteRecords()"/>';
+    }
+    ?>
 </div>
 
         <?php
