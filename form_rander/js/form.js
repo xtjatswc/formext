@@ -3,6 +3,10 @@ var formExt = {};
 formExt.sqlCfg = {};
 
 $(function($){
+
+    //jquery-ui tooltip
+    $( document ).tooltip();
+
     formExt.pageIndexCtrl = $("#hidPageIndex")[0];
 
     $("td").focusin(function() {
