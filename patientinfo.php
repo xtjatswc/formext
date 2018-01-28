@@ -10,10 +10,14 @@ $form->_pageCfg = array(
     'version' => "6", //系统版本，变动时，js等缓存文件也会刷新
     'isPrintNo' => "0", //是否打印序号列
     'primaryKey' => "PatientHospitalize_DBKey", //主键，复选框对应的值
+);
+
+$form->_sqlCfg = array(
     'deleteSql' => "delete a.*,b.* from patienthospitalizebasicinfo  a
                     inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where PatientHospitalize_DBKey in ({0})", //删除sql
-    'editSql1' => "update patientbasicinfo set {columnName} = :value where PATIENT_DBKEY = {PATIENT_DBKEY} and PatientNo = '{PatientNo}'",
-    'editSql2' => "update patienthospitalizebasicinfo set {columnName} = :value where PatientHospitalize_DBKey = {PatientHospitalize_DBKey}",
+    'editSql1' => "update patientbasicinfo set {columnName} = :value where
+                     PATIENT_DBKEY = :PATIENT_DBKEY and PatientNo = :PatientNo",
+    'editSql2' => "update patienthospitalizebasicinfo set {columnName} = :value where PatientHospitalize_DBKey = :PatientHospitalize_DBKey",
 );
 
 $form->_listColumnCfg = array(

@@ -1,5 +1,6 @@
 
 var formExt = {};
+formExt.sqlCfg = {};
 
 $(function($){
     formExt.pageIndexCtrl = $("#hidPageIndex")[0];
@@ -19,8 +20,10 @@ $(function($){
         $p.prop("title", $td.text());
 
         //保存
-        var sql = $td.attr("editSql");
+        var editSqlKey = $td.attr("editSqlKey");
+        var sql = formExt.sqlCfg[editSqlKey]; 
         if(!sql) return;
+        sql = sql.format({"columnName" : $td.attr("columnName")});
 
         //取值
         var newValue = "";
@@ -30,8 +33,19 @@ $(function($){
             newValue = $td.html();
         }
 
-
         var para = {":value" : newValue};
+
+        //取其它列值
+        var editKey = $td.attr("editKey");
+        if(editKey){
+            var arr = editKey.split(",");
+            for (let index = 0; index < arr.length; index++) {
+                var key = arr[index];
+                var theValue = $td.parent().children("[columnName='"+ key +"']").html();
+                para[":" + key] = theValue;
+            }
+        }
+
         $.post("form_rander/exec.php", { sql:sql, para:para },function(data){
             if(data.success){
                 console.log("保存成功！");
@@ -115,7 +129,7 @@ formExt.deleteRecords = function(){
         return;
     }
 
-    formExt.deleteSql = formExt.deleteSql.format(str);
+    formExt.deleteSql = formExt.sqlCfg["deleteSql"].format(str);
 
     $.post("form_rander/exec.php", { sql:formExt.deleteSql },function(data){
         if(data.success){
@@ -123,7 +137,7 @@ formExt.deleteRecords = function(){
             $records.parents("tr").remove();
         }else{
             console.log("删除失败！");
-            console.log(formExt.deleteSql);
+            console.log(formExt.sqlCfg["deleteSql"]);
             console.log(data.msg);
         }
     },"json");

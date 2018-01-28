@@ -3,7 +3,12 @@ namespace form_rander;
 require "../autoload.php";
 
 $sql = $_POST["sql"];
-$para = $_POST["para"];
-$db->query($sql, $para);
+
+if(array_key_exists("para", $_POST)){
+    $db->query($sql, $_POST["para"]);
+}else{
+    $db->query($sql);
+}
+
 echo json_encode(array("success" => true));
 

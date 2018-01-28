@@ -5,6 +5,7 @@ class form
 {
     public $_listColumnCfg;
     public $_pageCfg;
+    public $_sqlCfg;
     public $_listDisplayCfg;
     public $_pager;
     public $_searcher;
@@ -125,24 +126,18 @@ foreach ($rows as $rkey => $rvalue) {
         }
         //是否允许编辑列
         $contentEditable = "";
-        $editSql = "";
+        $editSqlKey = "";
+        $editKey = "";        
         if($cvalue["allowEdit"] == "1"){
+
             $contentEditable = "contentEditable='true'";
-            $editSqlKey = $cvalue["editSqlKey"];
-            if(!empty($editSqlKey) && array_key_exists($editSqlKey, $this->_pageCfg)){
-                $editSql = $this->_pageCfg[$editSqlKey];
-                //替换
-                $editSql = str_replace("{columnName}", $ckey, $editSql);
-                $editKey = $cvalue["editKey"];
-                $editKeyArray = explode(",", $editKey);
-                foreach ($editKeyArray as $editTheKey => $editTheValue) {
-                    $editSql = str_replace("{".$editTheValue."}",  $rvalue[$editTheValue], $editSql);                   
-                }
-                $editSql = 'editSql="'.$editSql.'"';
-            }
+            $editSqlKey = 'editSqlKey="'.$cvalue["editSqlKey"].'"';
+            $editKey = 'editKey="'.$cvalue["editKey"].'"';
+
         }
+        $columnName = 'columnName="'.$ckey.'"';
         
-        echo "<td $contentEditable $editSql class='$printTdClass' style='$isDisplay'>";
+        echo "<td $columnName $contentEditable $editSqlKey $editKey class='$printTdClass' style='$isDisplay'>";
 
         //列别名
         $value = $this->displayValue($rvalue[$ckey], $ckey);
@@ -213,8 +208,11 @@ echo "</tbody>
     <script src="form_rander\js\form.js?v=<?php echo $version?>"></script>
     <script type="text/javascript">
     <?php 
-            $deleteSql = str_replace(array("\r\n", "\r", "\n"), " ", $this->_pageCfg["deleteSql"]);    
-            echo 'formExt.deleteSql = "'.$deleteSql.'"';
+        foreach ($this->_sqlCfg as $key => $sql) {
+            $sql = str_replace(array("\r\n", "\r", "\n"), " ", $sql);    
+            echo 'formExt.sqlCfg["'.$key.'"] = "'.$sql.'";';
+            echo "\r\n";
+        }
     ?>    
     </script>
 </head>
