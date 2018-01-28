@@ -204,6 +204,7 @@ echo "</tbody>
     <link rel="stylesheet" type="text/css" media="screen" href="form_rander\css\style.css?v=<?php echo $version?>" />
     <link rel="stylesheet" type="text/css" media="print" href="form_rander\css\style-print.css?v=<?php echo $version?>" />
     <script src="form_rander\js\jquery-3.3.1.min.js"></script>
+    <script src="form_rander\js\My97DatePicker\WdatePicker.js"></script>
     <script src="form_rander\js\jquery.table2excel.js?v=<?php echo $version?>"></script>
     <script src="form_rander\js\util.js?v=<?php echo $version?>"></script>
     <script src="form_rander\js\form.js?v=<?php echo $version?>"></script>

@@ -50,7 +50,7 @@ $form->_listDisplayCfg = array(
 //Y-m-d H:i:s
 $form->_searcher->_searchCfg = array(
     'HospitalizationNumber' => array('labelName' => '住院号','randerText' => " and a.HospitalizationNumber like '%{value}%' ",'dataType' => 'string', 'defaultValue' => '11','format' => '', 'break' => '0'),
-    'InHospitalData' => array('labelName' => '入院日期 ','randerText' => " and a.InHospitalData >= '{value}' ",'dataType' => 'date',  'defaultValue' => '-100','format' => 'Y-m-d H:i:s', 'break' => '0'),
+    'InHospitalData' => array('labelName' => '入院日期 ','randerText' => " and a.InHospitalData >= '{value}' ",'dataType' => 'datetime',  'defaultValue' => '-100','format' => 'Y-m-d H:i:s', 'break' => '0'),
     'InHospitalData2' => array('labelName' => '至','randerText' => " and a.InHospitalData <= '{value}' ",'dataType' => 'date',  'defaultValue' => '0','format' => 'Y-m-d', 'break' => '1'),
     'PatientName' => array('labelName' => '患者姓名','randerText' => " and b.PatientName like '{value}%' ",'dataType' => 'string',  'defaultValue' => '','format' => '', 'break' => '0'),
 );
