@@ -26,14 +26,7 @@ $(function($){
         sql = sql.format({"columnName" : $td.attr("columnName")});
 
         //取值
-        var newValue = "";
-        if($p.length == 1){
-            newValue = $p.text();
-        }else{
-            newValue = $td.text();
-        }
-
-        var para = {":value" : newValue};
+        var para = {":value" : $td.text()};
 
         //取其它列值
         var editKey = $td.attr("editKey");
@@ -41,7 +34,7 @@ $(function($){
             var arr = editKey.split(",");
             for (let index = 0; index < arr.length; index++) {
                 var key = arr[index];
-                var theValue = $td.parent().children("[columnName='"+ key +"']").html();
+                var theValue = $td.parent().children("[columnName='"+ key +"']").text();
                 para[":" + key] = theValue;
             }
         }
