@@ -4,11 +4,16 @@ require "../autoload.php";
 
 $sql = $_POST["sql"];
 
+$affectedCount = 0;
 if(array_key_exists("para", $_POST)){
-    $db->query($sql, $_POST["para"]);
+    $affectedCount = $db->query($sql, $_POST["para"]);
 }else{
-    $db->query($sql);
+    $affectedCount = $db->query($sql);
 }
 
-echo json_encode(array("success" => true));
+echo json_encode(array(
+    "success" => true, 
+    "msg" => "执行成功！", 
+    "affectedCount" => $affectedCount,
+));
 

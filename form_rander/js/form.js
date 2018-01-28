@@ -48,7 +48,7 @@ $(function($){
 
         $.post("form_rander/exec.php", { sql:sql, para:para },function(data){
             if(data.success){
-                console.log("保存成功！");
+                console.log(data.msg + data.affectedCount);
             }else{
                 console.log("保存失败！");
                 console.log(sql);
@@ -133,7 +133,7 @@ formExt.deleteRecords = function(){
 
     $.post("form_rander/exec.php", { sql:formExt.deleteSql },function(data){
         if(data.success){
-            console.log("删除成功！");
+            console.log(data.msg + data.affectedCount);
             $records.parents("tr").remove();
         }else{
             console.log("删除失败！");
