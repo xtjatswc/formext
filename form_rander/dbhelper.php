@@ -421,9 +421,13 @@ class dbhelper
                 {
                     if( is_array($params__value) && count($params__value) > 0 )
                     {
-                        foreach($params__value as $params__value__value)
-                        {
-                            $params_flattened[] = $params__value__value;
+                        foreach ($params__value as $key => $params__value__value) {
+                            // by zxs
+                            if($key[0] == ":"){
+                                $params_flattened[$key] = $params__value__value;
+                            }else{
+                                $params_flattened[] = $params__value__value;
+                            }
                         }
                     }
                     elseif( !is_array($params__value) )

@@ -31,13 +31,14 @@ $(function($){
         }
 
 
-        sql = sql.format(newValue);
-        $.post("form_rander/exec.php", { sql:sql },function(data){
+        var para = {":value" : newValue};
+        $.post("form_rander/exec.php", { sql:sql, para:para },function(data){
             if(data.success){
-                console.log("保存成功！")
+                console.log("保存成功！");
             }else{
-                console.log("保存失败！")
-                console.log(sql)
+                console.log("保存失败！");
+                console.log(sql);
+                console.log(para);
                 console.log(data.msg);
             }
         }, "json");        

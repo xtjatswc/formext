@@ -12,8 +12,8 @@ $form->_pageCfg = array(
     'primaryKey' => "PatientHospitalize_DBKey", //主键，复选框对应的值
     'deleteSql' => "delete a.*,b.* from patienthospitalizebasicinfo  a
                     inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where PatientHospitalize_DBKey in ({0})", //删除sql
-    'editSql1' => "update patientbasicinfo set {columnName} = '{0}' where PATIENT_DBKEY = {PATIENT_DBKEY} and PatientNo = '{PatientNo}'",
-    'editSql2' => "update patienthospitalizebasicinfo set {columnName} = '{0}' where PatientHospitalize_DBKey = {PatientHospitalize_DBKey}",
+    'editSql1' => "update patientbasicinfo set {columnName} = :value where PATIENT_DBKEY = {PATIENT_DBKEY} and PatientNo = '{PatientNo}'",
+    'editSql2' => "update patienthospitalizebasicinfo set {columnName} = :value where PatientHospitalize_DBKey = {PatientHospitalize_DBKey}",
 );
 
 $form->_listColumnCfg = array(
