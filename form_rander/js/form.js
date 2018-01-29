@@ -10,8 +10,8 @@ $(function($){
     var para = {
         id : "where_PatientName",
         url : "form_rander/query.php",
-        sql : "select PatientName label, PATIENT_DBKEY value from patientbasicinfo where PatientName like :term limit 0, 30",
-        keyword : "%{keyword}%",
+        sql : "select CONCAT(PatientName, '  [ ', PatientNameFirstLetter, ' ]') label, PatientName value from patientbasicinfo where (PatientName like :term or PatientNameFirstLetter like :term2) limit 0, 30",
+        requestPara : '{":term" : "%{0}%", ":term2" : "{0}%"}',
     };
     formExt.autocomplete(para);
 
@@ -200,10 +200,12 @@ formExt.autocomplete = function(para){
 /*             response( $.ui.autocomplete.filter(
               availableTags, extractLast( request.term ) ) );
  */         
-            var requestPara = {":term" : para.keyword.format({keyword : extractLast(request.term)})};
+            //var requestPara = {":term" : para.keyword.format({keyword : extractLast(request.term)})};
+            var params = eval("(" + para.requestPara.format(extractLast(request.term)) + ")");
+
             $.getJSON(para.url, {
                 sql : para.sql,
-                para: requestPara
+                para: params
             }, response);
           },
           focus: function() {
