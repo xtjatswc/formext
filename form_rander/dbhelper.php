@@ -412,6 +412,7 @@ class dbhelper
         =>
         fetch('SELECT * FROM table WHERE ID = ?', 1, 2, 3, 4, 5, 6)
         */
+        $useNamedPara = false; //true：表示类似 :paraName， false：表示 ? 
         if( !empty($params) )
         {
             $params_flattened = [];
@@ -425,6 +426,7 @@ class dbhelper
                             // by zxs
                             if($key[0] == ":"){
                                 $params_flattened[$key] = $params__value__value;
+                                $useNamedPara = true;
                             }else{
                                 $params_flattened[] = $params__value__value;
                             }
@@ -499,7 +501,9 @@ class dbhelper
                     unset($params[$delete_keys__value]);
                 }
             }
-            $params = array_values($params);
+            if(!$useNamedPara){
+                $params = array_values($params);
+            }
         }
 
         return [$return, $params];
