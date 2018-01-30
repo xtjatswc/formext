@@ -1,5 +1,5 @@
 
-
+var util = {};
 
  /*
  两种调用方式
@@ -146,3 +146,93 @@ $(function($){
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
 
 });
+
+//封装jquery-ui Autocomplete
+util.autocomplete = function(para){
+/*     var para = {
+        id : "where_PatientName",
+        url : "form_rander/query.php",
+    };
+*/   /*  var availableTags = [
+    "ActionScript",
+    "AppleScript",
+    "Asp",
+    "BASIC",
+    "C",
+    "C++",
+    "Clojure",
+    "COBOL",
+    "ColdFusion",
+    "Erlang",
+    "Fortran",
+    "Groovy",
+    "Haskell",
+    "Java",
+    "JavaScript",
+    "Lisp",
+    "Perl",
+    "PHP",
+    "Python",
+    "Ruby",
+    "Scala",
+    "Scheme"
+    ]; */
+    function split( val ) {
+    return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+    return split( term ).pop();
+    }
+
+    $( "#" + para.id )
+    // don't navigate away from the field on tab when selecting an item
+    .on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+        event.preventDefault();
+        }
+    })
+    .autocomplete({
+        minLength: para.minLength,
+        source: function( request, response ) {
+        // delegate back to autocomplete, but extract the last term
+/*             response( $.ui.autocomplete.filter(
+            availableTags, extractLast( request.term ) ) );
+*/         
+        //var requestPara = {":term" : para.keyword.format({keyword : extractLast(request.term)})};
+        var params = eval("(" + para.requestPara.format(extractLast(request.term)) + ")");
+
+        $.getJSON(para.url, {
+            sql : para.sql,
+            para: params
+        }, response);
+        },
+        focus: function() {
+        // prevent value inserted on focus
+        return false;
+        },
+        select: function( event, ui ) {
+        var terms = split( this.value );
+        // remove the current input
+        terms.pop();
+        // add the selected item
+        terms.push( ui.item.value );
+        // add placeholder to get the comma-and-space at the end
+        terms.push( "" );
+        this.value = terms.join( ", " );
+        return false;
+        }
+    });
+}
+    
+//获取时间
+util.getTime = function(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+}
