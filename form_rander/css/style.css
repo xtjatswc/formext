@@ -51,3 +51,10 @@ input.condition{
 .gridtable .odd{ background:rgb(255, 255, 255);}      /* 奇数行样式 E1F4EE*/  
 .gridtable .over{background:rgb(196, 196, 164);}      /* 鼠标掠过行样式 CCCC99*/  
 .gridtable .selected{ background:rgb(209, 212, 22);color:rgb(52, 8, 250);} /* 选中行样式 BFDFFF*/  
+
+.ui-autocomplete-category {
+    font-weight: bold;
+    padding: .2em .4em;
+    margin: .8em 0 .2em;
+    line-height: 1.5;
+  }

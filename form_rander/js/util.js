@@ -145,6 +145,28 @@ $(function($){
         isRTL: false}; 
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
 
+    //Autocomplete 分类效果逻辑
+    $.widget( "custom.catcomplete", $.ui.autocomplete, {
+        _create: function() {
+            this._super();
+            this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+        },
+        _renderMenu: function( ul, items ) {
+            var that = this,
+            currentCategory = "";
+            $.each( items, function( index, item ) {
+            var li;
+            if ( item.category != currentCategory ) {
+                ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+                currentCategory = item.category;
+            }
+            li = that._renderItemData( ul, item );
+            if ( item.category ) {
+                li.attr( "aria-label", item.category + " : " + item.label );
+            }
+            });
+        }
+    });
 });
 
 //封装jquery-ui Autocomplete
@@ -184,15 +206,7 @@ util.autocomplete = function(para){
     return split( term ).pop();
     }
 
-    $( "#" + para.id )
-    // don't navigate away from the field on tab when selecting an item
-    .on( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).autocomplete( "instance" ).menu.active ) {
-        event.preventDefault();
-        }
-    })
-    .autocomplete({
+    var methodPara = {
         minLength: para.minLength,
         delay : para.delay,
         source: function( request, response ) {
@@ -228,7 +242,22 @@ util.autocomplete = function(para){
             this.value = terms.join( ", " );
             return false;
         }
+    };
+
+    var $input = $( "#" + para.id );
+    // don't navigate away from the field on tab when selecting an item
+    $input.on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+        event.preventDefault();
+        }
     });
+
+    if(para.category){
+        $input.catcomplete(methodPara);
+    }else{
+        $input.autocomplete(methodPara);
+    }
 }
     
 //获取时间
