@@ -60,7 +60,11 @@ $sql = 'select a.*, b.PatientName,b.PatientNo,b.Age,case when a.PatientHospitali
 $rows = $form->randerForm($sql);
 //$form->getColumns($rows);
 
-$db->disconnect();
+function randerScriptCallBack(){
+    ?>
+<script src="patientinfo.js"></script>
+    <?php
+}
 
 ?>
 

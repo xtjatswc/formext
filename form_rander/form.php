@@ -221,6 +221,9 @@ echo "</tbody>
         }
     ?>    
     </script>
+    <?php
+        echo call_user_func("randerScriptCallBack");
+    ?>
 </head>
 <body>
 <form method="post" action="">
