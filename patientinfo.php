@@ -53,9 +53,11 @@ $form->_searcher->_searchCfg = array(
     'InHospitalData' => array('labelName' => '入院日期 ','randerText' => " and a.InHospitalData >= '{value}' ",'dataType' => 'datetime',  'defaultValue' => '-100','format' => 'Y-m-d H:i:s', 'break' => '0'),
     'InHospitalData2' => array('labelName' => '至','randerText' => " and a.InHospitalData <= '{value}' ",'dataType' => 'date',  'defaultValue' => '0','format' => 'Y-m-d', 'break' => '1'),
     'PatientName' => array('labelName' => '患者姓名','randerText' => " and b.PatientName like '{value}%' ",'dataType' => 'string',  'defaultValue' => '','format' => '', 'break' => '0'),
+    'Department' => array('labelName' => '科室','randerText' => " and a.Department_DBKey in ({value}) ",'dataType' => 'string',  'defaultValue' => '','format' => '', 'break' => '0'),
+
 );
 
-$sql = 'select a.*, b.PatientName,b.PatientNo,b.Age,case when a.PatientHospitalize_DBKey > 135659 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] order by  a.InHospitalData desc '.$form->_pager->getLimit();
+$sql = 'select a.*, b.PatientName,b.PatientNo,b.Age,case when a.PatientHospitalize_DBKey > 135659 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] [w|Department] order by  a.InHospitalData desc '.$form->_pager->getLimit();
 
 $rows = $form->randerForm($sql);
 //$form->getColumns($rows);

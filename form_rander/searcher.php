@@ -56,7 +56,8 @@ class searcher
             $sWhere = "";
             $inputValue = "";
             if(array_key_exists("where_$key", $_POST)){
-                $inputValue = $_POST["where_$key"];
+                $inputValue = trim($_POST["where_$key"]);   //去掉首尾空格
+                $inputValue = rtrim($inputValue, ",");  //去掉最右边的逗号
             }else{
                 //取默认值
                 $inputValue = $this->getDefaultValue($value);
