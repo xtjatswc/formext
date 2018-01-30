@@ -10,6 +10,8 @@ class pager
         if(array_key_exists("txtPageSize",$_POST)){
             $this->_pageSize = $_POST["txtPageSize"];
             $this->_pageIndex = $_POST["hidPageIndex"];
+        }else{
+            $this->_pageSize = form::$_pageCfg["pageSize"];
         }
     }
 
