@@ -194,6 +194,7 @@ util.autocomplete = function(para){
     })
     .autocomplete({
         minLength: para.minLength,
+        delay : para.delay,
         source: function( request, response ) {
         // delegate back to autocomplete, but extract the last term
 /*             response( $.ui.autocomplete.filter(
