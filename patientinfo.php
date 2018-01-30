@@ -61,9 +61,7 @@ $rows = $form->randerForm($sql);
 //$form->getColumns($rows);
 
 function randerScriptCallBack(){
-    ?>
-<script src="patientinfo.js"></script>
-    <?php
+    echo '<script src="js/patientinfo.js?v='.form_rander\form::$_pageCfg["version"].'"></script>';
 }
 
 ?>
