@@ -36,7 +36,7 @@ class searcher
                         $randerCode = 'onClick="WdatePicker({el:this,dateFmt:\'yyyy-MM-dd HH:mm:ss\'})"';
                     }
 ?>
-    <label for="where_<?php echo $key?>"><?php echo $value["labelName"]?></label>
+    <label for="where_<?php echo $key?>" title="<?php echo $value["tooltip"] ?>" ><?php echo $value["labelName"]?></label>
     <input class="condition" id="where_<?php echo $key?>" name="where_<?php echo $key?>" type="text" value="<?php echo $inputValue ?>" <?php echo $randerCode ?> />
 <?php
                     if($value["break"] == "1"){
