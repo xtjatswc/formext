@@ -6,6 +6,7 @@ $(function($){
     var para = {
         id : "where_PatientName",
         url : "form_rander/query.php",
+        source : null,
         delay : 1000,
         minLength : 2,
         multiple : false,
@@ -19,6 +20,7 @@ $(function($){
     var para = {
         id : "where_Department",
         url : "form_rander/query.php",
+        source : null,
         delay : 1000,
         minLength : 2,
         multiple : true,
@@ -27,6 +29,22 @@ $(function($){
         requestPara : '{":term" : "%{0}%", ":term2" : "%{0}%"}',
     };
     util.autocomplete(para);
+
+    //性别
+    var dataSource = [{label: "男", value: "M"}, {label: "女", value: "F"}];
+    var para = {
+        id : "where_Gender",
+        url : "form_rander/query.php",
+        source : dataSource,
+        delay : 1000,
+        minLength : 1,
+        multiple : false,
+        category : false,
+        sql : "",
+        requestPara : '',
+    };
+    util.autocomplete(para);
+    
 
 });
 

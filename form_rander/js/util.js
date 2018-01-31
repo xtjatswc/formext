@@ -206,10 +206,7 @@ util.autocomplete = function(para){
     return split( term ).pop();
     }
 
-    var methodPara = {
-        minLength: para.minLength,
-        delay : para.delay,
-        source: function( request, response ) {
+    var dataSource = para.source || function( request, response ) {
         // delegate back to autocomplete, but extract the last term
 /*             response( $.ui.autocomplete.filter(
             availableTags, extractLast( request.term ) ) );
@@ -221,7 +218,12 @@ util.autocomplete = function(para){
                 sql : para.sql,
                 para: params
             }, response);
-        },
+    };
+
+    var methodPara = {
+        minLength: para.minLength,
+        delay : para.delay,
+        source: dataSource,        
         focus: function() {
             // prevent value inserted on focus
             // 不让多选时，点选的值覆盖掉之前已选的值
