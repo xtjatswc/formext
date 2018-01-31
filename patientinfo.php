@@ -33,7 +33,7 @@ $form->_listColumnCfg = array(
     'PatientNo' => array('isDisplay' => '1','displayName' => 'PatientNo','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'Age' => array('isDisplay' => '1','displayName' => 'Age','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'PATIENT_DBKEY,PatientNo', 'editSqlKey' => 'editSql1'),
     'Gender' => array('isDisplay' => '1','displayName' => 'Gender','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
-    'NextScreeningDate' => array('isDisplay' => '1','displayName' => 'NextScreeningDate','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
+    'TherapyStatus' => array('isDisplay' => '1','displayName' => 'TherapyStatus','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'Height' => array('isDisplay' => '1','displayName' => 'Height','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'Weight' => array('isDisplay' => '1','displayName' => 'Weight','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'MedicalHistory' => array('isDisplay' => '1','displayName' => 'MedicalHistory','width' => '150px','maxLength' => '10','isPrint' => '0','allowEdit' => '1','editKey' => 'PatientHospitalize_DBKey', 'editSqlKey' => 'editSql2'),
@@ -59,7 +59,7 @@ $form->_searcher->_searchCfg = array(
 
 );
 
-$sql = 'select a.*, b.PatientName,b.PatientNo,b.Age,b.Gender, case when a.PatientHospitalize_DBKey > 135659 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] [w|Department] [w|Gender] [w|TherapyStatus] order by  a.InHospitalData desc '.$form->_pager->getLimit();
+$sql = 'select a.*, b.PatientName,b.PatientNo,b.Age,b.Gender, case when a.PatientHospitalize_DBKey > 135659 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] [w|Department] [w|Gender] [w|TherapyStatus] [w|Sex] order by  a.InHospitalData desc '.$form->_pager->getLimit();
 
 $rows = $form->randerForm($sql);
 //$form->getColumns($rows);
@@ -68,6 +68,11 @@ function randerSearchCallBack(){
     $where_TherapyStatus_value = "0";
     if(isset($_POST["where_TherapyStatus"])){
         $where_TherapyStatus_value = $_POST["where_TherapyStatus"];
+    }
+
+    $where_Sex = array();
+    if(isset($_POST["where_Sex"])){
+        $where_Sex = $_POST["where_Sex"];
     }
 ?>
     
@@ -80,6 +85,12 @@ function randerSearchCallBack(){
     <script>
         $("#where_TherapyStatus").val(<?php echo $where_TherapyStatus_value?>);
     </script>
+
+    <label for="where_Sex_M" title="" >男</label>
+    <input id="where_Sex_M" name="where_Sex[]" type="checkbox" value="M" <?php if(in_array('M', $where_Sex)) echo("checked");?> />
+    <label for="where_Sex_F" title="" >女</label>
+    <input id="where_Sex_F" name="where_Sex[]" type="checkbox" value="F" <?php if(in_array('F', $where_Sex)) echo("checked");?> />
+
 <?php
 }
 
@@ -96,7 +107,19 @@ function randerSearchWhereCallBack($sql){
         $where_TherapyStatus = " and a.TherapyStatus = 9 ";
     }
 
+    $where_Sex = array();
+    $where_Sql = "";
+    if(isset($_POST["where_Sex"])){
+        $where_Sex = $_POST["where_Sex"];
+        $where_Sql = "  and b.Gender in (";
+        foreach ($where_Sex as $sexKey => $sexValue) {
+            $where_Sql .= "'".$sexValue."',";
+        }
+        $where_Sql = rtrim($where_Sql, ",").")";    
+    }
+
     $sql = str_replace("[w|TherapyStatus]", $where_TherapyStatus, $sql);
+    $sql = str_replace("[w|Sex]", $where_Sql, $sql);
 
     return $sql;
 }
