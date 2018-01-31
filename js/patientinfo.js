@@ -1,3 +1,5 @@
+var patientinfo = {};
+
 $(function($){
 
     //患者姓名
@@ -27,3 +29,9 @@ $(function($){
     util.autocomplete(para);
 
 });
+
+patientinfo.openInfo = function(){
+    var str = formExt.getSelectRecords().selStr;
+
+    alert(str);
+}

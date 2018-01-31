@@ -40,6 +40,7 @@ class pager
     if(form::$_pageCfg["EnableDel"] == "1"){
         echo '<input type="button" value="删除"  onclick="formExt.deleteRecords()"/>';
     }
+    echo call_user_func("randerToolBarCallBack");
     ?>
 </div>
 

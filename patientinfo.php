@@ -63,6 +63,13 @@ $sql = 'select a.*, b.PatientName,b.PatientNo,b.Age,case when a.PatientHospitali
 $rows = $form->randerForm($sql);
 //$form->getColumns($rows);
 
+function randerToolBarCallBack(){
+    ?>
+
+    <input type="button" value="打开" onclick="patientinfo.openInfo()"/>
+    <?php
+}
+
 function randerScriptCallBack(){
     echo '<script src="js/patientinfo.js?v='.form_rander\form::$_pageCfg["version"].'"></script>';
 }

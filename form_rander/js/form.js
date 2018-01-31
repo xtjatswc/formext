@@ -96,21 +96,32 @@ formExt.exportExcel = function(){
     });
 }
 
-//删除选中记录
-formExt.deleteRecords = function(){
+//获取选成的记录
+formExt.getSelectRecords = function(){
     var $records = $("#mainGridTable> tbody>tr td:first-child :checkbox:checked");
     var str="";
+    var arr = [];
     $records.each(function(){
         str += $(this).val() + ",";
+        arr.push($(this).val());
     });
     str = str.substring(0, str.length - 1);
+
+    return {selArr : arr, selStr : str, tdRecords : $records};
+}
+
+//删除选中记录
+formExt.deleteRecords = function(){
+
+    var selObj = formExt.getSelectRecords();
+    var str = selObj.selStr;
 
     if(str == ""){
         alert("请选中要删除的记录！")
         return;
     }
 
-    if(!confirm("确定删除选中的" + $records.length + "条记录吗？")){
+    if(!confirm("确定删除选中的" + selObj.selArr.length + "条记录吗？")){
         return;
     }
 
@@ -119,7 +130,7 @@ formExt.deleteRecords = function(){
     $.post("form_rander/exec.php", { sql:formExt.deleteSql },function(data){
         if(data.success){
             console.log(data.msg + data.affectedCount);
-            $records.parents("tr").remove();
+            selObj.tdRecords.parents("tr").remove();
         }else{
             console.log("删除失败！");
             console.log(formExt.sqlCfg["deleteSql"]);
