@@ -207,17 +207,26 @@ util.autocomplete = function(para){
     }
 
     var dataSource = para.source || function( request, response ) {
-        // delegate back to autocomplete, but extract the last term
-/*             response( $.ui.autocomplete.filter(
-            availableTags, extractLast( request.term ) ) );
-*/         
-        //var requestPara = {":term" : para.keyword.format({keyword : extractLast(request.term)})};
-        var params = eval("(" + para.urlsource.requestPara.format(extractLast(request.term)) + ")");
+        
+        var term = extractLast(request.term);
+
+        //是否需要从缓存取数据
+        if(para.urlsource.cache){
+            if ( term in para.urlsource.cachedata ) {
+              response( para.urlsource.cachedata[ term ] );
+              return;
+            }
+        }
+
+        var params = eval("(" + para.urlsource.requestPara.format(term) + ")");
 
         $.getJSON(para.urlsource.url, {
                 sql : para.urlsource.sql,
                 para: params
-            }, response);
+            }, function( data, status, xhr ) {
+                para.urlsource.cachedata[ term ] = data;
+                response( data );
+            });
     };
 
     var methodPara = {
