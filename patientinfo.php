@@ -59,16 +59,53 @@ $form->_searcher->_searchCfg = array(
 
 );
 
-$sql = 'select a.*, b.PatientName,b.PatientNo,b.Age,b.Gender, case when a.PatientHospitalize_DBKey > 135659 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] [w|Department] [w|Gender] order by  a.InHospitalData desc '.$form->_pager->getLimit();
+$sql = 'select a.*, b.PatientName,b.PatientNo,b.Age,b.Gender, case when a.PatientHospitalize_DBKey > 135659 then 1 else 0 end isChecked from patienthospitalizebasicinfo a inner join patientbasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY where 1=1 [w|HospitalizationNumber] [w|InHospitalData] [w|InHospitalData2] [w|PatientName] [w|Department] [w|Gender] [w|TherapyStatus] order by  a.InHospitalData desc '.$form->_pager->getLimit();
 
 $rows = $form->randerForm($sql);
 //$form->getColumns($rows);
 
+function randerSearchCallBack(){
+    $where_TherapyStatus_value = "0";
+    if(isset($_POST["where_TherapyStatus"])){
+        $where_TherapyStatus_value = $_POST["where_TherapyStatus"];
+    }
+?>
+    
+    <label for="where_TherapyStatus" title="" >在院状态</label>
+    <select id="where_TherapyStatus" name="where_TherapyStatus">
+        <option value ="-1">全部</option>
+        <option value ="0">在院</option>
+        <option value="9">出院</option>
+    </select>
+    <script>
+        $("#where_TherapyStatus").val(<?php echo $where_TherapyStatus_value?>);
+    </script>
+<?php
+}
+
+function randerSearchWhereCallBack($sql){
+    $where_TherapyStatus_value = "0";
+    if(isset($_POST["where_TherapyStatus"])){
+        $where_TherapyStatus_value = $_POST["where_TherapyStatus"];
+    }
+
+    $where_TherapyStatus = "";
+    if($where_TherapyStatus_value == "0"){
+        $where_TherapyStatus = " and a.TherapyStatus <> 9 ";
+    }else if($where_TherapyStatus_value == "9"){
+        $where_TherapyStatus = " and a.TherapyStatus = 9 ";
+    }
+
+    $sql = str_replace("[w|TherapyStatus]", $where_TherapyStatus, $sql);
+
+    return $sql;
+}
+
 function randerToolBarCallBack(){
-    ?>
+?>
 
     <input type="button" value="打开" onclick="patientinfo.openInfo()"/>
-    <?php
+<?php
 }
 
 function randerScriptCallBack(){

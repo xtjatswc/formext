@@ -44,6 +44,8 @@ class searcher
 ";
                     }
                 }
+
+                echo call_user_func("randerSearchCallBack");
 ?>
 </fieldset>
 
@@ -69,6 +71,8 @@ class searcher
 
             $sql = str_replace("[w|$key]", $sWhere, $sql);
         }
+
+        $sql = call_user_func("randerSearchWhereCallBack", $sql);
         return $sql;
     }
 
