@@ -212,10 +212,10 @@ util.autocomplete = function(para){
             availableTags, extractLast( request.term ) ) );
 */         
         //var requestPara = {":term" : para.keyword.format({keyword : extractLast(request.term)})};
-        var params = eval("(" + para.requestPara.format(extractLast(request.term)) + ")");
+        var params = eval("(" + para.urlsource.requestPara.format(extractLast(request.term)) + ")");
 
-        $.getJSON(para.url, {
-                sql : para.sql,
+        $.getJSON(para.urlsource.url, {
+                sql : para.urlsource.sql,
                 para: params
             }, response);
     };
