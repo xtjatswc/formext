@@ -58,3 +58,7 @@ input.condition{
     margin: .8em 0 .2em;
     line-height: 1.5;
   }
+
+.ui-autocomplete-loading {
+background: white url("../js/jquery-ui-1.12.1/images/ui-anim_basic_16x16.gif") right center no-repeat;
+}  
