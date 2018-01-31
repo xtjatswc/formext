@@ -229,6 +229,22 @@ util.autocomplete = function(para){
             });
     };
 
+    var selectMethod = para.select || function( event, ui ) {
+        if(!para.multiple){
+            //单选
+            return true;
+        }
+        var terms = split( this.value );
+        // remove the current input
+        terms.pop();
+        // add the selected item
+        terms.push( ui.item.value );
+        // add placeholder to get the comma-and-space at the end
+        terms.push( "" );
+        this.value = terms.join( ", " );
+        return false;
+    };
+
     var methodPara = {
         minLength: para.minLength,
         delay : para.delay,
@@ -238,21 +254,7 @@ util.autocomplete = function(para){
             // 不让多选时，点选的值覆盖掉之前已选的值
             return false;
         },
-        select: function( event, ui ) {
-            if(!para.multiple){
-                //单选
-                return true;
-            }
-            var terms = split( this.value );
-            // remove the current input
-            terms.pop();
-            // add the selected item
-            terms.push( ui.item.value );
-            // add placeholder to get the comma-and-space at the end
-            terms.push( "" );
-            this.value = terms.join( ", " );
-            return false;
-        }
+        select: selectMethod,
     };
 
     var $input = $( "#" + para.id );
@@ -266,9 +268,14 @@ util.autocomplete = function(para){
 
     if(para.category){
         $input.catcomplete(methodPara);
+        if(para.renderitem)
+            $input.catcomplete( "instance" )._renderItem = para.renderitem;
     }else{
         $input.autocomplete(methodPara);
+        if(para.renderitem)
+            $input.autocomplete( "instance" )._renderItem = para.renderitem;
     }
+
 }
     
 //获取时间
