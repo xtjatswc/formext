@@ -43,7 +43,7 @@ $(function($){
             }
         }
 
-        $.post("form_rander/exec.php", { sql:sql, para:para },function(data){
+        $.post(formExt.lbPath + "exec.php", { sql:sql, para:para },function(data){
             if(data.success){
                 console.log(data.msg + data.affectedCount);
             }else{
@@ -127,7 +127,7 @@ formExt.deleteRecords = function(){
 
     formExt.deleteSql = formExt.sqlCfg["deleteSql"].format(str);
 
-    $.post("form_rander/exec.php", { sql:formExt.deleteSql },function(data){
+    $.post(formExt.lbPath + "exec.php", { sql:formExt.deleteSql },function(data){
         if(data.success){
             console.log(data.msg + data.affectedCount);
             selObj.tdRecords.parents("tr").remove();

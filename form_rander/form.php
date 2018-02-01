@@ -196,6 +196,8 @@ echo "</tbody>
 
     private function header(){
         $version = self::$_pageCfg["version"];
+        $root = self::$_pageCfg["rootPath"];
+        $lib = self::$_pageCfg["libPath"];
         ?>
 <html>
 <head>
@@ -203,17 +205,21 @@ echo "</tbody>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php echo  self::$_pageCfg["Title"] ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="form_rander\css\style.css?v=<?php echo $version?>" />
-    <link rel="stylesheet" type="text/css" media="print" href="form_rander\css\style-print.css?v=<?php echo $version?>" />
-    <link href="form_rander\js\jquery-ui-1.12.1\jquery-ui.css" rel="stylesheet">
-    <script src="form_rander\js\jquery-3.3.1.min.js"></script>
-    <script src="form_rander\js\jquery-ui-1.12.1\jquery-ui.min.js"></script>
-    <script src="form_rander\js\My97DatePicker\WdatePicker.js"></script>
-    <script src="form_rander\js\jquery.table2excel.js?v=<?php echo $version?>"></script>
-    <script src="form_rander\js\util.js?v=<?php echo $version?>"></script>
-    <script src="form_rander\js\form.js?v=<?php echo $version?>"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $lib ?>css\style.css?v=<?php echo $version?>" />
+    <link rel="stylesheet" type="text/css" media="print" href="<?php echo $lib ?>css\style-print.css?v=<?php echo $version?>" />
+    <link href="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui.css" rel="stylesheet">
+    <script src="<?php echo $lib ?>js\jquery-3.3.1.min.js"></script>
+    <script src="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui.min.js"></script>
+    <script src="<?php echo $lib ?>js\My97DatePicker\WdatePicker.js"></script>
+    <script src="<?php echo $lib ?>js\jquery.table2excel.js?v=<?php echo $version?>"></script>
+    <script src="<?php echo $lib ?>js\util.js?v=<?php echo $version?>"></script>
+    <script src="<?php echo $lib ?>js\form.js?v=<?php echo $version?>"></script>
     <script type="text/javascript">
     <?php 
+        echo "formExt.rootPath='$root';";
+        echo "\r\n";
+        echo "formExt.libPath='$lib';";
+        echo "\r\n";
         foreach ($this->_sqlCfg as $key => $sql) {
             $sql = str_replace(array("\r\n", "\r", "\n"), " ", $sql);    
             echo 'formExt.sqlCfg["'.$key.'"] = "'.$sql.'";';

@@ -7,7 +7,7 @@ $(function($){
         id : "where_PatientName",
         source : null,
         urlsource : {
-                url : "form_rander/query.php",
+                url : formExt.libPath + "query.php",
                 sql : "select CONCAT(PatientName, '  [ ', PatientNameFirstLetter, ' ]') label, PatientName value from patientbasicinfo where (PatientName like :term or PatientNameFirstLetter like :term2) limit 0, 30",
                 requestPara : '{":term" : "%{0}%", ":term2" : "{0}%"}',    
                 cache : false,
@@ -40,7 +40,7 @@ $(function($){
         id : "where_Department",
         source : null,
         urlsource : {
-                url : "form_rander/query.php",
+                url : formExt.libPath + "query.php",
                 sql : "select CONCAT(DepartmentName, '  [ ', Department_DBKey, ' ]') label, Department_DBKey value, case when Department_DBKey > 170 then '分类1' else '分类2' end category from department where (DepartmentName like :term or Department_DBKey like :term2) limit 0, 30",
                 requestPara : '{":term" : "%{0}%", ":term2" : "%{0}%"}',   
                 cache : true, 
@@ -61,7 +61,7 @@ $(function($){
         id : "where_Gender",        
         source : dataSource,
         urlsource : {
-                url : "form_rander/query.php",
+                url : "",
                 sql : "",
                 requestPara : '',
                 cache : false,
