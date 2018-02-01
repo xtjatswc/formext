@@ -197,7 +197,7 @@ echo "</tbody>
     private function header(){
         $version = self::$_pageCfg["version"];
         $root = self::$_pageCfg["rootPath"];
-        $lib = self::$_pageCfg["libPath"];
+        $lib = self::$_pageCfg["libPath"]; 
         ?>
 <html>
 <head>
@@ -216,9 +216,9 @@ echo "</tbody>
     <script src="<?php echo $lib ?>js\form.js?v=<?php echo $version?>"></script>
     <script type="text/javascript">
     <?php 
-        echo "formExt.rootPath='$root';";
+        echo "formExt.rootPath='".str_replace("\\", "/", $root)."';";
         echo "\r\n";
-        echo "formExt.libPath='$lib';";
+        echo "formExt.libPath='".str_replace("\\", "/", $lib)."';";
         echo "\r\n";
         foreach ($this->_sqlCfg as $key => $sql) {
             $sql = str_replace(array("\r\n", "\r", "\n"), " ", $sql);    

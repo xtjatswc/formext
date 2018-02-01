@@ -1,11 +1,11 @@
 
 
 <?php
-require "../autoload.php";
+require "../../autoload.php";
 
 form_rander\form::$_pageCfg = array(
-    'rootPath' => "..\\\\",
-    'libPath' => "..\\\\form_rander\\\\",
+    'rootPath' => "..\\..\\",
+    'libPath' => "..\\..\\form_rander\\",
     'Title' => "住院患者信息",
     'version' => "6", //系统版本，变动时，js等缓存文件也会刷新
     'isPrintNo' => "0", //是否打印序号列
