@@ -146,6 +146,9 @@ foreach ($rows as $rkey => $rvalue) {
 
         //长度截取
         $value = $this->subLength($value, $cvalue["width"]);
+
+        $value = call_user_func("randerCellCallBack", $rvalue, $ckey, $value);
+
         echo $value;
         echo "</td>
     ";
