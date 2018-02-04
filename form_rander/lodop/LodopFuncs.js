@@ -49,7 +49,10 @@ if (needCLodop()) {
 };
 //====获取LODOP对象的主过程：====
 function getLodop(oOBJECT,oEMBED){
-    var lodopPath = pageExt.libPath + "lodop\\"
+    var lodopPath = "";
+    if("undefined" != typeof pageExt){
+        pageExt.libPath + "lodop\\"
+    }
 
     var strHtmInstall="<br><font color='#FF00FF'>打印控件未安装!点击这里<a href='"+lodopPath+"install_lodop32.exe' target='_self'>执行安装</a>,安装后请刷新页面或重新进入。</font>";
     var strHtmUpdate="<br><font color='#FF00FF'>打印控件需要升级!点击这里<a href='"+lodopPath+"install_lodop32.exe' target='_self'>执行升级</a>,升级后请重新进入。</font>";
