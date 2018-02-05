@@ -85,5 +85,10 @@ function randerScriptCallBack(){
     echo '<script src="js/patientinfo.js?v='.form_rander\form::$_pageCfg["version"].'"></script>';
 }
 
+function randerCellCallBack($row, $key, $value){
+
+    return $value;
+}
+
 ?>
 
