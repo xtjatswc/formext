@@ -62,3 +62,14 @@ input.condition{
 .ui-autocomplete-loading {
 background: white url("../js/jquery-ui-1.12.1/images/ui-anim_basic_16x16.gif") right center no-repeat;
 }  
+
+label.error {
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 25px;
+    color: red;
+    background: url('../images/error.png') no-repeat left center;
+    background-size: 18px 18px;
+}
