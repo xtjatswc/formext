@@ -1,1 +1,6 @@
-table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}
+table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse;font-size: 9pt}
+body
+{
+    font-family: verdana,arial,sans-serif;
+    font-size: 10pt
+}

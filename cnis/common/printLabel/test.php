@@ -38,68 +38,70 @@ function randerBodyCallBack(){
     <input type="button" value="打印" onclick="printLabel.print()" />
 </div>
 
-<div> 
-        <div id="divBaseInfo" >
-        <div style="float:left">姓名：张三</div> &nbsp;
-        <div style="float:left">科室：肿瘤内科</div> &nbsp;
-        <div style="float:left">床号：a12536</div> &nbsp;
-        <div style="float:left">住院号：0001254521</div> &nbsp;
-</div>
+<div style="width:300px">
+    <div> 
+            <div id="divBaseInfo" >
+            <div style="float:left">姓名:张三&nbsp;</div> 
+            <div style="float:left">科室:肿瘤内科&nbsp;</div> 
+            <div style="float:left">床号:a12536&nbsp;</div> 
+            <div style="float:left">住院号:0001254521&nbsp;</div> 
+    </div>
 
-<table  id="tblNutrientadvicedetail" class="gridtable">
-    <thead>
-        <tr>
-        <td>品名2</td>
-        <td>数量</td>
-        <td>规格</td>
-        <td>备注</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <td>倍康素</td>
-        <td>2</td>
-        <td>250ml</td>
-        <td></td>
-        </tr>
-        <tr>
-        <td>倍康素2</td>
-        <td>2</td>
-        <td>250ml</td>
-        <td></td>
-        </tr>
-        <tr>
-        <td>倍康素3</td>
-        <td>2</td>
-        <td>250ml</td>
-        <td></td>
-        </tr>
-        <tr>
-        <td>倍康素4</td>
-        <td>2</td>
-        <td>250ml</td>
-        <td></td>
-        </tr>
-        <tr>
-        <td>倍康素5</td>
-        <td>2</td>
-        <td>250ml</td>
-        <td></td>
-        </tr>
-        <tr>
-        <td>倍康素6</td>
-        <td>2</td>
-        <td>250ml</td>
-        <td></td>
-        </tr>
-        <tr>
-        <td>倍康素</td>
-        <td>2</td>
-        <td>250ml</td>
-        <td></td>
-        </tr>
-    </tbody>
-</table>
+    <table  id="tblNutrientadvicedetail" style="width:90%">
+        <thead>
+            <tr>
+            <td>品名</td>
+            <td><nobr>数量</nobr></td>
+            <td>规格</td>
+            <td>备注</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>倍康素倍康素倍康素</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td>加500ml水</td>
+            </tr>
+            <tr>
+            <td>倍康素2</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>倍康素3</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>倍康素4</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>倍康素5</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>倍康素6</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>倍康素</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <?php
 }    
