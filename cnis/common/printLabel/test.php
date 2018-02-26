@@ -94,6 +94,24 @@ function randerBodyCallBack(){
             <td></td>
             </tr>
             <tr>
+            <td>倍康素7</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>倍康素8</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>倍康素9</td>
+            <td>2</td>
+            <td>250ml</td>
+            <td></td>
+            </tr>
+            <tr>
             <td>倍康素</td>
             <td>2</td>
             <td>250ml</td>
