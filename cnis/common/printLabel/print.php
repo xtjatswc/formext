@@ -33,17 +33,22 @@ function randerBodyCallBack(){
     global $db;
 
     $detailDBKeys = $_GET["detailDBKeys"];
-    echo $detailDBKeys;
 
-    $sql = "select  d.HospitalizationNumber, e.PatientName, f.DepartmentName, g.Bed from nutrientadvicedetail a INNER JOIN nutrientadvice b on a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey
+    $sql = "select  d.HospitalizationNumber, e.PatientName, f.DepartmentName, g.Bed, h.SysCodeName PreparationMode,a.TakeOrder from nutrientadvicedetail a INNER JOIN nutrientadvice b on a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey
     inner JOIN nutrientadvicesummary c on b.NutrientAdviceSummary_DBKey = c.NutrientAdviceSummary_DBKey
     inner join patienthospitalizebasicinfo d on d.PatientHospitalize_DBKey = c.PatientHospitalize_DBKey
     inner join patientbasicinfo e on e.PATIENT_DBKEY = d.PATIENT_DBKEY
     left join department f on f.Department_DBKey = d.Department_DBKey
     left join bednumber g on g.BedNumber_DBKey = d.BedNumber_DBKey
+    left join syscode h on h.SysCode = a.PreparationMode and h.SystemCodeTypeName = 'PreparationMode'
     where a.NutrientAdviceDetail_DBKEY = $detailDBKeys";
     $result = $db->fetch_row($sql);
-    $baseInfo = "姓名:".$result["PatientName"]."&nbsp;科室:".$result["DepartmentName"]."&nbsp;床号:".$result["Bed"]."&nbsp;住院号:".$result["HospitalizationNumber"]."&nbsp;"
+    $baseInfo = "姓名:".$result["PatientName"]."&nbsp;科室:".$result["DepartmentName"]."&nbsp;床号:".$result["Bed"]."&nbsp;住院号:".$result["HospitalizationNumber"]."&nbsp;制剂方式:".$result["PreparationMode"]."&nbsp;服用时间:".$result["TakeOrder"]."&nbsp;";
+
+    //制剂数据
+    $sql = "select b.RecipeAndProductName,a.AdviceAmount,a.NutrientAdviceDetailRemark from nutrientadvicedetail a 
+    INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
+    where a.NutrientAdviceDetail_DBKEY = $detailDBKeys";
 ?>
 <div>
     <input type="button" value="打印设计" onclick="printLabel.printDesign()" />
@@ -62,7 +67,6 @@ function randerBodyCallBack(){
             <tr>
             <td>品名</td>
             <td><nobr>数量</nobr></td>
-            <td>规格</td>
             <td>备注</td>
             </tr>
         </thead>
@@ -70,63 +74,8 @@ function randerBodyCallBack(){
             <tr>
             <td>倍康素倍康素倍康素</td>
             <td>2</td>
-            <td>250ml</td>
             <td>加500ml水</td>
-            </tr>
-            <tr>
-            <td>倍康素2</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>倍康素3</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>倍康素4</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>倍康素5</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>倍康素6</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>倍康素7</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>倍康素8</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>倍康素9</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>倍康素</td>
-            <td>2</td>
-            <td>250ml</td>
-            <td></td>
-            </tr>
+            </tr>          
         </tbody>
     </table>
 </div>

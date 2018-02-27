@@ -40,6 +40,11 @@ printLabel.printInit = function(){
     LODOP.SET_PRINT_STYLEA(0,"ItemType",2);
     LODOP.SET_PRINT_STYLEA(0,"LinkedItem",-1);
 
+    LODOP.ADD_PRINT_TEXT("44.24mm","23.97mm","35.45mm","5.29mm","制作日期：" + util.getDate());
+    LODOP.SET_PRINT_STYLEA(0,"Vorient",1);
+    LODOP.SET_PRINT_STYLEA(0,"ItemType",1);
+    LODOP.SET_PRINT_STYLEA(0,"LinkedItem",-2);
+
     LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED",1);//横向时的正向显示
 
 }

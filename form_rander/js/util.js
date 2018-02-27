@@ -289,3 +289,12 @@ util.getTime = function(){
     var second = date.getSeconds();
     return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
 }
+
+//获取日期
+util.getDate = function(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+    return year + '-' + month + '-' + day;
+}
