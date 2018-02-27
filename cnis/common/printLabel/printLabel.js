@@ -27,33 +27,48 @@ WHERE \
 });
 
 printLabel.printDesign = function () {
-    printLabel.printInit();
-    LODOP.PRINT_DESIGN();
+    printLabel.printLoad(1);
 }
 
 printLabel.printSetup = function () {
-    printLabel.printInit();
-    LODOP.PRINT_SETUP();
+    printLabel.printLoad(2);
 }
 
 printLabel.preview = function () {
-    printLabel.printInit();
-    LODOP.PREVIEW();
+    printLabel.printLoad(3);
 }
 
 printLabel.print = function () {
-    printLabel.printInit();
-    LODOP.PRINT();
+    printLabel.printLoad(4);
 }
 
-printLabel.printInit = function(){
+printLabel.printLoad = function (flag) {
     LODOP = getLodop();
+    var $labels = $("#divLabels").children(".label");
+    $labels.each(function(e){  
+        printLabel.printInit(this.innerHTML);
+        if(flag == 1){
+            LODOP.PRINT_DESIGN();
+            return false;
+        }else if(flag == 2){
+            LODOP.PRINT_SETUP();
+            return false;
+        }else if(flag == 3){
+            LODOP.PREVIEW();
+            return false;
+        }else if(flag == 4){
+            LODOP.PRINT(); 
+        }           
+    });
+}
+
+printLabel.printInit = function(labelInfo){
 
     LODOP.PRINT_INITA(0,0,"90.01mm","50.01mm","标签打印");
     LODOP.SET_PRINT_PAGESIZE(2,900,500,"");
     var strStyle=  document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
-    LODOP.ADD_PRINT_HTM("1.01mm","1.01mm","82.01mm","42.49mm",strStyle + document.getElementById("divBaseInfo").outerHTML);
+    LODOP.ADD_PRINT_HTM("1.01mm","1.01mm","82.01mm","42.49mm",strStyle + labelInfo);
     LODOP.SET_PRINT_STYLEA(0,"Vorient",3);
 
     //LODOP.ADD_PRINT_TABLE("1.59mm","1.01mm","85.01mm","28mm",strStyle + document.getElementById("tblNutrientadvicedetail").outerHTML);

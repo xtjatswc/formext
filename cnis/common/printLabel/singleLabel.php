@@ -21,7 +21,7 @@ where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
 $tblDetail = $db->fetch_all($sql);
 ?>
 
-<div id="divBaseInfo" style="width:290px;">
+<div id="divBaseInfo" style="width:280px;">
 <div> 
      <?php echo $baseInfo ?> 
 </div>
