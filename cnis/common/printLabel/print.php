@@ -41,14 +41,14 @@ function randerBodyCallBack(){
     left join department f on f.Department_DBKey = d.Department_DBKey
     left join bednumber g on g.BedNumber_DBKey = d.BedNumber_DBKey
     left join syscode h on h.SysCode = a.PreparationMode and h.SystemCodeTypeName = 'PreparationMode'
-    where a.NutrientAdviceDetail_DBKEY = $detailDBKeys";
+    where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) limit 0,1";
     $result = $db->fetch_row($sql);
     $baseInfo = "姓名:".$result["PatientName"]."&nbsp;科室:".$result["DepartmentName"]."&nbsp;床号:".$result["Bed"]."&nbsp;住院号:".$result["HospitalizationNumber"]."&nbsp;制剂方式:".$result["PreparationMode"]."&nbsp;服用时间:".$result["TakeOrder"]."&nbsp;";
 
     //制剂数据
     $sql = "select b.RecipeAndProductName,a.AdviceAmount,a.NutrientAdviceDetailRemark from nutrientadvicedetail a 
     INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
-    where a.NutrientAdviceDetail_DBKEY = $detailDBKeys";
+    where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
     $tblDetail = $db->fetch_all($sql);
 ?>
 <div>
