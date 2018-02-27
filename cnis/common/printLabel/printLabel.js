@@ -1,5 +1,9 @@
 var printLabel = {};
 
+$(function($){
+    $("#divLabels").load("singleLabel.php?detailDBKeys=18706,18708");
+});
+
 printLabel.printDesign = function () {
     printLabel.printInit();
     LODOP.PRINT_DESIGN();
