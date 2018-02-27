@@ -30,6 +30,20 @@ function randerJavascriptCallBack(){
 
 //body
 function randerBodyCallBack(){
+    global $db;
+
+    $detailDBKeys = $_GET["detailDBKeys"];
+    echo $detailDBKeys;
+
+    $sql = "select  d.HospitalizationNumber, e.PatientName, f.DepartmentName, g.Bed from nutrientadvicedetail a INNER JOIN nutrientadvice b on a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey
+    inner JOIN nutrientadvicesummary c on b.NutrientAdviceSummary_DBKey = c.NutrientAdviceSummary_DBKey
+    inner join patienthospitalizebasicinfo d on d.PatientHospitalize_DBKey = c.PatientHospitalize_DBKey
+    inner join patientbasicinfo e on e.PATIENT_DBKEY = d.PATIENT_DBKEY
+    left join department f on f.Department_DBKey = d.Department_DBKey
+    left join bednumber g on g.BedNumber_DBKey = d.BedNumber_DBKey
+    where a.NutrientAdviceDetail_DBKEY = $detailDBKeys";
+    $result = $db->fetch_row($sql);
+    $baseInfo = "姓名:".$result["PatientName"]."&nbsp;科室:".$result["DepartmentName"]."&nbsp;床号:".$result["Bed"]."&nbsp;住院号:".$result["HospitalizationNumber"]."&nbsp;"
 ?>
 <div>
     <input type="button" value="打印设计" onclick="printLabel.printDesign()" />
@@ -39,12 +53,8 @@ function randerBodyCallBack(){
 </div>
 
 <div style="width:300px">
-    <div> 
-            <div id="divBaseInfo" >
-            <div style="float:left">姓名:张三&nbsp;</div> 
-            <div style="float:left">科室:肿瘤内科&nbsp;</div> 
-            <div style="float:left">床号:a12536&nbsp;</div> 
-            <div style="float:left">住院号:0001254521&nbsp;</div> 
+    <div id="divBaseInfo"> 
+         <?php echo $baseInfo ?> 
     </div>
 
     <table  id="tblNutrientadvicedetail" style="width:90%">
