@@ -1,7 +1,29 @@
 var printLabel = {};
 
 $(function($){
-    $("#divLabels").load("singleLabel.php?detailDBKeys=18706,18708");
+
+    var sql = "SELECT \
+	c.NutrientAdviceSummary_DBKey, \
+	b.AdviceDate, \
+	a.TakeOrder, \
+	a.PreparationMode, \
+	a.NutrientAdviceDetail_DBKEY \
+FROM \
+	nutrientadvicedetail a \
+INNER JOIN nutrientadvice b ON a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey \
+INNER JOIN nutrientadvicesummary c ON b.NutrientAdviceSummary_DBKey = c.NutrientAdviceSummary_DBKey \
+WHERE \
+    a.NutrientAdviceDetail_DBKEY IN (18706, 18708);";
+    
+
+    $.getJSON(pageExt.libPath + "query.php", {sql : sql}, function( data, status, xhr ) {
+        for(j = 0; j < data.length; j++) {
+
+            $("#divLabels").append('<div class="label" id="divLabel_' + data[j].NutrientAdviceDetail_DBKEY + '"></div><br/>');
+            $("#divLabel_" + data[j].NutrientAdviceDetail_DBKEY).load("singleLabel.php?v=" + Math.random() + "&detailDBKeys=" + data[j].NutrientAdviceDetail_DBKEY);
+
+        } 
+    });
 });
 
 printLabel.printDesign = function () {
@@ -31,7 +53,7 @@ printLabel.printInit = function(){
     LODOP.SET_PRINT_PAGESIZE(2,900,500,"");
     var strStyle=  document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
-    LODOP.ADD_PRINT_HTM("1.01mm","1.01mm","85.01mm","42.49mm",strStyle + document.getElementById("divBaseInfo").outerHTML);
+    LODOP.ADD_PRINT_HTM("1.01mm","1.01mm","82.01mm","42.49mm",strStyle + document.getElementById("divBaseInfo").outerHTML);
     LODOP.SET_PRINT_STYLEA(0,"Vorient",3);
 
     //LODOP.ADD_PRINT_TABLE("1.59mm","1.01mm","85.01mm","28mm",strStyle + document.getElementById("tblNutrientadvicedetail").outerHTML);

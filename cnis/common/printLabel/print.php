@@ -37,9 +37,11 @@ function randerBodyCallBack(){
     <input type="button" value="打印预览" onclick="printLabel.preview()" />
     <input type="button" value="打印" onclick="printLabel.print()" />
 </div>
+<br/>
 
-<div id="divLabels" style="width:290px">
 
+<div id="divLabels">
+         
 </div>
 
 <?php

@@ -5,3 +5,7 @@ body
     font-size: 10pt;
     word-break:break-all;
 }
+.label
+{
+    width:290px;border:1px solid black;padding:2px
+}
