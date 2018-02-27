@@ -2,5 +2,6 @@ table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse;fon
 body
 {
     font-family: verdana,arial,sans-serif;
-    font-size: 10pt
+    font-size: 10pt;
+    word-break:break-all;
 }

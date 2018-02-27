@@ -52,12 +52,12 @@ function randerBodyCallBack(){
     <input type="button" value="打印" onclick="printLabel.print()" />
 </div>
 
-<div style="width:300px">
-    <div id="divBaseInfo"> 
+<div id="divBaseInfo" style="width:290px">
+    <div> 
          <?php echo $baseInfo ?> 
     </div>
 
-    <table  id="tblNutrientadvicedetail" style="width:90%">
+    <table  id="tblNutrientadvicedetail" style="width:100%">
         <thead>
             <tr>
             <td>品名</td>
