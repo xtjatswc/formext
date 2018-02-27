@@ -2,6 +2,8 @@ var printLabel = {};
 
 $(function($){
 
+    var urlParams = util.urlToObject(window.location.search);
+
     var sql = "SELECT \
 	c.NutrientAdviceSummary_DBKey, \
 	b.AdviceDate, \
@@ -13,7 +15,7 @@ FROM \
 INNER JOIN nutrientadvice b ON a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey \
 INNER JOIN nutrientadvicesummary c ON b.NutrientAdviceSummary_DBKey = c.NutrientAdviceSummary_DBKey \
 WHERE \
-    a.NutrientAdviceDetail_DBKEY IN (18706, 18708);";
+    a.NutrientAdviceDetail_DBKEY IN (" + urlParams.detailDBKeys + ");";
     
 
     $.getJSON(pageExt.libPath + "query.php", {sql : sql}, function( data, status, xhr ) {
