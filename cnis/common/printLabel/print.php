@@ -49,6 +49,7 @@ function randerBodyCallBack(){
     $sql = "select b.RecipeAndProductName,a.AdviceAmount,a.NutrientAdviceDetailRemark from nutrientadvicedetail a 
     INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
     where a.NutrientAdviceDetail_DBKEY = $detailDBKeys";
+    $tblDetail = $db->fetch_all($sql);
 ?>
 <div>
     <input type="button" value="打印设计" onclick="printLabel.printDesign()" />
@@ -71,11 +72,15 @@ function randerBodyCallBack(){
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <td>倍康素倍康素倍康素</td>
-            <td>2</td>
-            <td>加500ml水</td>
-            </tr>          
+            <?php
+            foreach ($tblDetail as $key => $value) {
+                echo "<tr>
+                <td>".$value["RecipeAndProductName"]."</td>
+                <td>".$value["AdviceAmount"]."</td>
+                <td>".$value["NutrientAdviceDetailRemark"]."</td>
+                </tr>";   
+            }       
+            ?>
         </tbody>
     </table>
 </div>
