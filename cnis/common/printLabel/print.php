@@ -38,7 +38,10 @@ function randerBodyCallBack(){
     <input type="button" value="打印" onclick="printLabel.print()" />
 </div>
 <br/>
-
+标签打印机:      
+<select id="PrinterList" size="1"></select>
+<br/>
+<br/>
 
 <div id="divLabels">
          

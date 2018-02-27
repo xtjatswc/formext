@@ -1,6 +1,10 @@
 var printLabel = {};
 
 $(function($){
+    
+    var timer1=window.setTimeout(function(){
+        CreatePrinterList();
+    },1000); 
 
     var urlParams = util.urlToObject(window.location.search);
 
@@ -67,6 +71,9 @@ printLabel.printLoad = function (flag) {
 printLabel.printInit = function(labelInfo){
 
     LODOP.PRINT_INITA(0,0,"90.01mm","50.01mm","标签打印");
+    //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());
+    //if (LODOP.SET_PRINTER_INDEXA(strPrinterName)) 
+    //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(2,900,500,"");
     var strStyle=  document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
@@ -91,4 +98,17 @@ printLabel.printInit = function(labelInfo){
     LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED",1);//横向时的正向显示
 
 }
+
+function CreatePrinterList(){
+    if (document.getElementById('PrinterList').innerHTML!="") return;
+    LODOP=getLodop(); 
+    var iPrinterCount=LODOP.GET_PRINTER_COUNT();
+    for(var i=0;i<iPrinterCount;i++){
+
+           var option=document.createElement('option');
+           option.innerHTML=LODOP.GET_PRINTER_NAME(i);
+           option.value=i;
+        document.getElementById('PrinterList').appendChild(option);
+    };	
+};
 
