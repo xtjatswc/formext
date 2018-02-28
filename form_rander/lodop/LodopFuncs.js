@@ -51,7 +51,7 @@ if (needCLodop()) {
 function getLodop(oOBJECT,oEMBED){
     var lodopPath = "";
     if("undefined" != typeof pageExt){
-        pageExt.libPath + "lodop\\"
+        lodopPath = pageExt.libPath + "lodop\\"
     }
 
     var strHtmInstall="<br><font color='#FF00FF'>打印控件未安装!点击这里<a href='"+lodopPath+"install_lodop32.exe' target='_self'>执行安装</a>,安装后请刷新页面或重新进入。</font>";
