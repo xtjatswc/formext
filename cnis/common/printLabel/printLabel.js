@@ -115,9 +115,14 @@ printLabel.createPrintPage = function(labelInfo){
 
     LODOP.PRINT_INITA(0,0,"90.01mm","50.01mm","标签打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
-    if (!LODOP.SET_PRINTER_INDEXA($("#printerName").html())){
-        $("#lsMsg").html("尚未设置默认的标签打印机，将输出到默认打印机！");
+    if($("#printerName").html() == "#未设置#"){
+        $("#lsMsg").html("尚未设置默认的标签打印机！");
+    }else{
+        if (!LODOP.SET_PRINTER_INDEXA($("#printerName").html())){
+            $("#lsMsg").html("未检测到该打印机，将输出到默认打印机！");
+        }
     }
+
 
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(2,900,500,"");
