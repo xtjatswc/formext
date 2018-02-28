@@ -5,15 +5,17 @@ $(function($){
     var timer1=window.setTimeout(function(){
         document.getElementById('PcSN').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('PcSN'));
 
-        var timer1=window.setTimeout(function(){
+        var timer2=window.setTimeout(function(){
 
             //回显
             var sql = "select * from printersetup where PcID = '{PcID}' and printerType=1";
             var sql2 = sql.format({PcID:$("#PcSN").val()});
             $.getJSON(pageExt.libPath + "query.php", {sql : sql2}, function( data, status, xhr ) {
-                for(j = 0; j < data.length; j++) {    
-                    $("#printerName").html(data[j].PrinterName);
-                } 
+                if(data.length == 0){
+                    $("#printerName").html("#未设置#");
+                }else{
+                    $("#printerName").html(data[0].PrinterName);
+                }
             });   
 
         },500); 
@@ -36,15 +38,41 @@ WHERE \
     a.NutrientAdviceDetail_DBKEY IN (" + urlParams.detailDBKeys + ");";
     
 
+    var labelCount = -1;
     $.getJSON(pageExt.libPath + "query.php", {sql : sql}, function( data, status, xhr ) {
+        labelCount = data.length;
         for(j = 0; j < data.length; j++) {
 
-            $("#divLabels").append('<div class="label" id="divLabel_' + data[j].NutrientAdviceDetail_DBKEY + '"></div><br/>');
+            $("#divLabels").append('<div class="label" id="divLabel_' + data[j].NutrientAdviceDetail_DBKEY + '"><div class="unload"></div></div><br/>');
             $("#divLabel_" + data[j].NutrientAdviceDetail_DBKEY).load("singleLabel.php?v=" + Math.random() + "&detailDBKeys=" + data[j].NutrientAdviceDetail_DBKEY);
 
         } 
     });
+
+    //检查dom是否加载完毕
+    var timer3=window.setInterval(function(){
+        $labels = $(".labelContent");
+        if($labels.length == labelCount && $("#printerName").html() != ""){
+            //alert("加载完毕");
+            window.clearInterval(timer3);
+
+            if($("#printerName").html() == "#未设置#"){
+                if(confirm("未设置打印机，是否输出到默认打印机？")){
+                    $("#btnPrint").click();
+                }
+            }else{
+                $("#btnPrint").click();
+            }
+        
+        }              
+    },1000); 
+    
+
 });
+
+printLabel.printSetting = function () {
+    window.open("../printerSet.php");
+}
 
 printLabel.printDesign = function () {
     printLabel.printLoad(1);
@@ -86,9 +114,9 @@ printLabel.printLoad = function (flag) {
 printLabel.createPrintPage = function(labelInfo){
 
     LODOP.PRINT_INITA(0,0,"90.01mm","50.01mm","标签打印");
-    //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());
-    if (!LODOP.SET_PRINTER_INDEXA("pdfFactory Pro")){
-        alert("设置的标签打印机无效！");
+    //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
+    if (!LODOP.SET_PRINTER_INDEXA($("#printerName").html())){
+        $("#lsMsg").html("尚未设置默认的标签打印机，将输出到默认打印机！");
     }
 
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());

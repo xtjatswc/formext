@@ -32,15 +32,18 @@ function randerJavascriptCallBack(){
 function randerBodyCallBack(){    
 ?>
 <div>
-    <input type="button" value="打印设计" onclick="printLabel.printDesign()" />
+    <input type="button" value="设置" onclick="printLabel.printSetting()" />
     <input type="button" value="打印维护" onclick="printLabel.printSetup()" />
-    <input type="button" value="打印预览" onclick="printLabel.preview()" />
-    <input type="button" value="打印" onclick="printLabel.print()" />
+    <div style="display:none">
+        <input type="button" value="打印设计" onclick="printLabel.printDesign()" />
+        <input type="button" value="打印预览" onclick="printLabel.preview()" />
+        <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />
+    </div>
 </div>
 <br/>
 <div style="display:none">电脑编号：<input type="text" id="PcSN" size="47" disabled=disabled> </div>
 标签打印机:      
-<font id="printerName" color="blue"></font>
+<font id="printerName" color="blue"></font>&nbsp;&nbsp;<font id="lsMsg" color="red"></font>
 <br/>
 <br/>
 

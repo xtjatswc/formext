@@ -29,6 +29,7 @@ printerSet.CreatePrinterList = function(){
     //if (document.getElementById('PrinterList').innerHTML!="") return;
     LODOP=getLodop(); 
     var iPrinterCount=LODOP.GET_PRINTER_COUNT();
+    $("select").append("<option value='-1'>#未设置#</option>");
     for(var i=0;i<iPrinterCount;i++){
 
            var option=document.createElement('option');
