@@ -30,6 +30,7 @@ function randerBodyCallBack(){
 
 <input type="button" value="保存设置" onclick="printerSet.saveSetting()"/>
 <div>电脑编号：<input type="text" id="T5" size="47" disabled=disabled> </div>
+<font color="red">注：下面的打印机设置仅对当前电脑有效！</font>
 <table class="gridtable ">
 <thead>
     <tr>

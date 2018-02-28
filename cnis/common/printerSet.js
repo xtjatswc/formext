@@ -5,7 +5,21 @@ $(function($){
     var timer1=window.setTimeout(function(){
         document.getElementById('T5').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('T5'))
         printerSet.CreatePrinterList();
-    },1000); 
+
+        var timer1=window.setTimeout(function(){
+
+            //回显
+            var sql = "select * from printersetup where PcID = '{PcID}'";
+            var sql2 = sql.format({PcID:$("#T5").val()});
+            $.getJSON(pageExt.libPath + "query.php", {sql : sql2}, function( data, status, xhr ) {
+                for(j = 0; j < data.length; j++) {        
+                    $("#PrinterList" + data[j].PrinterType).find("option:contains('"+ data[j].PrinterName +"')").attr("selected",true);        
+                } 
+            });   
+
+        },500); 
+
+    },500); 
 
 });
     
@@ -27,13 +41,16 @@ printerSet.CreatePrinterList = function(){
 
 printerSet.saveSetting = function(){
 
-    $.ajaxSetup({ 
-        async : false 
-    });
+    printerSet.singleSave(1);
+    printerSet.singleSave(2);
 
+    alert("保存成功！");
+}
+
+printerSet.singleSave = function(type){
     var sql = "delete from printersetup where PcID = '{PcID}' and PrinterType = {PrinterType};insert into printersetup(PcID, PrinterType, PrinterName) values({PcID},{PrinterType},'{PrinterName}');";
 
-    var sql2 = sql.format({PcID:$("#T5").val(), PrinterType:1, PrinterName: $("#PrinterList1").find("option:selected").text()});
+    var sql2 = sql.format({PcID:$("#T5").val(), PrinterType:type, PrinterName: $("#PrinterList" + type).find("option:selected").text()});
 
     $.post(pageExt.libPath + "exec2.php", { sql:sql2 },function(data){
         var d = data;
