@@ -45,6 +45,7 @@ function randerBodyCallBack(){
 标签打印机:      
 <font id="printerName" color="blue"></font>&nbsp;&nbsp;<font id="lsMsg" color="red"></font>
 <br/>
+<font id="labelTip" color="red"></font>
 <br/>
 
 <div id="divLabels">

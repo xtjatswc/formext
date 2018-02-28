@@ -43,6 +43,7 @@ WHERE \
         labelCount = data.length;
         for(j = 0; j < data.length; j++) {
 
+            $("#labelTip").html("正在加载标签内容，请稍候……");
             $("#divLabels").append('<div class="label" id="divLabel_' + data[j].NutrientAdviceDetail_DBKEY + '"><div class="unload"></div></div><br/>');
             $("#divLabel_" + data[j].NutrientAdviceDetail_DBKEY).load("singleLabel.php?v=" + Math.random() + "&detailDBKeys=" + data[j].NutrientAdviceDetail_DBKEY);
 
@@ -56,6 +57,8 @@ WHERE \
             //alert("加载完毕");
             window.clearInterval(timer3);
 
+            $("#labelTip").html("");
+
             if($("#printerName").html() == "#未设置#"){
                 if(confirm("未设置打印机，是否输出到默认打印机？")){
                     $("#btnPrint").click();
@@ -66,7 +69,7 @@ WHERE \
             }
         
         }              
-    },1000); 
+    },2000); 
     
 
 });
@@ -89,7 +92,7 @@ printLabel.preview = function () {
 
 printLabel.print = function () {
     printLabel.printLoad(4);
-    alert("正在打印中，请等待打印完毕后，再关闭该页面！");
+    alert("请等待打印完毕后，再关闭该页面！");
 }
 
 printLabel.printLoad = function (flag) {
