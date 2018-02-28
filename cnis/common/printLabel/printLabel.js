@@ -50,9 +50,10 @@ printLabel.print = function () {
 
 printLabel.printLoad = function (flag) {
     LODOP = getLodop();
+
     var $labels = $("#divLabels").children(".label");
     $labels.each(function(e){  
-        printLabel.printInit(this.innerHTML);
+        printLabel.createPrintPage(this.innerHTML);
         if(flag == 1){
             LODOP.PRINT_DESIGN();
             return false;
@@ -68,11 +69,14 @@ printLabel.printLoad = function (flag) {
     });
 }
 
-printLabel.printInit = function(labelInfo){
+printLabel.createPrintPage = function(labelInfo){
 
     LODOP.PRINT_INITA(0,0,"90.01mm","50.01mm","标签打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());
-    //if (LODOP.SET_PRINTER_INDEXA(strPrinterName)) 
+    if (!LODOP.SET_PRINTER_INDEXA("pdfFactory Pro")){
+        alert("设置的标签打印机无效！");
+    }
+
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(2,900,500,"");
     var strStyle=  document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"

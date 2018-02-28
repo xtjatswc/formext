@@ -6,7 +6,7 @@ form_rander\page::$_pageCfg = array(
     'rootPath' => "..\\..\\..\\",
     'libPath' => "..\\..\\..\\form_rander\\",
     'Title' => "标签打印",
-    'version' => "1", //系统版本，变动时，js等缓存文件也会刷新
+    'version' => $globalCfg["version"], //系统版本，变动时，js等缓存文件也会刷新
 );
 
 $page = new form_rander\page($db);

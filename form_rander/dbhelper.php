@@ -225,6 +225,10 @@ class dbhelper
 
     }
 
+    public function exec($query){
+        return $this->sql->exec($query);
+    }
+
     public function insert($table, $data)
     {
         if( !isset($data[0]) && !is_array(array_values($data)[0]) )
