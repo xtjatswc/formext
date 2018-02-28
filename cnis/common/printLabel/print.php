@@ -38,8 +38,9 @@ function randerBodyCallBack(){
     <input type="button" value="打印" onclick="printLabel.print()" />
 </div>
 <br/>
+<div style="display:none">电脑编号：<input type="text" id="PcSN" size="47" disabled=disabled> </div>
 标签打印机:      
-<select id="PrinterList" size="1"></select>
+<font id="printerName" color="blue"></font>
 <br/>
 <br/>
 

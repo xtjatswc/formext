@@ -3,8 +3,22 @@ var printLabel = {};
 $(function($){
     
     var timer1=window.setTimeout(function(){
-        CreatePrinterList();
-    },1000); 
+        document.getElementById('PcSN').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('PcSN'));
+
+        var timer1=window.setTimeout(function(){
+
+            //回显
+            var sql = "select * from printersetup where PcID = '{PcID}' and printerType=1";
+            var sql2 = sql.format({PcID:$("#PcSN").val()});
+            $.getJSON(pageExt.libPath + "query.php", {sql : sql2}, function( data, status, xhr ) {
+                for(j = 0; j < data.length; j++) {    
+                    $("#printerName").html(data[j].PrinterName);
+                } 
+            });   
+
+        },500); 
+
+    },500); 
 
     var urlParams = util.urlToObject(window.location.search);
 
@@ -102,17 +116,4 @@ printLabel.createPrintPage = function(labelInfo){
     LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED",1);//横向时的正向显示
 
 }
-
-function CreatePrinterList(){
-    if (document.getElementById('PrinterList').innerHTML!="") return;
-    LODOP=getLodop(); 
-    var iPrinterCount=LODOP.GET_PRINTER_COUNT();
-    for(var i=0;i<iPrinterCount;i++){
-
-           var option=document.createElement('option');
-           option.innerHTML=LODOP.GET_PRINTER_NAME(i);
-           option.value=i;
-        document.getElementById('PrinterList').appendChild(option);
-    };	
-};
 

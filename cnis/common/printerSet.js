@@ -3,7 +3,7 @@ var printerSet = {};
 $(function($){
 
     var timer1=window.setTimeout(function(){
-        document.getElementById('T5').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('T5'))
+        document.getElementById('T5').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('T5'));
         printerSet.CreatePrinterList();
 
         var timer1=window.setTimeout(function(){
