@@ -62,6 +62,7 @@ WHERE \
                 }
             }else{
                 $("#btnPrint").click();
+
             }
         
         }              
@@ -88,6 +89,7 @@ printLabel.preview = function () {
 
 printLabel.print = function () {
     printLabel.printLoad(4);
+    alert("正在打印中，请等待打印完毕后，再关闭该页面！");
 }
 
 printLabel.printLoad = function (flag) {
