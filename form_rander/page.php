@@ -31,6 +31,7 @@ class page
 <script src="<?php echo $lib ?>js\jquery.validate.js"></script>
 <script src="<?php echo $lib ?>js\jquery.validate.unobtrusive.js"></script>
 <script src="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui.min.js"></script>
+<script src="<?php echo $lib ?>js\jquery.cookie.js"></script>
 <script src="<?php echo $lib ?>lodop\LodopFuncs.js"></script>
 <script src="<?php echo $lib ?>js\My97DatePicker\WdatePicker.js"></script>
 <script src="<?php echo $lib ?>js\jquery.table2excel.js?v=<?php echo $version?>"></script>
