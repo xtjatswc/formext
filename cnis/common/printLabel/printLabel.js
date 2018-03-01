@@ -1,5 +1,8 @@
 var printLabel = {};
 
+//页面是否加载完毕
+printLabel.isDomReady = false;
+
 $(function($){
     
     var timer1=window.setTimeout(function(){
@@ -55,6 +58,7 @@ WHERE \
         $labels = $(".labelContent");
         if($labels.length == labelCount && $("#printerName").html() != ""){
             //alert("加载完毕");
+            printLabel.isDomReady = true;
             window.clearInterval(timer3);
 
             $("#labelTip").html("");
@@ -91,6 +95,11 @@ printLabel.preview = function () {
 }
 
 printLabel.print = function () {
+    if(!printLabel.isDomReady){
+        alert("页面没加载完，请重试！");
+        return;
+    }
+
     printLabel.printLoad(4);
     alert("请等待打印完毕后，再关闭该页面！");
 }
