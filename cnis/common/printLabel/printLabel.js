@@ -6,9 +6,17 @@ printLabel.isDomReady = false;
 $(function($){
     
     var timer1=window.setTimeout(function(){
-        document.getElementById('PcSN').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('PcSN'));
+        var PcSN = $.cookie("PcSN");
+        if(PcSN){
+            document.getElementById('PcSN').value = PcSN;
+        }else{
+            document.getElementById('PcSN').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('PcSN'));
+        }
 
         var timer2=window.setTimeout(function(){
+            if(!$.cookie("PcSN") && $("#PcSN").val() != ""){
+                $.cookie('PcSN', $("#PcSN").val(), { expires: 180, path: '/' });
+            }
 
             //回显
             var sql = "select * from printersetup where PcID = '{PcID}' and printerType=1";

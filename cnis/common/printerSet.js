@@ -3,11 +3,19 @@ var printerSet = {};
 $(function($){
 
     var timer1=window.setTimeout(function(){
-        document.getElementById('T5').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('T5'));
+        var PcSN = $.cookie("PcSN");
+        if(PcSN){
+            document.getElementById('T5').value = PcSN;
+        }else{
+            document.getElementById('T5').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('T5'));
+        }
 
         printerSet.CreatePrinterList();
 
         var timer1=window.setTimeout(function(){
+            if(!$.cookie("PcSN") && $("#T5").val() != ""){
+                $.cookie('PcSN', $("#T5").val(), { expires: 180, path: '/' });
+            }
 
             //回显
             var sql = "select * from printersetup where PcID = '{PcID}'";
