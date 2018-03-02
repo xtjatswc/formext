@@ -58,7 +58,7 @@ printerSet.saveSetting = function(){
 }
 
 printerSet.singleSave = function(type){
-    var sql = "delete from printersetup where PcID = '{PcID}' and PrinterType = {PrinterType};insert into printersetup(PcID, PrinterType, PrinterName) values({PcID},{PrinterType},'{PrinterName}');";
+    var sql = "insert into printersetup(PcID, PrinterType, PrinterName) values('{PcID}',{PrinterType},'{PrinterName}') ON DUPLICATE KEY UPDATE PrinterName=VALUES(PrinterName);";
 
     var sql2 = sql.format({PcID:$("#T5").val(), PrinterType:type, PrinterName: $("#PrinterList" + type).find("option:selected").text()});
 
