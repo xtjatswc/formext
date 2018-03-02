@@ -147,10 +147,12 @@ printLabel.createPrintPage = function(labelInfo){
 
 
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
-    LODOP.SET_PRINT_PAGESIZE(2,900,500,"");
+    LODOP.SET_PRINT_PAGESIZE(2,"90mm","50mm","");
+    //是否控制位置基点，true时，对套打有利
+    LODOP.SET_PRINT_MODE("POS_BASEON_PAPER",false);
     var strStyle=  document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
-    LODOP.ADD_PRINT_HTM("1.01mm","1.01mm","82.01mm","42.49mm",strStyle + labelInfo);
+    LODOP.ADD_PRINT_HTM("1.01mm","1.01mm","85mm","42.49mm",strStyle + labelInfo);
     LODOP.SET_PRINT_STYLEA(0,"Vorient",3);
 
     //LODOP.ADD_PRINT_TABLE("1.59mm","1.01mm","85.01mm","28mm",strStyle + document.getElementById("tblNutrientadvicedetail").outerHTML);

@@ -50,7 +50,7 @@ function randerBodyCallBack(){
 <font id="labelTip" color="red"></font>
 <br/>
 
-<div id="divLabels">
+<div id="divLabels" style="width:290px">
          
 </div>
 
