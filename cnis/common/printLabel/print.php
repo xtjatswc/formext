@@ -16,7 +16,8 @@ $page->randerPage();
 function randerStylesheetCallBack(){
     $version = form_rander\page::$_pageCfg["version"];
     ?>
-	<link id="cssPrint" rel="stylesheet" type="text/css" media="screen" href="printLabel.css?v=<?php echo $version ?>" />    
+	<!-- <link id="cssPrint" rel="stylesheet" type="text/css" media="screen" href="printLabel.css?v=<?php echo $version ?>" />     -->
+	<link id="cssPrint" rel="stylesheet" type="text/css" href="printLabel.css" />    
     <?php
 }
 
