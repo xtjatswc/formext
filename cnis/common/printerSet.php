@@ -32,7 +32,7 @@ function randerBodyCallBack(){
 <font color="red">备注：
 <ul>
     <li>下面的设置仅对当前电脑有效！</li>
-    <li>如果未设置，则按电脑默认打印机执行打印任务！</li>
+    <li>如果未设置，则按电脑默认配置执行打印任务！</li>
 </ul>    
 </font>
 <input type="button" value="保存设置" onclick="printerSet.saveSetting()"/>
@@ -42,17 +42,37 @@ function randerBodyCallBack(){
     <tr>
     <th>类别</th>
     <th>打印机名称</th>
+    <th>打印方向</th>
+    <th>纸张名称</th>
+    <th>宽度</th>
+    <th>高度</th>
     </tr>
 </thead>
 <tbody>
     <tr>
         <td>标签打印机</td>
-        <td><select id="PrinterList1" size="1"></select>
+        <td><select class="PrinterList" id="PrinterList1" index="1" size="1"></select>
+        </td>
+        <td><select class="Orient" id="Orient1" size="1"></select>
+        </td>
+        <td><select class="PagSizeList" id="PagSizeList1" size="1"></select>
+        </td>
+        <td><input id="Width1" type="text" /></select>
+        </td>
+        <td><input id="Heigth1" type="text" /></select>
         </td>
     </tr>
     <tr>
         <td>肠内医嘱单打印机</td>
-        <td><select id="PrinterList2" size="1"></select></td>
+        <td><select class="PrinterList" id="PrinterList2" index="2" size="1"></select></td>
+        <td><select class="Orient" id="Orient2" size="1"></select>
+        </td>
+        <td><select class="PagSizeList" id="PagSizeList2" size="1"></select>
+        </td>
+        <td><input id="Width2" type="text" /></select>
+        </td>
+        <td><input id="Heigth2" type="text" /></select>
+        </td>
     </tr>
 </tbody>
 </table>
