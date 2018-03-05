@@ -338,3 +338,22 @@ util.CheckLodopIsInstall = function () {
 
     return false;
 }; 
+
+//获取select控件的选中项
+util.getSelectOptionByText = function (selector, optionText){
+    var $option =$(selector + " option").map(function(){   
+        if ($(this).text() == optionText) {  
+            return this;  
+        }  
+    });  
+    return $option;
+}
+
+util.getSelectOptionByValue = function (selector, optionValue){
+    var $option =$(selector + " option").map(function(){   
+        if ($(this).val() == optionValue) {  
+            return this;  
+        }  
+    });  
+    return $option;
+}

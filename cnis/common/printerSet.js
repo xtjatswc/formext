@@ -25,9 +25,15 @@ $(function($){
             var sql2 = sql.format({PcID:$("#T5").val()});
             $.getJSON(pageExt.libPath + "query.php", {sql : sql2}, function( data, status, xhr ) {
                 for(j = 0; j < data.length; j++) {        
-                    $("#PrinterList" + data[j].PrinterType).find("option:contains('"+ data[j].PrinterName +"')").attr("selected",true);  
+                    util.getSelectOptionByText("#PrinterList" + data[j].PrinterType, data[j].PrinterName).attr("selected",true);
+                
                     //设置纸张
                     printerSet.CreatePagSizeList(j + 1);
+                    
+                    util.getSelectOptionByValue("#Orient" + data[j].PrinterType, data[j].Orient).attr("selected",true);
+                    util.getSelectOptionByText("#PagSizeList" + data[j].PrinterType, data[j].PageName).attr("selected",true);
+                    $("#Width" + data[j].PrinterType).val(data[j].PageWidth);
+                    $("#Heigth" + data[j].PrinterType).val(data[j].PageHeigth);
                 } 
             });   
 
