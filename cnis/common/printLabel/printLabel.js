@@ -3,6 +3,15 @@ var printLabel = {};
 //页面是否加载完毕
 printLabel.isDomReady = false;
 
+//打印设置
+printLabel.printerSetting = {
+    PrinterName : "",
+    Orient : 0,
+    PageName : "",
+    PageWidth : "",
+    PageHeigth : "",
+};
+
 $(function($){
     
     var timer1=window.setTimeout(function(){
@@ -26,6 +35,16 @@ $(function($){
                     $("#printerName").html("#未设置#");
                 }else{
                     $("#printerName").html(data[0].PrinterName);
+                    $("#hidOrient").html(data[0].Orient);
+                    $("#hidPageName").html(data[0].PageName);
+                    $("#hidPageWidth").html(data[0].PageWidth);
+                    $("#hidPageHeigth").html(data[0].PageHeigth);
+
+                    printLabel.printerSetting.PrinterName = data[0].PrinterName;
+                    printLabel.printerSetting.Orient = data[0].Orient;
+                    printLabel.printerSetting.PageName = data[0].PageName;
+                    printLabel.printerSetting.PageWidth = data[0].PageWidth;
+                    printLabel.printerSetting.PageHeigth = data[0].PageHeigth;
                 }
             });   
 
@@ -137,10 +156,10 @@ printLabel.createPrintPage = function(labelInfo){
 
     LODOP.PRINT_INITA(0,0,"90.01mm","50.01mm","标签打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
-    if($("#printerName").html() == "#未设置#"){
+    if(printLabel.printerSetting.PrinterName == "#未设置#"){
         $("#lsMsg").html("尚未设置默认的标签打印机！");
     }else{
-        if (!LODOP.SET_PRINTER_INDEXA($("#printerName").html())){
+        if (!LODOP.SET_PRINTER_INDEXA(printLabel.printerSetting.PrinterName)){
             $("#lsMsg").html("未检测到该打印机，将输出到默认打印机！");
         }
     }
