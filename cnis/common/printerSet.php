@@ -33,6 +33,7 @@ function randerBodyCallBack(){
 <ul>
     <li>下面的设置仅对当前电脑有效！</li>
     <li>如果未设置，则按电脑默认配置执行打印任务！</li>
+    <li>如果设置了纸张名称，就不需要设置纸张高度和宽度！</li>
 </ul>    
 </font>
 <input type="button" value="保存设置" onclick="printerSet.saveSetting()"/>
@@ -44,8 +45,8 @@ function randerBodyCallBack(){
     <th>打印机名称</th>
     <th>打印方向</th>
     <th>纸张名称</th>
-    <th>宽度</th>
-    <th>高度</th>
+    <th>宽度（mm）</th>
+    <th>高度（mm）</th>
     </tr>
 </thead>
 <tbody>
