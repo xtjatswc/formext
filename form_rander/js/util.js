@@ -367,5 +367,5 @@ util.bootstrapLodop = function(callback){
             LODOP = getLodop();
             callback();
         }
-    },1000); 
+    },500); 
 }

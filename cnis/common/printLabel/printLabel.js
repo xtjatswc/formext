@@ -14,7 +14,8 @@ printLabel.printerSetting = {
 
 $(function ($) {
 
-    var timer1 = window.setTimeout(function () {
+    util.bootstrapLodop(function(){
+
         var PcSN = $.cookie("PcSN");
         if (PcSN) {
             document.getElementById('PcSN').value = PcSN;
@@ -54,7 +55,7 @@ $(function ($) {
 
         }, 500);
 
-    }, 500);
+    });
 
     var urlParams = util.urlToObject(window.location.search);
 
@@ -104,7 +105,7 @@ WHERE \
             }
 
         }
-    }, 2000);
+    }, 500);
 
 
 });
@@ -136,7 +137,7 @@ printLabel.print = function () {
 }
 
 printLabel.printLoad = function (flag) {
-    LODOP = getLodop();
+    // LODOP = getLodop();
 
     var $labels = $("#divLabels").children(".label");
     $labels.each(function (e) {

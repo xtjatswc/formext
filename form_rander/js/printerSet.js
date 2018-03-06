@@ -2,7 +2,6 @@ var printerSet = {};
 
 $(function($){
 
-    //检查dom是否加载完毕，加载完毕后，如果lodop未安装，引导下载安装
     util.bootstrapLodop(function(){
 
         //---<
