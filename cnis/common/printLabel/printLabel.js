@@ -148,6 +148,7 @@ printLabel.printLoad = function (flag) {
             LODOP.PRINT_SETUP();
             return false;
         } else if (flag == 3) {
+            LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);//语句控制显示标尺
             LODOP.PREVIEW();
             return false;
         } else if (flag == 4) {
@@ -175,6 +176,7 @@ printLabel.createPrintPage = function (labelInfo) {
     var strStyle = document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
     LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "85mm", "91.97mm", strStyle + labelInfo);
+    // LODOP.SET_PRINT_STYLEA(0,"Horient",3); //别水平拉伸，不然死活看不见页脚
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
 
     //LODOP.ADD_PRINT_TABLE("1.59mm","1.01mm","85.01mm","28mm",strStyle + document.getElementById("tblNutrientadvicedetail").outerHTML);
