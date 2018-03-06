@@ -357,3 +357,15 @@ util.getSelectOptionByValue = function (selector, optionValue){
     });  
     return $option;
 }
+
+//引导lodop
+util.bootstrapLodop = function(callback){
+    var timer = window.setInterval(function () {
+        if(document.readyState==="complete"){
+            window.clearInterval(timer);
+            //全局变量
+            LODOP = getLodop();
+            callback();
+        }
+    },1000); 
+}

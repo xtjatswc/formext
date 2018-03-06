@@ -2,7 +2,10 @@ var printerSet = {};
 
 $(function($){
 
-    var timer1=window.setTimeout(function(){
+    //检查dom是否加载完毕，加载完毕后，如果lodop未安装，引导下载安装
+    util.bootstrapLodop(function(){
+
+        //---<
         var PcSN = $.cookie("PcSN");
         if(PcSN){
             document.getElementById('T5').value = PcSN;
@@ -39,15 +42,8 @@ $(function($){
 
         },500); 
 
-    },500); 
-
-    //检查dom是否加载完毕，加载完毕后，如果lodop未安装，引导下载安装
-    var timer3 = window.setInterval(function () {
-        if(document.readyState==="complete"){
-            var lodop = getLodop();
-            window.clearInterval(timer3);
-        }
-    },1000); 
+        //--->
+    });
 
     $(".PrinterList").change(function(){
         printerSet.CreatePagSizeList($(this).attr("index"));
@@ -60,7 +56,7 @@ $(function($){
 
 printerSet.CreatePrinterList = function(){
     //if (document.getElementById('PrinterList').innerHTML!="") return;
-    LODOP=getLodop(); 
+    //LODOP=getLodop(); 
     var iPrinterCount=LODOP.GET_PRINTER_COUNT();
     $(".PrinterList").append("<option value='-1'>#未设置#</option>");
     for(var i=0;i<iPrinterCount;i++){
@@ -74,7 +70,7 @@ printerSet.CreatePrinterList = function(){
 };
 
 printerSet.CreatePagSizeList = function(index){
-    LODOP=getLodop(); 
+    //LODOP=getLodop(); 
     //clearPageListChild();
     $("#PagSizeList" + index).empty();
     var strPageSizeList=LODOP.GET_PAGESIZES_LIST($("#PrinterList" + index).val(),"\n");
