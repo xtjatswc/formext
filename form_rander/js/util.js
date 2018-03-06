@@ -317,7 +317,7 @@ util.urlToObject = function (url) {
 
 //lodop 获取客户端信息
 util.getSystemInfo = function (strINFOType, oResultOB) {
-    var LODOP = getLodop();
+    //var LODOP = getLodop();
     if (LODOP.CVERSION) CLODOP.On_Return = function (TaskID, Value) { if (oResultOB) oResultOB.value = Value; };
     var strResult = LODOP.GET_SYSTEM_INFO(strINFOType);
     if (!LODOP.CVERSION) return strResult; else return "";
