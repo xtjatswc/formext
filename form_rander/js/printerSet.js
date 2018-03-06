@@ -15,7 +15,7 @@ $(function($){
         //打印方向列表
         $(".Orient").append("<option value='0'>0---方向不定，由操作者自行选择或按打印机缺省设置</option><option value='1'>1---纵向打印，固定纸张；</option><option value='2'>2---横向打印，固定纸张；</option><option value='3'>3---纵向打印，宽度固定，高度按打印内容的高度自适应</option>")
 
-        var timer1=window.setTimeout(function(){
+        var timer2=window.setTimeout(function(){
             if(!$.cookie("PcSN") && $("#T5").val() != ""){
                 $.cookie('PcSN', $("#T5").val(), { expires: 180, path: '/' });
             }
@@ -40,6 +40,14 @@ $(function($){
         },500); 
 
     },500); 
+
+    //检查dom是否加载完毕，加载完毕后，如果lodop未安装，引导下载安装
+    var timer3 = window.setInterval(function () {
+        if(document.readyState==="complete"){
+            var lodop = getLodop();
+            window.clearInterval(timer3);
+        }
+    },1000); 
 
     $(".PrinterList").change(function(){
         printerSet.CreatePagSizeList($(this).attr("index"));
