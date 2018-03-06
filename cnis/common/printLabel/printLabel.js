@@ -41,8 +41,14 @@ $(function ($) {
                     if(data[0].PageName != "#未设置#"){
                         printLabel.printerSetting.PageName = data[0].PageName;
                     }
-                    printLabel.printerSetting.PageWidth = data[0].PageWidth;
-                    printLabel.printerSetting.PageHeigth = data[0].PageHeigth;
+
+                    if(data[0].PageWidth != ""){
+                        printLabel.printerSetting.PageWidth = data[0].PageWidth + "mm";
+                    }
+
+                    if(data[0].PageHeigth != ""){
+                        printLabel.printerSetting.PageHeigth = data[0].PageHeigth + "mm";
+                    }
                 }
             });
 
@@ -152,10 +158,7 @@ printLabel.printLoad = function (flag) {
 
 printLabel.createPrintPage = function (labelInfo) {
 
-    var areaWidth = printLabel.printerSetting.PageWidth == "" ? "90.01mm" : printLabel.printerSetting.PageWidth + "mm";
-    var areaHeigth = printLabel.printerSetting.PageHeigth == "" ? "50.01mm" : printLabel.printerSetting.PageHeigth + "mm";
-
-    LODOP.PRINT_INITA(0, 0, areaWidth, areaHeigth, "标签打印");
+    LODOP.PRINT_INITA(0, 0, "180mm", "100mm", "标签打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
     if (printLabel.printerSetting.PrinterName == "#未设置#") {
         $("#lsMsg").html("尚未设置默认的标签打印机！");
@@ -166,14 +169,12 @@ printLabel.createPrintPage = function (labelInfo) {
     }
 
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
-    var pageWidth = printLabel.printerSetting.PageWidth == "" ? "" : printLabel.printerSetting.PageWidth + "mm";
-    var pageHeigth = printLabel.printerSetting.PageHeigth == "" ? "" : printLabel.printerSetting.PageHeigth + "mm";
-    LODOP.SET_PRINT_PAGESIZE(printLabel.printerSetting.Orient, pageWidth, pageHeigth, printLabel.printerSetting.PageName);
+    LODOP.SET_PRINT_PAGESIZE(printLabel.printerSetting.Orient, printLabel.printerSetting.PageWidth, printLabel.printerSetting.PageHeigth, printLabel.printerSetting.PageName);
     //是否控制位置基点，true时，对套打有利
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
-    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "85mm", "42.49mm", strStyle + labelInfo);
+    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "85mm", "91.97mm", strStyle + labelInfo);
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
 
     //LODOP.ADD_PRINT_TABLE("1.59mm","1.01mm","85.01mm","28mm",strStyle + document.getElementById("tblNutrientadvicedetail").outerHTML);
@@ -181,12 +182,12 @@ printLabel.createPrintPage = function (labelInfo) {
     //LODOP.SET_PRINT_STYLEA(0,"Offset2Top","-10mm"); //设置次页偏移把区域向上扩
     //LODOP.SET_PRINT_STYLEA(0,"LinkedItem",-1);
 
-    LODOP.ADD_PRINT_TEXT("44.24mm", "1.32mm", "21.17mm", "5.29mm", "第#页/共&页");
+    LODOP.ADD_PRINT_TEXT("94.24mm", "1.32mm", "21.17mm", "5.29mm", "第#页/共&页");
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.ADD_PRINT_TEXT("44.24mm", "23.97mm", "35.45mm", "5.29mm", "制作日期：" + util.getDate());
+    LODOP.ADD_PRINT_TEXT("94.24mm", "23.97mm", "35.45mm", "5.29mm", "制作日期：" + util.getDate());
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
