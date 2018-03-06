@@ -1,10 +1,10 @@
 
 <?php
-require "../../autoload.php";
+require "../autoload.php";
 
 form_rander\page::$_pageCfg = array(
-    'rootPath' => "..\\..\\",
-    'libPath' => "..\\..\\form_rander\\",
+    'rootPath' => "..\\",
+    'libPath' => "..\\form_rander\\",
     'Title' => "打印机设置",
     'version' => $globalCfg["version"],
 );
@@ -20,7 +20,7 @@ function randerStylesheetCallBack(){
 function randerJavascriptCallBack(){
     $version = form_rander\page::$_pageCfg["version"];
     ?>
-	<script language="javascript" type="text/javascript" src="printerSet.js?v=<?php echo $version ?>"></script>    
+	<script language="javascript" type="text/javascript" src="js/printerSet.js?v=<?php echo $version ?>"></script>    
     <?php
 }
 

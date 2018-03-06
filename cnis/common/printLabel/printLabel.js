@@ -110,7 +110,7 @@ WHERE \
 });
 
 printLabel.printSetting = function () {
-    window.open("../printerSet.php");
+    window.open("../../../../formext/form_rander/printerSet.php");
 }
 
 printLabel.printDesign = function () {
