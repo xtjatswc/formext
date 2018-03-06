@@ -86,9 +86,9 @@ printerSet.CreatePagSizeList = function(index){
 
 printerSet.saveSetting = function(){
 
-    printerSet.singleSave(1);
-    printerSet.singleSave(2);
-
+    for(var i = 1; i <= 2; i++){
+        printerSet.singleSave(i);
+    }
     alert("保存成功！");
 }
 

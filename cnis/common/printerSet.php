@@ -50,31 +50,29 @@ function randerBodyCallBack(){
     </tr>
 </thead>
 <tbody>
+<?php
+$printer = array(
+    1 => "标签打印机",
+    2 => "肠内医嘱单打印机",
+);
+foreach ($printer as $key => $value) {
+?>
     <tr>
-        <td>标签打印机</td>
-        <td><select class="PrinterList" id="PrinterList1" index="1" size="1"></select>
+        <td><?php echo $value?></td>
+        <td><select class="PrinterList" id="PrinterList<?php echo $key?>" index="<?php echo $key?>" size="1"></select>
         </td>
-        <td><select class="Orient" id="Orient1" size="1"></select>
+        <td><select class="Orient" id="Orient<?php echo $key?>" size="1"></select>
         </td>
-        <td><select class="PagSizeList" id="PagSizeList1" size="1"></select>
+        <td><select class="PagSizeList" id="PagSizeList<?php echo $key?>" size="1"></select>
         </td>
-        <td><input id="Width1" type="text" /></select>
+        <td><input id="Width<?php echo $key?>" type="text" /></select>
         </td>
-        <td><input id="Heigth1" type="text" /></select>
+        <td><input id="Heigth<?php echo $key?>" type="text" /></select>
         </td>
     </tr>
-    <tr>
-        <td>肠内医嘱单打印机</td>
-        <td><select class="PrinterList" id="PrinterList2" index="2" size="1"></select></td>
-        <td><select class="Orient" id="Orient2" size="1"></select>
-        </td>
-        <td><select class="PagSizeList" id="PagSizeList2" size="1"></select>
-        </td>
-        <td><input id="Width2" type="text" /></select>
-        </td>
-        <td><input id="Heigth2" type="text" /></select>
-        </td>
-    </tr>
+<?php
+} 
+?>
 </tbody>
 </table>
 
