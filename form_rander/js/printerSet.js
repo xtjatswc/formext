@@ -4,44 +4,30 @@ $(function($){
 
     util.bootstrapLodop(function(){
 
-        //---<
-        var PcSN = $.cookie("PcSN");
-        if(PcSN){
-            document.getElementById('T5').value = PcSN;
-        }else{
-            document.getElementById('T5').value = util.getSystemInfo('DiskDrive.1.SerialNumber',document.getElementById('T5'));
-        }
+        document.getElementById('T5').value = util.PcSN;
 
         //打印机列表
         printerSet.CreatePrinterList();
         //打印方向列表
         $(".Orient").append("<option value='0'>0---方向不定，由操作者自行选择或按打印机缺省设置</option><option value='1'>1---纵向打印，固定纸张；</option><option value='2'>2---横向打印，固定纸张；</option><option value='3'>3---纵向打印，宽度固定，高度按打印内容的高度自适应</option>")
 
-        var timer2=window.setTimeout(function(){
-            if(!$.cookie("PcSN") && $("#T5").val() != ""){
-                $.cookie('PcSN', $("#T5").val(), { expires: 180, path: '/' });
-            }
-
-            //回显
-            var sql = "select * from printersetup where PcID = '{PcID}'";
-            var sql2 = sql.format({PcID:$("#T5").val()});
-            $.getJSON(pageExt.libPath + "query.php", {sql : sql2}, function( data, status, xhr ) {
-                for(j = 0; j < data.length; j++) {        
-                    util.getSelectOptionByText("#PrinterList" + data[j].PrinterType, data[j].PrinterName).attr("selected",true);
+        //回显
+        var sql = "select * from printersetup where PcID = '{PcID}'";
+        var sql2 = sql.format({PcID:util.PcSN});
+        $.getJSON(pageExt.libPath + "query.php", {sql : sql2}, function( data, status, xhr ) {
+            for(j = 0; j < data.length; j++) {        
+                util.getSelectOptionByText("#PrinterList" + data[j].PrinterType, data[j].PrinterName).attr("selected",true);
+            
+                //设置纸张
+                printerSet.CreatePagSizeList(j + 1);
                 
-                    //设置纸张
-                    printerSet.CreatePagSizeList(j + 1);
-                    
-                    util.getSelectOptionByValue("#Orient" + data[j].PrinterType, data[j].Orient).attr("selected",true);
-                    util.getSelectOptionByText("#PagSizeList" + data[j].PrinterType, data[j].PageName).attr("selected",true);
-                    $("#Width" + data[j].PrinterType).val(data[j].PageWidth);
-                    $("#Heigth" + data[j].PrinterType).val(data[j].PageHeigth);
-                } 
-            });   
+                util.getSelectOptionByValue("#Orient" + data[j].PrinterType, data[j].Orient).attr("selected",true);
+                util.getSelectOptionByText("#PagSizeList" + data[j].PrinterType, data[j].PageName).attr("selected",true);
+                $("#Width" + data[j].PrinterType).val(data[j].PageWidth);
+                $("#Heigth" + data[j].PrinterType).val(data[j].PageHeigth);
+            } 
+        });   
 
-        },500); 
-
-        //--->
     });
 
     $(".PrinterList").change(function(){
