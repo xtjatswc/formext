@@ -3,58 +3,18 @@ var printLabel = {};
 //页面是否加载完毕
 printLabel.isDomReady = false;
 
-//打印设置
-printLabel.printerSetting = {
-    PrinterName: "",
-    Orient: 0,
-    PageName: "",
-    PageWidth: "",
-    PageHeigth: "",
-};
+
 
 $(function ($) {
 
     util.bootstrapLodop(function(){
 
-        var PcSN = $.cookie("PcSN");
-        if (PcSN) {
-            document.getElementById('PcSN').value = PcSN;
-        } else {
-            document.getElementById('PcSN').value = util.getSystemInfo('DiskDrive.1.SerialNumber', document.getElementById('PcSN'));
+        if(util.printerSetting.PrinterName){
+            $("#printerName").html(util.printerSetting.PrinterName);
+        }else{
+            $("#printerName").html("#未设置#");
         }
-
-        var timer2 = window.setTimeout(function () {
-            if (!$.cookie("PcSN") && $("#PcSN").val() != "") {
-                $.cookie('PcSN', $("#PcSN").val(), { expires: 180, path: '/' });
-            }
-
-            //回显
-            var sql = "select * from printersetup where PcID = '{PcID}' and printerType=1";
-            var sql2 = sql.format({ PcID: $("#PcSN").val() });
-            $.getJSON(pageExt.libPath + "query.php", { sql: sql2 }, function (data, status, xhr) {
-                if (data.length == 0) {
-                    $("#printerName").html("#未设置#");
-                } else {
-                    $("#printerName").html(data[0].PrinterName);
-
-                    printLabel.printerSetting.PrinterName = data[0].PrinterName;
-                    printLabel.printerSetting.Orient = data[0].Orient;
-                    if(data[0].PageName != "#未设置#"){
-                        printLabel.printerSetting.PageName = data[0].PageName;
-                    }
-
-                    if(data[0].PageWidth != ""){
-                        printLabel.printerSetting.PageWidth = data[0].PageWidth + "mm";
-                    }
-
-                    if(data[0].PageHeigth != ""){
-                        printLabel.printerSetting.PageHeigth = data[0].PageHeigth + "mm";
-                    }
-                }
-            });
-
-        }, 500);
-
+                
     });
 
     var urlParams = util.urlToObject(window.location.search);
@@ -162,16 +122,16 @@ printLabel.createPrintPage = function (labelInfo) {
 
     LODOP.PRINT_INITA(0, 0, "180mm", "100mm", "标签打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
-    if (printLabel.printerSetting.PrinterName == "#未设置#") {
+    if (util.printerSetting.PrinterName == "#未设置#") {
         $("#lsMsg").html("尚未设置默认的标签打印机！");
     } else {
-        if (!LODOP.SET_PRINTER_INDEXA(printLabel.printerSetting.PrinterName)) {
+        if (!LODOP.SET_PRINTER_INDEXA(util.printerSetting.PrinterName)) {
             $("#lsMsg").html("未检测到该打印机，将输出到默认打印机！");
         }
     }
 
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
-    LODOP.SET_PRINT_PAGESIZE(printLabel.printerSetting.Orient, printLabel.printerSetting.PageWidth, printLabel.printerSetting.PageHeigth, printLabel.printerSetting.PageName);
+    LODOP.SET_PRINT_PAGESIZE(util.printerSetting.Orient, util.printerSetting.PageWidth, util.printerSetting.PageHeigth, util.printerSetting.PageName);
     //是否控制位置基点，true时，对套打有利
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"

@@ -43,7 +43,6 @@ function randerBodyCallBack(){
     </div>
 </div>
 <br/>
-<div style="display:none">电脑编号：<input type="text" id="PcSN" size="47" disabled=disabled> </div>
 标签打印机:      
 <font id="printerName" color="blue"></font>&nbsp;&nbsp;<font id="lsMsg" color="red"></font>
 <br/>

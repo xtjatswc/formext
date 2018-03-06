@@ -316,9 +316,9 @@ util.urlToObject = function (url) {
 };
 
 //lodop 获取客户端信息
-util.getSystemInfo = function (strINFOType, oResultOB) {
+util.getSystemInfo = function (strINFOType, callback) {
     //var LODOP = getLodop();
-    if (LODOP.CVERSION) CLODOP.On_Return = function (TaskID, Value) { if (oResultOB) oResultOB.value = Value; };
+    if (LODOP.CVERSION) CLODOP.On_Return = function (TaskID, Value) { if (callback) callback(Value); };
     var strResult = LODOP.GET_SYSTEM_INFO(strINFOType);
     if (!LODOP.CVERSION) return strResult; else return "";
 };
@@ -358,14 +358,67 @@ util.getSelectOptionByValue = function (selector, optionValue){
     return $option;
 }
 
+//打印设置
+util.printerSetting = {
+    PrinterName: "",
+    Orient: 0,
+    PageName: "",
+    PageWidth: "",
+    PageHeigth: "",
+};
+
 //引导lodop
+util.PcSN = "";
 util.bootstrapLodop = function(callback){
     var timer = window.setInterval(function () {
         if(document.readyState==="complete"){
-            window.clearInterval(timer);
             //全局变量
             LODOP = getLodop();
-            callback();
+
+            //获取硬盘序列号
+            if (!util.PcSN) {
+                util.PcSN = $.cookie("PcSN");
+            }
+
+            if (!util.PcSN) {
+                util.PcSN = util.getSystemInfo('DiskDrive.1.SerialNumber', function(retValue){
+                    if(!util.PcSN){
+                        util.PcSN = retValue;
+                        $.cookie('PcSN', util.PcSN, { expires: 180, path: '/' });
+                    }
+                });
+            }
+
+            if(!util.PcSN){
+                return;
+            }
+    
+            window.clearInterval(timer);
+
+            //获取打印设置
+            var sql = "select * from printersetup where PcID = '{PcID}' and printerType=1";
+            var sql2 = sql.format({ PcID: util.PcSN });
+            $.getJSON(pageExt.libPath + "query.php", { sql: sql2 }, function (data, status, xhr) {
+                if (data.length > 0) {
+                      
+                    util.printerSetting.PrinterName = data[0].PrinterName;
+                    util.printerSetting.Orient = data[0].Orient;
+                    if(data[0].PageName != "#未设置#"){
+                        util.printerSetting.PageName = data[0].PageName;
+                    }
+    
+                    if(data[0].PageWidth != ""){
+                        util.printerSetting.PageWidth = data[0].PageWidth + "mm";
+                    }
+    
+                    if(data[0].PageHeigth != ""){
+                        util.printerSetting.PageHeigth = data[0].PageHeigth + "mm";
+                    }
+                }
+
+                callback();
+            });
+                
         }
     },500); 
 }
