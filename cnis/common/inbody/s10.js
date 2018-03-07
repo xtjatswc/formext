@@ -38,7 +38,7 @@ $(function ($) {
         return;
     }
 
-    var sql = "select * from inbodyreport where InBodyReport_DBKey = " + urlParams.reportId + ";";
+    var sql = "select a.*,b.Height from inbodyreport a inner join patienthospitalizebasicinfo b on a.PatientHospitalize_DBKey = b.PatientHospitalize_DBKey where  a.InBodyReport_DBKey = " + urlParams.reportId + ";";
     $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
         s10.patient = data[0];
     });
@@ -118,9 +118,10 @@ s10.createPrintPage = function () {
     
     // LODOP.SET_PRINT_STYLE("FontName", "微软雅黑");
     // LODOP.SET_PRINT_STYLE("FontSize", "10.5");
-    LODOP.ADD_PRINT_TEXT(94,68,50,20,"ID");
+
+    LODOP.ADD_PRINT_TEXT(94,68,100,20,s10.patient.InBodyReport_DBKey); 
     LODOP.ADD_PRINT_TEXT(116,68,50,20,"年龄");
-    LODOP.ADD_PRINT_TEXT(94,237,50,20,"身高");
+    LODOP.ADD_PRINT_TEXT(94,237,50,20,s10.patient.Height);
     LODOP.ADD_PRINT_TEXT(116,237,50,20,"性别");
     LODOP.ADD_PRINT_TEXT(94,388,50,20,"日期");
     LODOP.ADD_PRINT_TEXT(116,389,50,20,"时间");
@@ -128,12 +129,12 @@ s10.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(208,617,50,20,"去脂体重");
     LODOP.ADD_PRINT_TEXT(208,548,50,20,"肌肉量");
     LODOP.ADD_PRINT_TEXT(191,476,50,20,"体水分");
-    LODOP.ADD_PRINT_TEXT(185,304,50,20,"范围1");
+    LODOP.ADD_PRINT_TEXT(185,304,100,20,s10.range(70, 69));
     LODOP.ADD_PRINT_TEXT(205,304,50,20,"范围2");
     LODOP.ADD_PRINT_TEXT(226,303,50,20,"范围3");
     LODOP.ADD_PRINT_TEXT(247,303,50,20,"范围4");
     LODOP.ADD_PRINT_TEXT(267,303,50,20,"范围5");
-    s10.ADD_PRINT_TEXT(184,230,50,20,"2");
+    LODOP.ADD_PRINT_TEXT(184,230,50,20,s10.toFixed2(2));
     LODOP.ADD_PRINT_TEXT(204,230,50,20,"a2");
     LODOP.ADD_PRINT_TEXT(225,229,50,20,"a3");
     LODOP.ADD_PRINT_TEXT(246,229,50,20,"a4");
@@ -161,6 +162,10 @@ s10.createPrintPage = function () {
 
 }
 
-s10.ADD_PRINT_TEXT = function(top, left, width, heigth, index){
-    LODOP.ADD_PRINT_TEXT(top, left, width, heigth, parseFloat(s10.report[index].ItemValue).toFixed(2));
+s10.toFixed2 = function(index){
+    return parseFloat(s10.report[index].ItemValue).toFixed(2);
+}
+
+s10.range = function(min, max){
+    return parseFloat(s10.report[min].ItemValue).toFixed(2)  + "~" + parseFloat(s10.report[max].ItemValue).toFixed(2);
 }
