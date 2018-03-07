@@ -2,7 +2,7 @@ var printerSet = {};
 
 $(function($){
 
-    util.bootstrapLodop(function(){
+    util.bootstrapLodop(0, function(){
 
         document.getElementById('T5').value = util.PcSN;
 
@@ -75,7 +75,7 @@ printerSet.CreatePagSizeList = function(index){
 
 printerSet.saveSetting = function(){
 
-    for(var i = 1; i <= 2; i++){
+    for(var i = 1; i <= 3; i++){
         printerSet.singleSave(i);
     }
     alert("保存成功！");

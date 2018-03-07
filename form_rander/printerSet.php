@@ -54,6 +54,7 @@ function randerBodyCallBack(){
 $printer = array(
     1 => "标签打印机",
     2 => "肠内医嘱单打印机",
+    3 => "人体成分报告打印机",
 );
 foreach ($printer as $key => $value) {
 ?>

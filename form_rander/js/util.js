@@ -369,7 +369,7 @@ util.printerSetting = {
 
 //引导lodop
 util.PcSN = "";
-util.bootstrapLodop = function(callback){
+util.bootstrapLodop = function(printerType, callback){
     var timer = window.setInterval(function () {
         if(document.readyState==="complete"){
             //全局变量
@@ -400,7 +400,7 @@ util.bootstrapLodop = function(callback){
             window.clearInterval(timer);
 
             //获取打印设置
-            var sql = "select * from printersetup where PcID = '{PcID}' and printerType=1";
+            var sql = "select * from printersetup where PcID = '{PcID}' and printerType=" + printerType;
             var sql2 = sql.format({ PcID: util.PcSN });
             $.getJSON(pageExt.libPath + "query.php", { sql: sql2 }, function (data, status, xhr) {
                 if (data.length > 0) {

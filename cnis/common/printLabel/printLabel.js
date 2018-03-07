@@ -7,7 +7,7 @@ printLabel.isDomReady = false;
 
 $(function ($) {
 
-    util.bootstrapLodop(function(){
+    util.bootstrapLodop(1, function(){
 
         if(util.printerSetting.PrinterName){
             $("#printerName").html(util.printerSetting.PrinterName);
