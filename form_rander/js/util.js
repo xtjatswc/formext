@@ -374,6 +374,10 @@ util.bootstrapLodop = function(callback){
         if(document.readyState==="complete"){
             //全局变量
             LODOP = getLodop();
+            if(!LODOP){
+                window.clearInterval(timer);
+                return;
+            }
 
             //获取硬盘序列号
             if (!util.PcSN) {
