@@ -47,7 +47,6 @@ s10.printLoad = function (flag) {
         LODOP.PRINT_SETUP();
         return false;
     } else if (flag == 3) {
-        LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);//语句控制显示标尺
         LODOP.PREVIEW();
         return false;
     } else if (flag == 4) {
@@ -58,7 +57,6 @@ s10.printLoad = function (flag) {
 s10.createPrintPage = function () {
 
     LODOP.PRINT_INITA(0, 0, "210mm", "297mm", "InBody报告纸打印");
-    //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
     if (util.printerSetting.PrinterName == "#未设置#") {
         $("#lsMsg").html("尚未设置默认的标签打印机！");
     } else {
@@ -69,15 +67,16 @@ s10.createPrintPage = function () {
 
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(util.printerSetting.Orient, util.printerSetting.PageWidth, util.printerSetting.PageHeigth, util.printerSetting.PageName);
-    //是否控制位置基点，true时，对套打有利
-    LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", true);
-    //是否可以重新选择打印机
-    LODOP.SET_PRINT_MODE("RESELECT_PRINTER",false);
 
     LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='s10模板.jpg'>");
     LODOP.SET_SHOW_MODE("BKIMG_WIDTH","210mm");
     LODOP.SET_SHOW_MODE("BKIMG_HEIGHT","297mm");
     LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);
-    LODOP.SET_SHOW_MODE("BKIMG_PRINT",true);
+    LODOP.SET_SHOW_MODE("BKIMG_PRINT",true);    
+    LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);  //语句控制显示标尺
+    LODOP.SET_SHOW_MODE("PREVIEW_NO_MINIMIZE",true);    //设置预览窗口禁止最小化，并始终在各个窗口的最前面        
+    LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", true); //是否控制位置基点，true时，对套打有利        
+    LODOP.SET_PRINT_MODE("RESELECT_PRINTER",false); //是否可以重新选择打印机
+    
 
 }

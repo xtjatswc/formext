@@ -109,7 +109,6 @@ printLabel.printLoad = function (flag) {
             LODOP.PRINT_SETUP();
             return false;
         } else if (flag == 3) {
-            LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);//语句控制显示标尺
             LODOP.PREVIEW();
             return false;
         } else if (flag == 4) {
@@ -155,6 +154,7 @@ printLabel.createPrintPage = function (labelInfo) {
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
 
+    LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);//语句控制显示标尺
     LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED", 1);//横向时的正向显示
 
 }
