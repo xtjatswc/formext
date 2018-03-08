@@ -43,7 +43,7 @@ $(function ($) {
         s10.patient = data[0];
     });
 
-    sql = "select * from inbodyresult where InBodyReport_DBKey = " + urlParams.reportId + ";";
+    sql = "select a.*,b.ItemName from inbodyresult a inner join inbodyitem b on a.ItemCode = b.ItemCode and b.InbodyModel = 's10' where InBodyReport_DBKey = " + urlParams.reportId + ";";
     $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
         s10.report = data;
     });
@@ -116,13 +116,13 @@ s10.createPrintPage = function () {
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", true); //是否控制位置基点，true时，对套打有利        
     LODOP.SET_PRINT_MODE("RESELECT_PRINTER",false); //是否可以重新选择打印机
     
-    // LODOP.SET_PRINT_STYLE("FontName", "微软雅黑");
-    // LODOP.SET_PRINT_STYLE("FontSize", "10.5");
+    LODOP.SET_PRINT_STYLE("FontName", "微软雅黑");
+    LODOP.SET_PRINT_STYLE("FontSize", "10.5");
 
     LODOP.ADD_PRINT_TEXT(94,68,100,20,s10.patient.InBodyReport_DBKey); 
-    LODOP.ADD_PRINT_TEXT(116,68,50,20,s10.patient.Age);
-    LODOP.ADD_PRINT_TEXT(94,237,50,20,s10.patient.Height + "cm");
-    LODOP.ADD_PRINT_TEXT(116,237,50,20,s10.patient.Gender == "M" ? "男" : "女");
+    LODOP.ADD_PRINT_TEXT(116,68,100,20,s10.patient.Age);
+    LODOP.ADD_PRINT_TEXT(94,237,100,20,s10.patient.Height + "cm");
+    LODOP.ADD_PRINT_TEXT(116,237,100,20,s10.patient.Gender == "M" ? "男" : "女");
     LODOP.ADD_PRINT_TEXT(94,388,150,20,s10.patient.TestTime.split(" ")[0]);
     LODOP.ADD_PRINT_TEXT(116,389,150,20,s10.patient.TestTime.split(" ")[1]);
     LODOP.ADD_PRINT_TEXT(209,697,100,20,s10.toFixed2(1) + "kg");
@@ -143,7 +143,7 @@ s10.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(363,227,50,20,s10.toFixed2(12));
     LODOP.ADD_PRINT_TEXT(387,226,50,20,s10.toFixed2(6));
     LODOP.ADD_PRINT_TEXT(414,226,50,20,s10.toFixed2(16));
-    LODOP.ADD_PRINT_TEXT(443,226,50,20,s10.toFixed2(15));
+    LODOP.ADD_PRINT_TEXT(443,226,100,20,s10.toFixed2(15));
     LODOP.ADD_PRINT_TEXT(339,301,100,20,s10.range(78, 77));
     LODOP.ADD_PRINT_TEXT(364,301,100,20,s10.range(80, 79));
     LODOP.ADD_PRINT_TEXT(388,300,100,20,s10.range(91, 92));
@@ -168,12 +168,29 @@ s10.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(363,168,50,20,"kg");
     LODOP.ADD_PRINT_TEXT(387,167,50,20,"kg");
     LODOP.ADD_PRINT_TEXT(414,167,50,20,"%");
-    LODOP.ADD_PRINT_TEXT(443,167,50,20,"kg/m²");
+    LODOP.ADD_PRINT_TEXT(443,167,100,20,"kg/m²");
     LODOP.ADD_PRINT_TEXT(519,168,50,20,"kg");
     LODOP.ADD_PRINT_TEXT(545,168,50,20,"kg");
     LODOP.ADD_PRINT_TEXT(569,167,50,20,"kg");
     LODOP.ADD_PRINT_TEXT(595,167,50,20,"kg");
     LODOP.ADD_PRINT_TEXT(624,167,50,20,"kg");
+    LODOP.ADD_PRINT_SHAPE(4,338,385,s10.rangeWidth(1, 78, 77),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,362,385,s10.rangeWidth(12, 80, 79),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,386,385,s10.rangeWidth(6, 91, 92),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,412,385,s10.rangeWidth(16, 84, 83),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,441,385,s10.rangeWidth(15, 82, 81),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,517,385,s10.rangeWidth(18, 130, 131),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,543,385,s10.rangeWidth(19, 130, 131),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,567,385,s10.rangeWidth(20, 132, 133),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,593,385,s10.rangeWidth(21, 134, 135),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,621,385,s10.rangeWidth(22, 134, 135),12,0,1,"#808080");
+    var dzkObj = {};
+    for(var i = 39; i <= 68; i++){
+        dzkObj[s10.report[i].ItemName] = s10.toFixed2(i);
+    }
+    var style = $("#style1")[0].outerHTML;
+    var dzk = $("#divDzk").html().format(dzkObj);
+    LODOP.ADD_PRINT_HTM("174.84mm","5.77mm","131.05mm","85.99mm", style + dzk);
 }
 
 s10.toFixed2 = function(index){
@@ -182,4 +199,17 @@ s10.toFixed2 = function(index){
 
 s10.range = function(min, max){
     return parseFloat(s10.report[min].ItemValue).toFixed(2)  + "~" + parseFloat(s10.report[max].ItemValue).toFixed(2);
+}
+
+s10.rangeWidth = function(value, min, max){
+    var w = s10.toFixed2(value);
+    var s1 = s10.toFixed2(min);
+    var s2 =s10.toFixed2(max);
+
+    var dw = 89;//mm 低标准的范围宽度
+    var ww = 68;//mm 标准值的范围宽度
+
+    var width = dw + (w - s1) * ww / (s2 - s1);
+
+    return width;
 }
