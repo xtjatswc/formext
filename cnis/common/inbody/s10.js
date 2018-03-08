@@ -114,7 +114,7 @@ s10.createPrintPage = function () {
     LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);  //语句控制显示标尺
     LODOP.SET_SHOW_MODE("PREVIEW_NO_MINIMIZE",true);    //设置预览窗口禁止最小化，并始终在各个窗口的最前面        
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", true); //是否控制位置基点，true时，对套打有利        
-    LODOP.SET_PRINT_MODE("RESELECT_PRINTER",false); //是否可以重新选择打印机
+    LODOP.SET_PRINT_MODE("RESELECT_PRINTER",true); //是否可以重新选择打印机
     
     LODOP.SET_PRINT_STYLE("FontName", "微软雅黑");
     LODOP.SET_PRINT_STYLE("FontSize", "10.5");
@@ -184,13 +184,8 @@ s10.createPrintPage = function () {
     LODOP.ADD_PRINT_SHAPE(4,567,385,s10.rangeWidth(20, 132, 133),12,0,1,"#808080");
     LODOP.ADD_PRINT_SHAPE(4,593,385,s10.rangeWidth(21, 134, 135),12,0,1,"#808080");
     LODOP.ADD_PRINT_SHAPE(4,621,385,s10.rangeWidth(22, 134, 135),12,0,1,"#808080");
-    var dzkObj = {};
-    for(var i = 39; i <= 68; i++){
-        dzkObj[s10.report[i].ItemName] = s10.toFixed2(i);
-    }
-    var style = $("#style1")[0].outerHTML;
-    var dzk = $("#divDzk").html().format(dzkObj);
-    LODOP.ADD_PRINT_HTM("174.84mm","5.77mm","131.05mm","85.99mm", style + dzk);
+    var dzk = s10.loadDZk();
+    LODOP.ADD_PRINT_HTM("174.84mm","5.77mm","131.05mm","85.99mm", dzk);
 }
 
 s10.toFixed2 = function(index){
@@ -212,4 +207,14 @@ s10.rangeWidth = function(value, min, max){
     var width = dw + (w - s1) * ww / (s2 - s1);
 
     return width;
+}
+
+s10.loadDZk = function(){
+    var dzkObj = {};
+    for(var i = 39; i <= 68; i++){
+        dzkObj[s10.report[i].ItemName] = s10.toFixed2(i);
+    }
+    var style = $("#style1")[0].outerHTML;
+    var dzk = $("#divDzk").html().format(dzkObj);
+    return style + dzk;
 }
