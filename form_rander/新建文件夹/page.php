@@ -14,7 +14,7 @@ class page
         $lib = self::$_pageCfg["libPath"]; 
         $debug = self::$_pageCfg["debug"]; 
         $min = "";
-        if($debug == "1"){
+        if($debug != "1"){
             $min = ".min";
         }
     ?>

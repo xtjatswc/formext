@@ -22,7 +22,7 @@ function randerJavascriptCallBack(){
     $version = form_rander\page::$_pageCfg["version"];
     $debug = form_rander\page::$_pageCfg["debug"]; 
     $min = "";
-    if($debug == "1"){
+    if($debug != "1"){
         $min = ".min";
     }
     ?>
