@@ -20,18 +20,36 @@ $(function ($) {
     var urlParams = util.urlToObject(window.location.search);
 
     var sql = "SELECT \
-	c.NutrientAdviceSummary_DBKey, \
-	b.AdviceDate, \
-	a.TakeOrder, \
-	a.PreparationMode, \
-	a.NutrientAdviceDetail_DBKEY \
+	tb.*, GROUP_CONCAT(NutrientAdviceDetail_DBKEY) NutrientAdviceDetail_DBKEY, \
+	GROUP_CONCAT( \
+		NutrientAdviceDetail_DBKEY SEPARATOR '_' \
+	) NutrientAdviceDetail_DBKEY2 \
 FROM \
-	nutrientadvicedetail a \
-INNER JOIN nutrientadvice b ON a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey \
-INNER JOIN nutrientadvicesummary c ON b.NutrientAdviceSummary_DBKey = c.NutrientAdviceSummary_DBKey \
-WHERE \
-    a.NutrientAdviceDetail_DBKEY IN (" + urlParams.detailDBKeys + ");";
-
+	( \
+		SELECT \
+			c.NutrientAdviceSummary_DBKey, \
+			b.AdviceDate, \
+			a.TakeOrder, \
+			a.PreparationMode, \
+			CASE \
+		WHEN a.PreparationMode IN (2, 7) THEN \
+			a.PreparationMode \
+		ELSE \
+			a.NutrientAdviceDetail_DBKEY \
+		END PreparationMode2, \
+		a.NutrientAdviceDetail_DBKEY \
+	FROM \
+		nutrientadvicedetail a \
+	INNER JOIN nutrientadvice b ON a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey \
+	INNER JOIN nutrientadvicesummary c ON b.NutrientAdviceSummary_DBKey = c.NutrientAdviceSummary_DBKey \
+	WHERE \
+		a.NutrientAdviceDetail_DBKEY IN (" + urlParams.detailDBKeys + ") \
+	) tb \
+GROUP BY \
+	NutrientAdviceSummary_DBKey, \
+	AdviceDate, \
+	TakeOrder, \
+    PreparationMode2";        
 
     var labelCount = -1;
     $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
@@ -39,8 +57,8 @@ WHERE \
         for (j = 0; j < data.length; j++) {
 
             $("#labelTip").html("正在加载标签内容，请稍候……");
-            $("#divLabels").append('<div class="label" id="divLabel_' + data[j].NutrientAdviceDetail_DBKEY + '"><div class="unload"></div></div><br/>');
-            $("#divLabel_" + data[j].NutrientAdviceDetail_DBKEY).load("singleLabel.php?v=" + Math.random() + "&detailDBKeys=" + data[j].NutrientAdviceDetail_DBKEY);
+            $("#divLabels").append('<div class="label" id="divLabel_' + data[j].NutrientAdviceDetail_DBKEY2 + '"><div class="unload"></div></div><br/>');
+            $("#divLabel_" + data[j].NutrientAdviceDetail_DBKEY2).load("singleLabel.php?v=" + Math.random() + "&detailDBKeys=" + data[j].NutrientAdviceDetail_DBKEY);
 
         }
     });
