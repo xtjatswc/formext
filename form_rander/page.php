@@ -12,7 +12,11 @@ class page
         $version = self::$_pageCfg["version"];
         $root = self::$_pageCfg["rootPath"];
         $lib = self::$_pageCfg["libPath"]; 
-
+        $debug = self::$_pageCfg["debug"]; 
+        $min = "";
+        if($debug == "1"){
+            $min = ".min";
+        }
     ?>
 <!DOCTYPE html>    
 <html>
@@ -36,8 +40,8 @@ class page
 <script src="<?php echo $lib ?>lodop\LodopFuncs.js"></script>
 <script src="<?php echo $lib ?>js\My97DatePicker\WdatePicker.js"></script>
 <script src="<?php echo $lib ?>js\jquery.table2excel.js?v=<?php echo $version?>"></script>
-<script src="<?php echo $lib ?>js\util.js?v=<?php echo $version?>"></script>
-<script src="<?php echo $lib ?>js\page.js?v=<?php echo $version?>"></script>
+<script src="<?php echo $lib ?>js\util<?php echo $min?>.js?v=<?php echo $version?>"></script>
+<script src="<?php echo $lib ?>js\page<?php echo $min?>.js?v=<?php echo $version?>"></script>
 <script type="text/javascript">
     <?php 
         echo "pageExt.rootPath='".str_replace("\\", "/", $root)."';";

@@ -12,6 +12,7 @@ form_rander\form::$_pageCfg = array(
     'primaryKey' => "PatientHospitalize_DBKey", //主键，复选框对应的值
     'EnableDel' => "1", //是否启用删除按钮
     'pageSize' => 20, //每页显示记录条数
+    'debug' => $globalCfg["debug"],
 );
 
 $form = new form_rander\form($db);

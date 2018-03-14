@@ -201,6 +201,11 @@ echo "</tbody>
         $version = self::$_pageCfg["version"];
         $root = self::$_pageCfg["rootPath"];
         $lib = self::$_pageCfg["libPath"]; 
+        $debug = self::$_pageCfg["debug"]; 
+        $min = "";
+        if($debug == "1"){
+            $min = ".min";
+        }
         ?>
 <!DOCTYPE html>            
 <html>
@@ -216,8 +221,8 @@ echo "</tbody>
     <script src="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui.min.js"></script>
     <script src="<?php echo $lib ?>js\My97DatePicker\WdatePicker.js"></script>
     <script src="<?php echo $lib ?>js\jquery.table2excel.js?v=<?php echo $version?>"></script>
-    <script src="<?php echo $lib ?>js\util.js?v=<?php echo $version?>"></script>
-    <script src="<?php echo $lib ?>js\form.js?v=<?php echo $version?>"></script>
+    <script src="<?php echo $lib ?>js\util<?php echo $min?>.js?v=<?php echo $version?>"></script>
+    <script src="<?php echo $lib ?>js\form<?php echo $min?>.js?v=<?php echo $version?>"></script>
     <script type="text/javascript">
     <?php 
         echo "formExt.rootPath='".str_replace("\\", "/", $root)."';";

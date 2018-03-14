@@ -7,6 +7,7 @@ form_rander\page::$_pageCfg = array(
     'libPath' => "..\\form_rander\\",
     'Title' => "打印机设置",
     'version' => $globalCfg["version"],
+    'debug' => $globalCfg["debug"],
 );
 
 $page = new form_rander\page($db);
@@ -19,8 +20,13 @@ function randerStylesheetCallBack(){
 //javascript
 function randerJavascriptCallBack(){
     $version = form_rander\page::$_pageCfg["version"];
+    $debug = form_rander\page::$_pageCfg["debug"]; 
+    $min = "";
+    if($debug == "1"){
+        $min = ".min";
+    }
     ?>
-	<script language="javascript" type="text/javascript" src="js/printerSet.js?v=<?php echo $version ?>"></script>    
+	<script language="javascript" type="text/javascript" src="js/printerSet<?php echo $min?>.js?v=<?php echo $version ?>"></script>    
     <?php
 }
 
