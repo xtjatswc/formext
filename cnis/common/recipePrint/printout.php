@@ -56,7 +56,7 @@ global $db;
 $recipeNo = $_GET["recipeNo"];
 $sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, b.HospitalizationNumber, c.PatientName, c.PatientNo,
 c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
- d.DepartmentName, e.UserName from nutrientadvicesummary a
+ d.DepartmentName, e.UserName, b.DiseaseListVal from nutrientadvicesummary a
 inner join patienthospitalizebasicinfo b on a.PatientHospitalize_DBKey = b.PatientHospitalize_DBKey
 inner join patientbasicinfo c on b.PATIENT_DBKEY = c.PATIENT_DBKEY
 inner join department d on d.Department_DBKey = b.Department_DBKey
@@ -85,7 +85,7 @@ $baseInfo = $db->fetch_row($sql);
         </tr>
     </table>
     <hr/>
-    疾病及诊断：
+    疾病及诊断：<?php echo $baseInfo["DiseaseListVal"] ?>
     <hr/>
     <table>
         <tr>
@@ -99,14 +99,27 @@ $baseInfo = $db->fetch_row($sql);
             <th>金额</th>
         </tr>
         <?php
+$sql = "select d.RecipeAndProductName, c.Specification, c.SingleMetering, e.SysCodeName,
+c.Directions, c.AdviceAmount, c.CurrentPrice, c.AdviceAmount * c.CurrentPrice TotalMoney from nutrientadvicesummary a 
+inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
+inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
+inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
+left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
+where a.NutrientAdviceSummary_DBKey = $recipeNo";
+$recipeRecords = $db->fetch_all($sql);
 
-        // foreach ($tblDetail as $key => $value) {
-        //     echo "<tr>
-        //     <td>".$value["RecipeAndProductName"]."</td>
-        //     <td>".$value["AdviceAmount"]."</td>
-        //     <td>".$value["NutrientAdviceDetailRemark"]."</td>
-        //     </tr>";   
-        // }       
+        foreach ($recipeRecords as $key => $value) {
+            echo "<tr>
+            <td>".$value["RecipeAndProductName"]."</td>
+            <td>".$value["Specification"]."</td>
+            <td>".$value["SingleMetering"]."</td>
+            <td>".$value["SysCodeName"]."</td>
+            <td>".$value["Directions"]."</td>
+            <td>".$value["AdviceAmount"]."</td>
+            <td>".$value["CurrentPrice"]."</td>
+            <td>".$value["TotalMoney"]."</td>
+            </tr>";   
+        }       
         ?>
     </table>
     <table>
