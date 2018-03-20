@@ -50,7 +50,20 @@ function randerBodyCallBack(){
     <br/>
     <font id="labelTip" color="red"></font>
     <br/>    
+<?php
+global $db;
+$recipeNo = $_GET["recipeNo"];
+$sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d'), b.HospitalizationNumber, c.PatientName, c.PatientNo,
+c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
+ d.DepartmentName, e.UserName from nutrientadvicesummary a
+inner join patienthospitalizebasicinfo b on a.PatientHospitalize_DBKey = b.PatientHospitalize_DBKey
+inner join patientbasicinfo c on b.PATIENT_DBKEY = c.PATIENT_DBKEY
+inner join department d on d.Department_DBKey = b.Department_DBKey
+left join user e on e.User_DBKey = a.CreateBy
+where a.NutrientAdviceSummary_DBKey = $recipeNo";
+$baseInfo = $db->fetch_row($sql);
 
+?>
 <div style="width:800px;border:1px solid black;padding:5px">
     <div id="divRecipe" style="padding:15px">
     营养科
@@ -60,14 +73,14 @@ function randerBodyCallBack(){
     </h2>
     <table>
         <tr>
-            <td>ID号：</td>
-            <td>病案号:</td>
-            <td>科别：</td>
+            <td>ID号：<?php echo $baseInfo["HospitalizationNumber"] ?></td>
+            <td>病案号：<?php echo $baseInfo["PatientNo"] ?></td>
+            <td>科别：<?php echo $baseInfo["DepartmentName"] ?></td>
         </tr>
         <tr>
-            <td>姓名：</td>
-            <td>性别:</td>
-            <td>年龄：</td>
+            <td>姓名：<?php echo $baseInfo["PatientName"] ?></td>
+            <td>性别：<?php echo $baseInfo["Gender"] ?></td>
+            <td>年龄：<?php echo $baseInfo["Age"] ?>岁</td>
         </tr>
     </table>
     <hr/>
@@ -84,7 +97,16 @@ function randerBodyCallBack(){
             <th>单价</th>
             <th>金额</th>
         </tr>
-        <tr></tr>
+        <?php
+
+        // foreach ($tblDetail as $key => $value) {
+        //     echo "<tr>
+        //     <td>".$value["RecipeAndProductName"]."</td>
+        //     <td>".$value["AdviceAmount"]."</td>
+        //     <td>".$value["NutrientAdviceDetailRemark"]."</td>
+        //     </tr>";   
+        // }       
+        ?>
     </table>
     <table>
         <tr>
