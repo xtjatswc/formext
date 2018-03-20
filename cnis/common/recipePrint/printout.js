@@ -1,5 +1,6 @@
 
 var printout = {};
+printout.urlParams = util.urlToObject(window.location.search);
 
 $(function ($) {
 
@@ -60,7 +61,7 @@ printout.printLoad = function (flag) {
 
 printout.createPrintPage = function (divRecipe) {
 
-    LODOP.PRINT_INIT("门诊医嘱单打印");
+    LODOP.PRINT_INITA(0, 0, "148mm", "160mm", "门诊医嘱单打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
     if (util.printerSetting.PrinterName == "#未设置#") {
         $("#lsMsg").html("尚未设置默认的标签打印机！");
@@ -75,9 +76,11 @@ printout.createPrintPage = function (divRecipe) {
     //是否控制位置基点，true时，对套打有利
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("style1").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
+    
+    LODOP.ADD_PRINT_BARCODE("7.12mm","6.59mm","44.58mm","10.13mm","93Extended",printout.urlParams.recipeNo);
 
-    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "208mm", "153mm", strStyle + divRecipe);
-    // LODOP.SET_PRINT_STYLEA(0,"Horient",3); //别水平拉伸，不然死活看不见页脚
+    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "145mm", "150mm", strStyle + divRecipe);
+    LODOP.SET_PRINT_STYLEA(0,"Horient",3); 
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
 
     //LODOP.ADD_PRINT_TABLE("1.59mm","1.01mm","85.01mm","28mm",strStyle + document.getElementById("tblNutrientadvicedetail").outerHTML);
@@ -88,12 +91,14 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_PRINT_STYLE("FontName", "微软雅黑");
     LODOP.SET_PRINT_STYLE("FontSize", "10.5");
 
-    LODOP.ADD_PRINT_TEXT("150.07mm","173.3mm","31.49mm","5.29mm","第#页/共&页");
+    LODOP.ADD_PRINT_TEXT("153.07mm","108.74mm","31.49mm","5.29mm","第#页/共&页");
+    LODOP.SET_PRINT_STYLEA(0,"Horient",1);
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.ADD_PRINT_TEXT("150.07mm","108.64mm","60.85mm","5.29mm","打印时间：" + util.getTime());
+    LODOP.ADD_PRINT_TEXT("153.07mm","45.64mm","60.85mm","5.29mm","打印时间：" + util.getTime());
+    LODOP.SET_PRINT_STYLEA(0,"Horient",1);
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);

@@ -53,6 +53,10 @@ function randerBodyCallBack(){
     <br/>    
 <?php
 global $db;
+
+$sql = "select SysConfigValue from sysconfig where SysConfigCode = 'SystemPrint'";
+$printTitle = $db->fetch_var($sql);
+
 $recipeNo = $_GET["recipeNo"];
 $sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, b.HospitalizationNumber, c.PatientName, c.PatientNo,
 c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
@@ -66,9 +70,8 @@ $baseInfo = $db->fetch_row($sql);
 
 ?>
 <div style="width:800px;border:1px solid black;padding:5px">
-    <div id="divRecipe" style="padding:15px">
-    营养科
-    <hr/>
+    <div id="divRecipe" style="padding:10px;padding-top:5px">
+    <div style="text-align:center;font-size:15pt"><?php echo $printTitle ?></div>
     <h3 style="text-align:center">
     医疗处方单
     </h3>
@@ -121,7 +124,7 @@ $recipeRecords = $db->fetch_all($sql);
             </tr>";   
         }       
 
-        $remaining = 6 - count($recipeRecords);
+        $remaining = 5 - count($recipeRecords);
         if($remaining > 0){
             for($i = 0; $i < $remaining; $i++){
                 echo "<tr><td>&nbsp;	</td></tr>
@@ -148,7 +151,7 @@ $recipeRecords = $db->fetch_all($sql);
         </tr>
     </table>
     <font style="font-size:10pt">
-    根据卫生部《医疗机构药事管理规定》要求：为保障患者用药安全，除药品质量原因外，药品一经发出，不得退换。
+    根据《中国食药局》相关要求：为保障患者食品安全，除食品质量原因外，食品一经发出，不得退换。
     </font>
     <h4>
     注：价格以收费时为准 当天交费，过期无效
