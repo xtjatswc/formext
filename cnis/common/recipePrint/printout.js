@@ -85,12 +85,15 @@ printout.createPrintPage = function (divRecipe) {
     //LODOP.SET_PRINT_STYLEA(0,"Offset2Top","-10mm"); //设置次页偏移把区域向上扩
     //LODOP.SET_PRINT_STYLEA(0,"LinkedItem",-1);
 
-    LODOP.ADD_PRINT_TEXT("150.07mm","183.62mm","21.17mm","5.29mm","第#页/共&页");
+    LODOP.SET_PRINT_STYLE("FontName", "微软雅黑");
+    LODOP.SET_PRINT_STYLE("FontSize", "10.5");
+
+    LODOP.ADD_PRINT_TEXT("150.07mm","173.3mm","31.49mm","5.29mm","第#页/共&页");
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.ADD_PRINT_TEXT("150.07mm","130.33mm","50.01mm","5.29mm","打印时间：" + util.getTime());
+    LODOP.ADD_PRINT_TEXT("150.07mm","108.64mm","60.85mm","5.29mm","打印时间：" + util.getTime());
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);

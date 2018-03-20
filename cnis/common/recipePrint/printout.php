@@ -16,9 +16,10 @@ $page->randerPage();
 function randerStylesheetCallBack(){
     ?>
 	<style id="style1">
+    body {font-family:微软雅黑;}
     table {width:100%}
-    td,th {font-size: 12pt;padding:3px;text-align:left}
-    h2,h3 {margin:0px;}
+    td,th {font-size: 10.5pt;padding:3px;text-align:left}
+    h3,h4 {margin:0px;}
     </style>
     <?php
 }
@@ -53,7 +54,7 @@ function randerBodyCallBack(){
 <?php
 global $db;
 $recipeNo = $_GET["recipeNo"];
-$sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d'), b.HospitalizationNumber, c.PatientName, c.PatientNo,
+$sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, b.HospitalizationNumber, c.PatientName, c.PatientNo,
 c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
  d.DepartmentName, e.UserName from nutrientadvicesummary a
 inner join patienthospitalizebasicinfo b on a.PatientHospitalize_DBKey = b.PatientHospitalize_DBKey
@@ -68,9 +69,9 @@ $baseInfo = $db->fetch_row($sql);
     <div id="divRecipe" style="padding:15px">
     营养科
     <hr/>
-    <h2 style="text-align:center">
+    <h3 style="text-align:center">
     医疗处方单
-    </h2>
+    </h3>
     <table>
         <tr>
             <td>ID号：<?php echo $baseInfo["HospitalizationNumber"] ?></td>
@@ -110,16 +111,16 @@ $baseInfo = $db->fetch_row($sql);
     </table>
     <table>
         <tr>
-            <td>医师：</td>
-            <td>签章:</td>
-            <td>日期：</td>
+            <td>医师：<?php echo $baseInfo["UserName"] ?></td>
+            <td style="width:40%">签章：</td>
+            <td>日期：<?php echo $baseInfo["CreateTime"] ?></td>
         </tr>
     </table>
     <hr/>
     <table>
         <tr>
             <td>药费：</td>
-            <td>审核/收费:</td>
+            <td>审核/收费：</td>
             <td>审核/调配：</td>
             <td>核对/发药：</td>
         </tr>
@@ -127,9 +128,9 @@ $baseInfo = $db->fetch_row($sql);
     <font style="font-size:10pt">
     根据卫生部《医疗机构药事管理规定》要求：为保障患者用药安全，除药品质量原因外，药品一经发出，不得退换。
     </font>
-    <h3>
+    <h4>
     注：价格以收费时为准 当天交费，过期无效
-    </h3>
+    </h4>
     </div>
 </div>
     <?php

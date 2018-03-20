@@ -279,15 +279,20 @@ util.autocomplete = function (para) {
 
 }
 
+//前面补0
+util.prefixZero = function(num, length) {
+    return (Array(length).join('0') + num).slice(-length);
+}
+
 //获取时间
 util.getTime = function () {
     var date = new Date();
     var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var hour = date.getHours();
-    var minute = date.getMinutes();
-    var second = date.getSeconds();
+    var month = util.prefixZero(date.getMonth() + 1, 2);
+    var day = util.prefixZero(date.getDate(), 2);
+    var hour = util.prefixZero(date.getHours(), 2);
+    var minute = util.prefixZero(date.getMinutes(), 2);
+    var second = util.prefixZero(date.getSeconds(), 2);
     return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
 }
 
@@ -295,8 +300,8 @@ util.getTime = function () {
 util.getDate = function () {
     var date = new Date();
     var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
+    var month = util.prefixZero(date.getMonth() + 1, 2);
+    var day = util.prefixZero(date.getDate(), 2);
     return year + '-' + month + '-' + day;
 }
 
