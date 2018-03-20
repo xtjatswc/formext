@@ -43,7 +43,7 @@ printout.print = function () {
 printout.printLoad = function (flag) {
 
     var $divRecipe = $("#divRecipe");
-    printout.createPrintPage($divRecipe.html());
+    printout.createPrintPage($divRecipe[0].outerHTML);
     if (flag == 1) {
         LODOP.PRINT_DESIGN();
         return false;
@@ -76,7 +76,7 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("style1").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
-    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "85mm", "91.97mm", strStyle + divRecipe);
+    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "208mm", "153mm", strStyle + divRecipe);
     // LODOP.SET_PRINT_STYLEA(0,"Horient",3); //别水平拉伸，不然死活看不见页脚
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
 
@@ -85,12 +85,12 @@ printout.createPrintPage = function (divRecipe) {
     //LODOP.SET_PRINT_STYLEA(0,"Offset2Top","-10mm"); //设置次页偏移把区域向上扩
     //LODOP.SET_PRINT_STYLEA(0,"LinkedItem",-1);
 
-    LODOP.ADD_PRINT_TEXT("94.24mm", "1.32mm", "21.17mm", "5.29mm", "第#页/共&页");
+    LODOP.ADD_PRINT_TEXT("150.07mm","183.62mm","21.17mm","5.29mm","第#页/共&页");
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.ADD_PRINT_TEXT("94.24mm", "23.97mm", "35.45mm", "5.29mm", "制作日期：" + util.getDate());
+    LODOP.ADD_PRINT_TEXT("150.07mm","130.33mm","50.01mm","5.29mm","打印时间：" + util.getTime());
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
