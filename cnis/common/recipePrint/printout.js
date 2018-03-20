@@ -47,7 +47,7 @@ printout.print = function () {
     // }
 
     printout.printLoad(4);
-    alert("请等待打印完毕后，再关闭该页面！");
+    //alert("请等待打印完毕后，再关闭该页面！");
 }
 
 printout.printLoad = function (flag) {
