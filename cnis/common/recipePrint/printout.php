@@ -120,6 +120,15 @@ $recipeRecords = $db->fetch_all($sql);
             <td>".$value["TotalMoney"]."</td>
             </tr>";   
         }       
+
+        $remaining = 6 - count($recipeRecords);
+        if($remaining > 0){
+            for($i = 0; $i < $remaining; $i++){
+                echo "<tr><td>&nbsp;	</td></tr>
+                ";
+            }
+        }
+
         ?>
     </table>
     <table>
