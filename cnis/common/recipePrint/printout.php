@@ -103,7 +103,7 @@ $baseInfo = $db->fetch_row($sql);
         </tr>
         <?php
 $sql = "select d.RecipeAndProductName, c.Specification, c.SingleMetering, e.SysCodeName,
-c.Directions, c.AdviceAmount, c.CurrentPrice, c.AdviceAmount * c.CurrentPrice TotalMoney from nutrientadvicesummary a 
+c.Directions, c.AdviceAmount, c.CurrentPrice, (c.AdviceAmount * c.CurrentPrice) TotalMoney from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
 inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
@@ -111,6 +111,7 @@ left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeN
 where a.NutrientAdviceSummary_DBKey = $recipeNo";
 $recipeRecords = $db->fetch_all($sql);
 
+        $TMoney = 0.0;
         foreach ($recipeRecords as $key => $value) {
             echo "<tr>
             <td>".$value["RecipeAndProductName"]."</td>
@@ -120,8 +121,9 @@ $recipeRecords = $db->fetch_all($sql);
             <td>".$value["Directions"]."</td>
             <td>".$value["AdviceAmount"]."</td>
             <td>".$value["CurrentPrice"]."</td>
-            <td>".$value["TotalMoney"]."</td>
+            <td>".round($value["TotalMoney"], 3)."</td>
             </tr>";   
+            $TMoney = $TMoney + $value["TotalMoney"];
         }       
 
         $remaining = 5 - count($recipeRecords);
@@ -144,7 +146,7 @@ $recipeRecords = $db->fetch_all($sql);
     <hr/>
     <table>
         <tr>
-            <td>药费：</td>
+            <td>药费：<?php echo round($TMoney, 2) ?> 元</td>
             <td>审核/收费：</td>
             <td>审核/调配：</td>
             <td>核对/发药：</td>
