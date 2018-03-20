@@ -11,6 +11,15 @@ $(function ($) {
             $("#printerName").html("#未设置#");
         }
 
+        if ($("#printerName").html() == "#未设置#") {
+            if (confirm("未设置打印机，是否输出到默认打印机？")) {
+                $("#btnPrint").click();
+            }
+        } else {
+            $("#btnPrint").click();
+
+        }
+
     });
 
 });
@@ -32,10 +41,10 @@ printout.preview = function () {
 }
 
 printout.print = function () {
-    if (!printout.isDomReady) {
-        alert("页面没加载完，请重试！");
-        return;
-    }
+    // if (!printout.isDomReady) {
+    //     alert("页面没加载完，请重试！");
+    //     return;
+    // }
 
     printout.printLoad(4);
     alert("请等待打印完毕后，再关闭该页面！");
