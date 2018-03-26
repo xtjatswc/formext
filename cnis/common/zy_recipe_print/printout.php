@@ -60,7 +60,7 @@ $printTitle = $db->fetch_var($sql);
 $recipeNo = $_GET["recipeNo"];
 $sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, b.HospitalizationNumber, c.PatientName, c.PatientNo,
 c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
- d.DepartmentName, e.UserName, b.DiseaseListVal, f.BedCode  from nutrientadvicesummary a
+ d.DepartmentName, e.UserName, b.DiseaseListVal, f.BedCode, DATE_FORMAT(a.AdviceBeginDate, '%Y-%m-%d') AdviceBeginDate, DATE_FORMAT(a.AdviceEndDate, '%Y-%m-%d') AdviceEndDate  from nutrientadvicesummary a
 inner join patienthospitalizebasicinfo b on a.PatientHospitalize_DBKey = b.PatientHospitalize_DBKey
 inner join patientbasicinfo c on b.PATIENT_DBKEY = c.PATIENT_DBKEY
 inner join department d on d.Department_DBKey = b.Department_DBKey
@@ -74,23 +74,25 @@ $baseInfo = $db->fetch_row($sql);
     <div id="divRecipe" style="padding:10px;padding-top:5px">
     <div style="text-align:center;font-size:15pt"><?php echo $printTitle ?></div>
     <h3 style="text-align:center">
-    医疗处方单
+    肠内营养(EN)医嘱单首页
     </h3>
     <table>
         <tr>
             <td>住院号：<?php echo $baseInfo["HospitalizationNumber"] ?></td>
             <td>科室：<?php echo $baseInfo["DepartmentName"] ?></td>
             <td>床号：<?php echo $baseInfo["BedCode"] ?></td>
+            <td>开始日期：<?php echo $baseInfo["AdviceBeginDate"] ?></td>
         </tr>
         <tr>
             <td>姓名：<?php echo $baseInfo["PatientName"] ?></td>
             <td>性别：<?php echo $baseInfo["Gender"] ?></td>
             <td>年龄：<?php echo $baseInfo["Age"] ?>岁</td>
+            <td>结束日期：<?php echo $baseInfo["AdviceEndDate"] ?></td>
         </tr>
     </table>
     <hr/>
-    疾病及诊断：<?php echo $baseInfo["DiseaseListVal"] ?>
-    <hr/>
+    <!-- 疾病及诊断：<?php echo $baseInfo["DiseaseListVal"] ?>
+    <hr/> -->
     <table>
         <tr>
             <th>药品名称</th>
