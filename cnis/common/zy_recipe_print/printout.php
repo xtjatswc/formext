@@ -60,11 +60,12 @@ $printTitle = $db->fetch_var($sql);
 $recipeNo = $_GET["recipeNo"];
 $sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, b.HospitalizationNumber, c.PatientName, c.PatientNo,
 c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
- d.DepartmentName, e.UserName, b.DiseaseListVal from nutrientadvicesummary a
+ d.DepartmentName, e.UserName, b.DiseaseListVal, f.BedCode  from nutrientadvicesummary a
 inner join patienthospitalizebasicinfo b on a.PatientHospitalize_DBKey = b.PatientHospitalize_DBKey
 inner join patientbasicinfo c on b.PATIENT_DBKEY = c.PATIENT_DBKEY
 inner join department d on d.Department_DBKey = b.Department_DBKey
 left join user e on e.User_DBKey = a.CreateBy
+left join bednumber f on f.BedNumber_DBKey = b.BedNumber_DBKey
 where a.NutrientAdviceSummary_DBKey = $recipeNo";
 $baseInfo = $db->fetch_row($sql);
 
@@ -77,9 +78,9 @@ $baseInfo = $db->fetch_row($sql);
     </h3>
     <table>
         <tr>
-            <td>ID号：<?php echo $baseInfo["HospitalizationNumber"] ?></td>
-            <td>病案号：<?php echo $baseInfo["PatientNo"] ?></td>
-            <td>科别：<?php echo $baseInfo["DepartmentName"] ?></td>
+            <td>住院号：<?php echo $baseInfo["HospitalizationNumber"] ?></td>
+            <td>科室：<?php echo $baseInfo["DepartmentName"] ?></td>
+            <td>床号：<?php echo $baseInfo["BedCode"] ?></td>
         </tr>
         <tr>
             <td>姓名：<?php echo $baseInfo["PatientName"] ?></td>
@@ -94,34 +95,47 @@ $baseInfo = $db->fetch_row($sql);
         <tr>
             <th>药品名称</th>
             <th>规格</th>
-            <th>单次剂量</th>
             <th>频次</th>
             <th>用法</th>
             <th>数量</th>
+            <th>单位</th>
             <th>单价</th>
             <th>金额</th>
         </tr>
         <?php
-$sql = "select d.RecipeAndProductName, c.Specification, c.SingleMetering, e.SysCodeName,
-c.Directions, c.AdviceAmount, c.CurrentPrice, (c.AdviceAmount * c.CurrentPrice) TotalMoney from nutrientadvicesummary a 
+$sql = "select d.RecipeAndProductName, concat( c.Specification, f.MeasureUnitName,'/' ,g.MeasureUnitName, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）') 
+Specification, c.SingleMetering, e.SysCodeName,
+c.Directions, c.AdviceAmount, c.CurrentPrice, 
+case d.wrapperType when 1 then c.AdviceAmount * c.CurrentPrice else c.AdviceAmount / c.Specification * c.CurrentPrice end TotalMoney
+, f.MeasureUnitName, g.MeasureUnitName minUnitName,d.wrapperType
+from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
 inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
+left join measureunit f on f.MeasureUnit_DBKey = d.MeasureUnit_DBKey
+left join measureunit g on g.MeasureUnit_DBKey = d.minUnit_DBKey
 where a.NutrientAdviceSummary_DBKey = $recipeNo";
 $recipeRecords = $db->fetch_all($sql);
 
         $TMoney = 0.0;
         foreach ($recipeRecords as $key => $value) {
+            $unit = "";
+            if($value["wrapperType"] == "1"){
+                $unit = $value["minUnitName"];
+            }else{
+                $unit = $value["MeasureUnitName"];
+            }
+
             echo "<tr>
             <td>".$value["RecipeAndProductName"]."</td>
             <td>".$value["Specification"]."</td>
-            <td>".$value["SingleMetering"]."</td>
             <td>".$value["SysCodeName"]."</td>
             <td>".$value["Directions"]."</td>
             <td>".$value["AdviceAmount"]."</td>
-            <td>".$value["CurrentPrice"]."</td>
-            <td>".round($value["TotalMoney"], 3)."</td>
+            <td>".$unit."</td>
+            <td>".$value["CurrentPrice"]." 元/".$value["minUnitName"]."</td>
+            <td>".round($value["TotalMoney"], 3)." 元</td>
             </tr>";   
             $TMoney = $TMoney + $value["TotalMoney"];
         }       
