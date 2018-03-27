@@ -1,9 +1,7 @@
 <?php
 require "../autoload.php";
 
-/*
-localhost\formext\cnis\route.php?opt=zy_recipe_print&recipeNo=1147
-*/
+//window.open("../../../formext/cnis/route.php?opt=recipe_print_zy/printout&recipeNo="+dbk);
 
 $clientFlag = $globalCfg["clientFlag"];
 if ($clientFlag == "") {
@@ -11,16 +9,14 @@ if ($clientFlag == "") {
 }
 
 $opt=$_GET["opt"];
-switch ($opt) {
-    case 'recipe_print_zy':
-        //住院医嘱单打印
-        $recipeNo = $_GET["recipeNo"];
-        header("location: $clientFlag/recipe_print_zy/printout.php?recipeNo=$recipeNo");
-        break;
-    
-    default:
-        # code...
-        break;
+
+$url = "$clientFlag/$opt.php";
+$para = str_replace("opt=$opt&", "", $_SERVER['QUERY_STRING']);
+
+if(file_exists($url)){
+    header("location: $url?".$para);
+}else{
+    header("location: common/$opt.php?".$para);
 }
 
 exit;
