@@ -2,7 +2,7 @@ table,td,th {border-width: 1px;border:1px solid black;border-collapse: collapse;
 body
 {
     font-family: verdana,arial,sans-serif;
-    font-size: 10pt;
+    font-size: 9pt;
     word-break:break-all;
 }
 .label
