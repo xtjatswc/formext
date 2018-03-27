@@ -30,7 +30,7 @@ $tblDetail = $db->fetch_all($sql);
 
 <div class="labelContent">
 
-<table class="table_bottom_none">
+<table class="baseTable">
     <tr>
     <td>姓名：<?php echo $result["PatientName"] ?></td>
     <td>科室：<?php echo $result["DepartmentName"] ?></td>
@@ -38,19 +38,19 @@ $tblDetail = $db->fetch_all($sql);
     </tr>
 </table>
 
-<table>
+<table style="margin-top:-1px" >
     <tr>
-    <td style="border-right:none;border-top:none;">品名</td>
-    <td style="border-left:none;border-top:none;">
-        <table>
+    <td style="border-right:none">品名</td>
+    <td style="padding:0px">
+        <table style="margin-top:-1px;margin-bottom:-1px">
             <tr>
-                <td style="border:none;">
-                <table  id="tblNutrientadvicedetail">
+                <td style="padding:0px">
+                <table  id="tblNutrientadvicedetail" >
     <thead>
         <tr>
-        <td style="border-top:none;">品名</td>
-        <td style="border-top:none;"><nobr>数量</nobr></td>
-        <td style="border-right:none;border-top:none;">备注</td>
+        <td>品名</td>
+        <td><nobr>数量</nobr></td>
+        <td>备注</td>
         </tr>
     </thead>
     <tbody>
@@ -66,7 +66,7 @@ foreach ($tblDetail as $key => $value) {
     echo "<tr>
             <td>" . $value["RecipeAndProductName"] . "</td>
             <td>" . $value["AdviceAmount"] . " " . $unit . "</td>
-            <td style='border-right:none;'>" . $value["NutrientAdviceDetailRemark"] . "</td>
+            <td>" . $value["NutrientAdviceDetailRemark"] . "</td>
             </tr>";
 }
 ?>
@@ -75,11 +75,11 @@ foreach ($tblDetail as $key => $value) {
                 </td>
             </tr>
             <tr>
-                <td style="border:none;">
-                    <table>
+                <td style="padding:0px">
+                    <table style="margin-top:-1px;">
                         <tr>
-                        <td style="border-bottom:none;border-top:none;">2</td>
-                        <td style="border-bottom:none;border-right:none;border-top:none;">3</td>
+                        <td>2</td>
+                        <td>3</td>
                         </tr>
                     </table>
                 </td>

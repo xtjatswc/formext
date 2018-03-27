@@ -1,7 +1,12 @@
 table {width:100%;border-collapse:collapse;}
+table table{ border-style:hidden;}
 table td,th
 {
-    border:1px solid black;font-size: 9pt;padding:0px;     
+    border:1px solid black;font-size: 9pt;padding:1px; 
+}
+.baseTable td,th
+{
+    border-bottom:none;
 }
 
 body
