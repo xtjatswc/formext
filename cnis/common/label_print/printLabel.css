@@ -1,4 +1,9 @@
-table,td,th {border-width: 1px;border:1px solid black;border-collapse: collapse;font-size: 9pt}
+table {width:100%;border-collapse:collapse;}
+table td,th
+{
+    border:1px solid black;font-size: 9pt;padding:0px;     
+}
+
 body
 {
     font-family: verdana,arial,sans-serif;
