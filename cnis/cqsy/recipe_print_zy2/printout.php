@@ -118,7 +118,7 @@ inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_D
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 left join measureunit f on f.MeasureUnit_DBKey = d.MeasureUnit_DBKey
 left join measureunit g on g.MeasureUnit_DBKey = d.minUnit_DBKey
-where a.NutrientAdviceSummary_DBKey = $recipeNo";
+where c.Directions is not null and a.NutrientAdviceSummary_DBKey = $recipeNo";
     $recipeRecords = $db->fetch_all($sql);
 
     $TMoney = 0.0;

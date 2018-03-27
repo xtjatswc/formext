@@ -1,0 +1,11 @@
+table,td,th {border-width: 1px;border:1px solid black;border-collapse: collapse;font-size: 9pt}
+body
+{
+    font-family: verdana,arial,sans-serif;
+    font-size: 9pt;
+    word-break:break-all;
+}
+.label
+{
+    border:1px solid black;padding:5px
+}
