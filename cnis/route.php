@@ -12,10 +12,10 @@ if ($clientFlag == "") {
 
 $opt=$_GET["opt"];
 switch ($opt) {
-    case 'zy_recipe_print':
+    case 'recipe_print_zy':
         //住院医嘱单打印
         $recipeNo = $_GET["recipeNo"];
-        header("location: $clientFlag\zy_recipe_print\printout.php?recipeNo=$recipeNo");
+        header("location: $clientFlag/recipe_print_zy/printout.php?recipeNo=$recipeNo");
         break;
     
     default:
