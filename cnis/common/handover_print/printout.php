@@ -53,14 +53,18 @@ function randerBodyCallBack()
     <?php
 
     global $db;
-    $sql = getSql();
+    $adviceDate = $_GET["adviceDate"];
+    $sql = getSql($adviceDate);
     $recipe = $db->fetch_all($sql);
+
+    $sql = getDetailSql($adviceDate);
+    $recipeDetail = $db->fetch_all($sql);
 
     $sql = "select SysConfigValue from sysconfig where SysConfigCode = 'SystemPrint'";
     $printTitle = $db->fetch_var($sql);
     ?>
 <div id="divRecipe">
-<h3 style="text-align:center;margin:0px;">
+<h3 style="text-align:center;margin-top:10px;">
     <?php echo $printTitle ?> 医嘱交接单
 </h3>
 <table>
@@ -87,7 +91,7 @@ foreach ($recipe as $key => $value) {
         <td><?php echo $value["PatientName"] ?></td>
         <?php
         foreach ($syscode as $syscodekey => $syscodevalue) {
-           echo "<td>".getCellValue($syscodevalue["SysCodeName"], $value["adviceDetails"])."</td>";
+           echo "<td>".getCellValue($recipeDetail, $syscodevalue["SysCodeName"], $value["NutrientAdviceSummary_DBKey"])."</td>";
         }
         ?>            
     </tr>
@@ -99,110 +103,88 @@ foreach ($recipe as $key => $value) {
 </div>
 <?php
 
-function getCellValue($takeOrder, $arrStr){
-    $result = "";
-    $arr = explode(",",$arrStr);
-    foreach ($arr as $key => $value) {
-        $arr2 = explode("#",$value);
-        if($arr2[0] == $takeOrder){
-            $result.=$arr2[1];
+function getCellValue($recipeDetail, $takeOrder, $NutrientAdviceSummary_DBKey){
+    foreach ($recipeDetail as $key => $value) {
+        if($value["NutrientAdviceSummary_DBKey"] == $NutrientAdviceSummary_DBKey && $value["TakeOrder"] == $takeOrder){
+            return $value["RecipeAndProductName"];
         }
     }
-    return $result;
+    return "";
 }
 
-function getSql()
+function getSql($adviceDate)
 {
-
-    $adviceDate = '2018-03-28';
-
     return "      
-		select advicedate, DepartmentName, BedCode, PatientName,  GROUP_CONCAT(TakeOrder, '#', singleName,'（',spc,' * ',AdviceAmount,'）', '<br/>') adviceDetails,col1,col2 singleName from 
-                (
-                SELECT
-                                    date_format(na.AdviceDate, '%Y-%m-%d') AS AdviceDate,
-                                    -- 医嘱日期		
-                                    b.DepartmentName,
-                                     -- 科室
-                                    b.BedCode,
-                                     -- 床位号						
-                                    b.PatientName,
-                                     -- 姓名							 
-                                    #nas.NutrientAdviceSummaryNo AS NutrientAdvice_DBKey,
-                                    -- 医嘱单号							 
-                                    nad.TakeOrder,
-                                     -- 时间段		
-                                        CASE
-                                    WHEN nad.Medicine_DBKey IS NOT NULL
-                                    AND nad.Medicine_DBKey <> 0 THEN
-                                        m.MedicineName
-                                    ELSE
-                                        rap.RecipeAndProductName
-                                    END singleName,
-                                     -- 单品名称
-                                    sum(nad.AdviceAmount) AdviceAmount,
-                                     -- 数量
-                                    nad.Specification spc,
-                                     -- 规格							
-                                    '' col1,
-                                    '' col2/*,
-                                    nad.NutrientProductCompleteNo,							 
-                                    -- 成品单号
-                                    nad.PreparationName,
-                                    -- 成品名称
-                                    date_format(
-                                        nad.PreparationData,
-                                        '%Y-%m-%d'
-                                    ) AS PreparationData,
-                                    -- 配置日期
-                                nad.AdviceAmount as totle,
-                                 -- 总量
-                                u3.UserName PreparationPerson,
-                                 -- 制剂员
-                                u1.UserName PreparationID,
-                                 -- 配送员
-                                u2.UserName HandoverPeople, -- 接收员
-                                CASE WHEN u1.UserName IS NOT NULL AND u1.UserName <> '' THEN
-                                    '已配送'
-                                ELSE
-                                    '未配送'
-                                END state */
-                                FROM
-                                    nutrientadvicesummary nas
-                                RIGHT JOIN nutrientadvice na ON nas.NutrientAdviceSummary_DBKey = na.NutrientAdviceSummary_DBKey
-                                RIGHT JOIN nutrientadvicedetail nad ON nad.NutrientAdvice_DBKey = na.NutrientAdvice_DBKey
-                                LEFT JOIN recipeandproduct rap ON rap.RecipeAndProduct_DBKey = nad.RecipeAndProduct_DBKey
-                                LEFT JOIN medicine m ON m.Medicine_DBKey = nad.Medicine_DBKey
-                                LEFT JOIN (
-                                    SELECT
-                                        Bed.BedCode AS BedCode,
-                                        d.DepartmentName AS DepartmentName,
-                                        phb.PatientHospitalize_DBKey AS PatientHospitalize_DBKey,
-                                        pb.PatientName AS PatientName,
-                                        phb.HospitalizationNumber,
-                                        d.Department_DBKey AS DepartmentCode
-                                    FROM
-                                        patienthospitalizebasicinfo phb
-                                    LEFT JOIN bednumber bed ON phb.BedNumber_DBKey = Bed.BedNumber_DBKey
-                                    LEFT JOIN department d ON d.Department_DBKey = phb.Department_DBKey
-                                    LEFT JOIN patientbasicinfo pb ON phb.PATIENT_DBKEY = pb.PATIENT_DBKEY
-                                ) b ON b.PatientHospitalize_DBKey = nas.PatientHospitalize_DBKey
-                                LEFT JOIN USER u1 ON u1.User_DBKey = nad.PreparationID
-                                LEFT JOIN USER u2 ON u2.User_DBKey = nad.HandoverPeople
-                                LEFT JOIN USER u3 ON u3.User_DBKey = nad.PreparationPerson
-                                LEFT JOIN (
-                                    SELECT
-                                        syscode,
-                                        syscodename
-                                    FROM
-                                        syscode
-                                    WHERE
-                                        SystemCodeTypeName = 'doTime'
-                                    OR SystemCodeTypeName = 'ENTime'
-                                ) w ON nad.AdviceDoTimeSegmental = w.syscode
-                                WHERE nad.RefundStatus>=0 
-                                     and date_format(na.AdviceDate , '%Y-%m-%d') = '2018-03-28'  group by advicedate, DepartmentName, BedCode, PatientName, singleName
-                ) tb
-                group by advicedate, DepartmentName, BedCode, PatientName
-                ORDER BY DepartmentName,PatientName,singleName";
+	SELECT
+	NutrientAdviceSummary_DBKey,
+	advicedate,
+	DepartmentName,
+	BedCode,
+	PatientName 
+FROM
+	(
+SELECT
+	nas.NutrientAdviceSummary_DBKey,
+CASE	
+	WHEN nas.AdviceBeginDate = nas.AdviceEndDate THEN
+	date_format( nas.AdviceBeginDate, '%Y-%m-%d' ) ELSE CONCAT(
+	date_format( nas.AdviceBeginDate, '%Y-%m-%d' ),
+		' ~ ',
+		date_format( nas.AdviceEndDate, '%Y-%m-%d' ),
+		' 共',
+		DATEDIFF( nas.AdviceEndDate, nas.AdviceBeginDate ) + 1,
+		'天' 
+		) 
+	END AS AdviceDate,-- 医嘱日期
+	b.DepartmentName,-- 科室
+	b.BedCode,-- 床位号
+	b.PatientName -- 姓名
+	
+FROM
+	nutrientadvicesummary nas
+	RIGHT JOIN nutrientadvice na ON nas.NutrientAdviceSummary_DBKey = na.NutrientAdviceSummary_DBKey
+	RIGHT JOIN nutrientadvicedetail nad ON nad.NutrientAdvice_DBKey = na.NutrientAdvice_DBKey
+	LEFT JOIN recipeandproduct rap ON rap.RecipeAndProduct_DBKey = nad.RecipeAndProduct_DBKey
+	LEFT JOIN medicine m ON m.Medicine_DBKey = nad.Medicine_DBKey
+	LEFT JOIN (
+	SELECT
+		Bed.BedCode AS BedCode,
+		d.DepartmentName AS DepartmentName,
+		phb.PatientHospitalize_DBKey AS PatientHospitalize_DBKey,
+		pb.PatientName AS PatientName,
+		phb.HospitalizationNumber,
+		d.Department_DBKey AS DepartmentCode 
+	FROM
+		patienthospitalizebasicinfo phb
+		LEFT JOIN bednumber bed ON phb.BedNumber_DBKey = Bed.BedNumber_DBKey
+		LEFT JOIN department d ON d.Department_DBKey = phb.Department_DBKey
+		LEFT JOIN patientbasicinfo pb ON phb.PATIENT_DBKEY = pb.PATIENT_DBKEY 
+	) b ON b.PatientHospitalize_DBKey = nas.PatientHospitalize_DBKey
+	LEFT JOIN USER u1 ON u1.User_DBKey = nad.PreparationID
+	LEFT JOIN USER u2 ON u2.User_DBKey = nad.HandoverPeople
+	LEFT JOIN USER u3 ON u3.User_DBKey = nad.PreparationPerson
+	LEFT JOIN ( SELECT syscode, syscodename FROM syscode WHERE SystemCodeTypeName = 'doTime' OR SystemCodeTypeName = 'ENTime' ) w ON nad.AdviceDoTimeSegmental = w.syscode 
+WHERE
+	nad.RefundStatus >= 0 
+	AND date_format( na.AdviceDate, '%Y-%m-%d' ) = '$adviceDate' 
+	) tb 
+GROUP BY
+	NutrientAdviceSummary_DBKey,
+	advicedate,
+	DepartmentName,
+	BedCode,
+	PatientName 
+ORDER BY
+	DepartmentName,
+	BedCode,
+PatientName";
+}
+
+function getDetailSql($adviceDate){
+    return "select nas.NutrientAdviceSummary_DBKey,nad.TakeOrder, GROUP_CONCAT(rap.RecipeAndProductName,' （',nad.Specification,' * ',nad.AdviceAmount, '）<br/>' separator '') RecipeAndProductName  from nutrientadvicedetail nad 
+    inner JOIN nutrientadvice na ON na.NutrientAdvice_DBKey = nad.NutrientAdvice_DBKey
+    inner join recipeandproduct rap ON rap.RecipeAndProduct_DBKey = nad.RecipeAndProduct_DBKey
+    inner join nutrientadvicesummary nas on nas.NutrientAdviceSummary_DBKey = na.NutrientAdviceSummary_DBKey
+    where nad.RefundStatus>=0 and date_format(na.AdviceDate , '%Y-%m-%d') = '$adviceDate'
+    group by nas.NutrientAdviceSummary_DBKey, nad.TakeOrder";
 }
