@@ -12,16 +12,9 @@ left join bednumber g on g.BedNumber_DBKey = d.BedNumber_DBKey
 left join syscode h on h.SysCode = a.PreparationMode and h.SystemCodeTypeName = 'PreparationMode'
 where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) limit 0,1";
 $result = $db->fetch_row($sql);
-$baseInfo = "姓名:<font style='font-size: 11pt;'>" . $result["PatientName"] . "</font>&nbsp;
-科室:<font style='font-size: 11pt;'>" . $result["DepartmentName"] . "</font>&nbsp;
-床号:<font style='font-size: 11pt;'>" . $result["Bed"] . "</font>&nbsp;
-住院号:<font style='font-size: 11pt;'>" . $result["HospitalizationNumber"] . "</font>&nbsp;
-医嘱单号:<font style='font-size: 11pt;'>" . $result["NutrientAdviceSummary_DBKey"] . "</font>&nbsp;
-制剂方式:<font style='font-size: 11pt;'>" . $result["PreparationMode"] . "</font>&nbsp;
-服用时间:<font style='font-size: 11pt;'>" . $result["TakeOrder"] . "</font>&nbsp;";
 
 //制剂数据
-$sql = "select b.RecipeAndProductName,a.AdviceAmount,a.NutrientAdviceDetailRemark,c.MeasureUnitName, b.wrapperType from nutrientadvicedetail a
+$sql = "select b.RecipeAndProductName,a.AdviceAmount,a.NutrientAdviceDetailRemark,c.MeasureUnitName, b.wrapperType, a.Specification from nutrientadvicedetail a
 INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
@@ -38,35 +31,28 @@ $tblDetail = $db->fetch_all($sql);
     </tr>
 </table>
 
-<table style="margin-top:-1px" >
+<table  style="margin-top:-1px" >
     <tr>
     <td style="border-right:none">品名</td>
     <td style="padding:0px">
         <table style="margin-top:-1px;margin-bottom:-1px">
             <tr>
                 <td style="padding:0px">
-                <table  id="tblNutrientadvicedetail" >
-    <thead>
-        <tr>
-        <td>品名</td>
-        <td><nobr>数量</nobr></td>
-        <td>备注</td>
-        </tr>
-    </thead>
+                <table  class="recipeTable" id="tblNutrientadvicedetail" >
     <tbody>
         <?php
 foreach ($tblDetail as $key => $value) {
-    $unit = "";
-    if ($value["wrapperType"] == "1") {
-        $unit = $value["MeasureUnitName"];
-    } else {
-        $unit = $value["MeasureUnitName"];
-    }
+    // $unit = "";
+    // if ($value["wrapperType"] == "1") {
+    //     $unit = $value["MeasureUnitName"];
+    // } else {
+    //     $unit = $value["MeasureUnitName"];
+    // }
 
     echo "<tr>
             <td>" . $value["RecipeAndProductName"] . "</td>
-            <td>" . $value["AdviceAmount"] . " " . $unit . "</td>
-            <td>" . $value["NutrientAdviceDetailRemark"] . "</td>
+            <td>规格：".$value["Specification"]."</td>
+            <td> * " . $value["AdviceAmount"] ."</td>
             </tr>";
 }
 ?>
@@ -78,8 +64,19 @@ foreach ($tblDetail as $key => $value) {
                 <td style="padding:0px">
                     <table style="margin-top:-1px;">
                         <tr>
-                        <td>2</td>
-                        <td>3</td>
+                        <td>时间：<?php echo $result["TakeOrder"] ?></td>
+                        <td>制剂方式：<?php echo $result["PreparationMode"] ?> 备注：
+                                室常温保存不超过6小时，4℃保存不超过12小时<br/>
+                                <?php
+                                $PreparationMode = $result["PreparationMode"];
+                                if ($PreparationMode == "粉剂") {
+                                    echo "用法：温水冲服<br/>";
+                                } else if ($PreparationMode == "管饲") {
+                                    echo "输注速度：<br/>";
+                                }
+
+                                ?>
+                        </td>
                         </tr>
                     </table>
                 </td>
@@ -89,20 +86,4 @@ foreach ($tblDetail as $key => $value) {
     </tr>
 </table>
 
-<div>
-     <?php echo $baseInfo ?>
-</div>
-
-
-禁止静脉注入<br/>
-室常温保存不超过6小时，4℃保存不超过12小时<br/>
-<?php
-$PreparationMode = $result["PreparationMode"];
-if ($PreparationMode == "粉剂") {
-    echo "用法：温水冲服<br/>";
-} else if ($PreparationMode == "管饲") {
-    echo "输注速度：<br/>";
-}
-
-?>
 </div>

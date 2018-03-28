@@ -9,6 +9,11 @@ table td,th
     border-bottom:none;
 }
 
+.recipeTable td,th
+{
+    border:none;
+}
+
 body
 {
     font-family: verdana,arial,sans-serif;
