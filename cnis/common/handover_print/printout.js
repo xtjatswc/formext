@@ -4,7 +4,7 @@ printout.urlParams = util.urlToObject(window.location.search);
 
 $(function ($) {
 
-    util.bootstrapLodop(2, function(){
+    util.bootstrapLodop(4, function(){
         if(util.printerSetting.PrinterName){
             $("#printerName").html(util.printerSetting.PrinterName);
         }else{
@@ -70,7 +70,7 @@ printout.printLoad = function (flag) {
 
 printout.createPrintPage = function (divRecipe) {
 
-    LODOP.PRINT_INITA(0, 0, "148mm", "160mm", "住院医嘱单打印");
+    LODOP.PRINT_INITA(0, 0, "148mm", "160mm", "医嘱交接单打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
     if (util.printerSetting.PrinterName == "#未设置#") {
         $("#lsMsg").html("尚未设置默认的标签打印机！");
@@ -84,10 +84,8 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_PRINT_PAGESIZE(util.printerSetting.Orient, util.printerSetting.PageWidth, util.printerSetting.PageHeigth, util.printerSetting.PageName);
     //是否控制位置基点，true时，对套打有利
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
-    var strStyle = document.getElementById("style1").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
+    var strStyle = document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
     
-    LODOP.ADD_PRINT_BARCODE("7.12mm","6.59mm","44.58mm","10.13mm","93Extended",printout.urlParams.recipeNo);
-
     LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "145mm", "150mm", strStyle + divRecipe);
     LODOP.SET_PRINT_STYLEA(0,"Horient",3); 
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);

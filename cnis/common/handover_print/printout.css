@@ -1,0 +1,6 @@
+table {width:100%;border-collapse:collapse;}
+table table{ border-style:hidden;}
+table td,th
+{
+    border:1px solid black;font-size: 10pt;padding:1px; 
+}
