@@ -22,7 +22,7 @@ $baseInfo = "姓名:<font style='font-size: 11pt;'>".$result["PatientName"]."</f
 
 
 //制剂数据
-$sql = "select b.RecipeAndProductName,a.AdviceAmount,a.NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType from nutrientadvicedetail a
+$sql = "select b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType from nutrientadvicedetail a
 INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 left join measureunit d on d.MeasureUnit_DBKey = b.minUnit_DBKey
@@ -31,25 +31,32 @@ $tblDetail = $db->fetch_all($sql);
 ?>
 
 <div class="labelContent">
-<div>
+<!-- <div>
      <?php echo $baseInfo ?>
-</div>
+</div> -->
 
-<table  id="tblNutrientadvicedetail" style="width:100%">
-    <thead>
-        <tr>
-        <td>品名</td>
-        <td><nobr>数量</nobr></td>
-        <td>备注</td>
-        </tr>
-    </thead>
+<table class="baseTable">
+    <tr>
+    <td>姓名：<?php echo $result["PatientName"] ?></td>
+    <td>科室：<?php echo $result["DepartmentName"] ?></td>
+    <td>床号：<?php echo $result["Bed"] ?></td>
+    </tr>
+</table>
+<table  style="margin-top:-1px" >
+    <tr>
+    <td style="border-right:none">品名</td>
+    <td style="padding:0px">
+        <table style="margin-top:-1px;margin-bottom:-1px">
+            <tr>
+                <td style="padding:0px">
+                <table  class="recipeTable" id="tblNutrientadvicedetail" >
     <tbody>
         <?php
 foreach ($tblDetail as $key => $value) {
     $unit = "";
-    if($value["wrapperType"] == "1"){
+    if ($value["wrapperType"] == "1") {
         $unit = $value["minUnitName"];
-    }else{
+    } else {
         $unit = $value["MeasureUnitName"];
     }
 
@@ -57,20 +64,36 @@ foreach ($tblDetail as $key => $value) {
             <td>" . $value["RecipeAndProductName"] . "</td>
             <td>" . $value["AdviceAmount"] . " ". $unit . "</td>
             <td>" . $value["NutrientAdviceDetailRemark"] . "</td>
-            </tr>";
+          </tr>";
 }
 ?>
     </tbody>
 </table>
-禁止静脉注入<br/>
-室常温保存不超过6小时，4℃保存不超过12小时<br/>
-<?php
-$PreparationMode = $result["PreparationMode"];
-if ($PreparationMode == "粉剂") {
-    echo "用法：温水冲服<br/>";
-} else if ($PreparationMode == "管饲") {
-    echo "输注速度：<br/>";
-}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:0px">
+                    <table style="margin-top:-1px;">
+                        <tr>
+                        <td><nobr>时间：</nobr><br/><nobr><?php echo $result["TakeOrder"] ?></nobr></td>
+                        <td>制剂方式：<?php echo $result["PreparationMode"] ?> 备注：
+                                室常温保存不超过6小时，4℃保存不超过12小时<br/>
+                                <?php
+                                $PreparationMode = $result["PreparationMode"];
+                                if ($PreparationMode == "粉剂") {
+                                    echo "用法：温水冲服<br/>";
+                                } else if ($PreparationMode == "管饲") {
+                                    echo "输注速度：<br/>";
+                                }
 
-?>
+                                ?>
+                        </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </td>
+    </tr>
+</table>
 </div>

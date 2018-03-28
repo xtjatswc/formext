@@ -64,7 +64,7 @@ foreach ($tblDetail as $key => $value) {
                 <td style="padding:0px">
                     <table style="margin-top:-1px;">
                         <tr>
-                        <td>时间：<?php echo $result["TakeOrder"] ?></td>
+                        <td><nobr>时间：</nobr><br/><nobr><?php echo $result["TakeOrder"] ?></nobr></td>                        
                         <td>制剂方式：<?php echo $result["PreparationMode"] ?> 备注：
                                 室常温保存不超过6小时，4℃保存不超过12小时<br/>
                                 <?php
