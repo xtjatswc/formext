@@ -12,14 +12,6 @@ left join bednumber g on g.BedNumber_DBKey = d.BedNumber_DBKey
 left join syscode h on h.SysCode = a.PreparationMode and h.SystemCodeTypeName = 'PreparationMode'
 where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) limit 0,1";
 $result = $db->fetch_row($sql);
-$baseInfo = "姓名:<font style='font-size: 11pt;'>".$result["PatientName"]."</font>&nbsp;
-科室:<font style='font-size: 11pt;'>" . $result["DepartmentName"] . "</font>&nbsp;
-床号:<font style='font-size: 11pt;'>" . $result["Bed"] . "</font>&nbsp;
-住院号:<font style='font-size: 11pt;'>" . $result["HospitalizationNumber"] . "</font>&nbsp;
-医嘱单号:<font style='font-size: 11pt;'>" . $result["NutrientAdviceSummary_DBKey"] . "</font>&nbsp;
-制剂方式:<font style='font-size: 11pt;'>" . $result["PreparationMode"] . "</font>&nbsp;
-服用时间:<font style='font-size: 11pt;'>" . $result["TakeOrder"] . "</font>&nbsp;";
-
 
 //制剂数据
 $sql = "select b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType from nutrientadvicedetail a
@@ -31,9 +23,6 @@ $tblDetail = $db->fetch_all($sql);
 ?>
 
 <div class="labelContent">
-<!-- <div>
-     <?php echo $baseInfo ?>
-</div> -->
 
 <table class="baseTable">
     <tr>
