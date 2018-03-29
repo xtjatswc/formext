@@ -39,7 +39,7 @@ function randerBodyCallBack()
         <input type="button" value="检测打印插件" onclick="util.CheckLodopIsInstall()" />
         <input type="button" value="设置" onclick="printout.printSetting()" />
         <input type="button" value="打印维护" onclick="printout.printSetup()" />
-        <div style="display:none2">
+        <div style="display:none">
             <input type="button" value="打印设计" onclick="printout.printDesign()" />
             <input type="button" value="打印预览" onclick="printout.preview()" />
             <input id="btnPrint" type="button" value="打印" onclick="printout.print()" />
@@ -54,7 +54,9 @@ function randerBodyCallBack()
 
     global $db;
     $adviceDate = $_GET["adviceDate"];
-    $sql = getSql($adviceDate);
+    $patientName = $_GET["patientName"];
+    $deptId = $_GET["deptId"];
+    $sql = getSql($adviceDate, $patientName, $deptId);
     $recipe = $db->fetch_all($sql);
 
     $sql = getDetailSql($adviceDate);
@@ -112,8 +114,18 @@ function getCellValue($recipeDetail, $takeOrder, $NutrientAdviceSummary_DBKey){
     return "";
 }
 
-function getSql($adviceDate)
+function getSql($adviceDate, $patientName, $deptId)
 {
+    $patientNameCondition = "";
+    if($patientName != ""){
+        $patientNameCondition = " and pb.patientName like '%$patientName%'";
+    }
+
+    $deptIdCondition = "";
+    if($deptId != ""){
+        $deptIdCondition = " and d.Department_DBKey = $deptId";
+    }
+
     return "      
 	SELECT
 	NutrientAdviceSummary_DBKey,
@@ -146,7 +158,7 @@ FROM
 	RIGHT JOIN nutrientadvicedetail nad ON nad.NutrientAdvice_DBKey = na.NutrientAdvice_DBKey
 	LEFT JOIN recipeandproduct rap ON rap.RecipeAndProduct_DBKey = nad.RecipeAndProduct_DBKey
 	LEFT JOIN medicine m ON m.Medicine_DBKey = nad.Medicine_DBKey
-	LEFT JOIN (
+	inner JOIN (
 	SELECT
 		Bed.BedCode AS BedCode,
 		d.DepartmentName AS DepartmentName,
@@ -158,7 +170,8 @@ FROM
 		patienthospitalizebasicinfo phb
 		LEFT JOIN bednumber bed ON phb.BedNumber_DBKey = Bed.BedNumber_DBKey
 		LEFT JOIN department d ON d.Department_DBKey = phb.Department_DBKey
-		LEFT JOIN patientbasicinfo pb ON phb.PATIENT_DBKEY = pb.PATIENT_DBKEY 
+        LEFT JOIN patientbasicinfo pb ON phb.PATIENT_DBKEY = pb.PATIENT_DBKEY 
+    where 1=1 $patientNameCondition $deptIdCondition
 	) b ON b.PatientHospitalize_DBKey = nas.PatientHospitalize_DBKey
 	LEFT JOIN USER u1 ON u1.User_DBKey = nad.PreparationID
 	LEFT JOIN USER u2 ON u2.User_DBKey = nad.HandoverPeople
