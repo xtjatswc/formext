@@ -14,7 +14,9 @@ where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) limit 0,1";
 $result = $db->fetch_row($sql);
 
 //制剂数据
-$sql = "select b.RecipeAndProductName,a.AdviceAmount,a.NutrientAdviceDetailRemark,c.MeasureUnitName, b.wrapperType, a.Specification from nutrientadvicedetail a
+$sql = "select b.RecipeAndProductName,cast(a.AdviceAmount as SIGNED INTEGER) AdviceAmount,a.NutrientAdviceDetailRemark,c.MeasureUnitName, b.wrapperType, a.Specification
+,a.NutrientAdviceDetailRemark, a.LiquidAmount
+from nutrientadvicedetail a
 INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
@@ -49,10 +51,15 @@ foreach ($tblDetail as $key => $value) {
     //     $unit = $value["MeasureUnitName"];
     // }
 
+    $NutrientAdviceDetailRemark = $value["NutrientAdviceDetailRemark"] == "无" ? "" : $value["NutrientAdviceDetailRemark"];
+    $LiquidAmount = $value["LiquidAmount"] == 0 ? "" : $value["LiquidAmount"] . "ml";
+    
     echo "<tr>
             <td>" . $value["RecipeAndProductName"] . "</td>
             <td>规格：".$value["Specification"]."</td>
-            <td> * " . $value["AdviceAmount"] ."</td>
+            <td>*".$value["AdviceAmount"] ."</td>
+            <td>". $NutrientAdviceDetailRemark . "</td>
+            <td>". $LiquidAmount . "</td>
             </tr>";
 }
 ?>
