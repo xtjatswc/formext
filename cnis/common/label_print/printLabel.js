@@ -73,15 +73,15 @@ GROUP BY \
 
             $("#labelTip").html("");
 
-            if ($("#printerName").html() == "#未设置#") {
-                if (confirm("未设置打印机，是否输出到默认打印机？")) {
-                    $("#btnPrint").click();
-                }
-            } else {
-                $("#btnPrint").click();
+            // if ($("#printerName").html() == "#未设置#") {
+            //     if (confirm("未设置打印机，是否输出到默认打印机？")) {
+            //         $("#btnPrint").click();
+            //     }
+            // } else {
+            //     $("#btnPrint").click();
+            // }
 
-            }
-
+            $("td").prop("contentEditable", true);
         }
     }, 500);
 
@@ -105,6 +105,13 @@ printLabel.preview = function () {
 }
 
 printLabel.print = function () {
+
+    if ($("#printerName").html() == "#未设置#") {
+        if (!confirm("未设置打印机，是否输出到默认打印机？")) {
+            return;
+        }
+    } 
+
     if (!printLabel.isDomReady) {
         alert("页面没加载完，请重试！");
         return;

@@ -37,10 +37,10 @@ function randerBodyCallBack(){
     <input type="button" value="检测打印插件" onclick="util.CheckLodopIsInstall()" />
     <input type="button" value="设置" onclick="printLabel.printSetting()" />
     <input type="button" value="打印维护" onclick="printLabel.printSetup()" />
+    <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
     <div style="display:none">
         <input type="button" value="打印设计" onclick="printLabel.printDesign()" />
         <input type="button" value="打印预览" onclick="printLabel.preview()" />
-        <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />
     </div>
 </div>
 <br/>

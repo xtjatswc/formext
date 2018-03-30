@@ -39,10 +39,10 @@ function randerBodyCallBack()
         <input type="button" value="检测打印插件" onclick="util.CheckLodopIsInstall()" />
         <input type="button" value="设置" onclick="printout.printSetting()" />
         <input type="button" value="打印维护" onclick="printout.printSetup()" />
+        <input id="btnPrint" type="button" value="打印" onclick="printout.print()" />
         <div style="display:none">
             <input type="button" value="打印设计" onclick="printout.printDesign()" />
             <input type="button" value="打印预览" onclick="printout.preview()" />
-            <input id="btnPrint" type="button" value="打印" onclick="printout.print()" />
         </div>
     </div>
     <br/>
@@ -80,6 +80,7 @@ function randerBodyCallBack()
         $syscode = $db->fetch_all($sql);
         foreach ($syscode as $syscodekey => $syscodevalue) {
            echo "<td>".$syscodevalue["SysCodeName"]."</td>";
+           echo "<td>签名</td>";
         }
         ?>
     </tr>
@@ -94,6 +95,7 @@ foreach ($recipe as $key => $value) {
         <?php
         foreach ($syscode as $syscodekey => $syscodevalue) {
            echo "<td>".getCellValue($recipeDetail, $syscodevalue["SysCodeName"], $value["NutrientAdviceSummary_DBKey"])."</td>";
+           echo "<td></td>";
         }
         ?>            
     </tr>
