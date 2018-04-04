@@ -73,7 +73,7 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.PRINT_INITA(0, 0, "148mm", "160mm", "住院医嘱单打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
     if (util.printerSetting.PrinterName == "#未设置#") {
-        $("#lsMsg").html("尚未设置默认的标签打印机！");
+        $("#lsMsg").html("尚未设置默认的医嘱单打印机！");
     } else {
         if (!LODOP.SET_PRINTER_INDEXA(util.printerSetting.PrinterName)) {
             $("#lsMsg").html("未检测到该打印机，将输出到默认打印机！");

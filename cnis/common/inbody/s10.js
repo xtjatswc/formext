@@ -96,7 +96,7 @@ s10.createPrintPage = function () {
 
     LODOP.PRINT_INITA(0, 0, "210mm", "297mm", "InBody报告纸打印");
     if (util.printerSetting.PrinterName == "#未设置#") {
-        $("#lsMsg").html("尚未设置默认的标签打印机！");
+        $("#lsMsg").html("尚未设置默认的人体成分报告打印机！");
     } else {
         if (!LODOP.SET_PRINTER_INDEXA(util.printerSetting.PrinterName)) {
             $("#lsMsg").html("未检测到该打印机，将输出到默认打印机！");
