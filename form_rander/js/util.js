@@ -379,7 +379,7 @@ util.bootstrapLodop = function(printerType, callback){
         if(document.readyState==="complete"){
             //全局变量
             LODOP = getLodop();
-            if(!LODOP){
+            if(!LODOP || !LODOP.GET_SYSTEM_INFO){
                 window.clearInterval(timer);
                 return;
             }
