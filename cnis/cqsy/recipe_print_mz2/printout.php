@@ -118,20 +118,22 @@ $recipeRecords = $db->fetch_all($sql);
                 $specification = $value["NutrientProductSpecification"]." ".$unitDict[$value["MeasureUnit_DBKey"]]."/".$unitDict[$value["minUnit_DBKey"]];   
             }
 
-            echo "<tr>
+            echo "<tr id=".$value["NutrientAdviceDetail_DBKEY"].">
             <td>".$value["RecipeAndProductName"]."</td>
             <td>".$specification."</td>
             <td>".$value["AdviceAmount"]." ".$value["Unit"]."</td>
             <td>".$value["ChargingItemName"]."</td>
-            <td><input type='text' value='1'/></td>
-            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_A_".$value["NutrientAdviceDetail_DBKEY"]."' type='radio' /><label for='radio_A_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice1"]." 元</label></td>
-            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_B_".$value["NutrientAdviceDetail_DBKEY"]."' type='radio' /><label for='radio_B_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice2"]." 元</label></td>
-            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_C_".$value["NutrientAdviceDetail_DBKEY"]."' type='radio' /><label for='radio_C_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice3"]." 元</label></td>
-            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_D_".$value["NutrientAdviceDetail_DBKEY"]."' type='radio' /><label for='radio_D_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice4"]." 元</label></td>
-            <td>111</td>
-            </tr>";
+            <td><input id='text_num_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='1'/></td>
+            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_A_".$value["NutrientAdviceDetail_DBKEY"]."' price='".$value["ChargingItemPrice1"]."' type='radio' /><label for='radio_A_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice1"]." 元</label></td>
+            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_B_".$value["NutrientAdviceDetail_DBKEY"]."' price='".$value["ChargingItemPrice2"]."' type='radio' /><label for='radio_B_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice2"]." 元</label></td>
+            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_C_".$value["NutrientAdviceDetail_DBKEY"]."' price='".$value["ChargingItemPrice3"]."' type='radio' /><label for='radio_C_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice3"]." 元</label></td>
+            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_D_".$value["NutrientAdviceDetail_DBKEY"]."' price='".$value["ChargingItemPrice4"]."' type='radio' /><label for='radio_D_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice4"]." 元</label></td>
+            <td><input name='text_money' id='text_money_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
+            </tr>
+            ";
         }
-        ?>            
+        ?>     
+        <tr><td colspan='10' style="text-align:right"><font id="label_totalMoney" color="blue">总金额：_ 元</font></td></tr>       
         </tbody>
     </table>
 <?php

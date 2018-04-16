@@ -22,6 +22,9 @@ $(function ($) {
 
     });
 
+    $(":radio").click(printout.calcMoney);
+    $(":text").keyup(printout.calcMoney);
+
 });
 
 printout.printSetting = function () {
@@ -115,4 +118,23 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);//语句控制显示标尺
     LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED", 1);//横向时的正向显示
 
+}
+
+printout.calcMoney = function(){
+    $tr = $(this).parents("tr");
+    var detailId = $tr.prop("id");
+    var num = $("#text_num_" + detailId).val(); //数量
+    var price = $tr.find(":radio").filter(":checked").attr("price"); //单价
+    var money = num * price;
+    if(money)
+        $("#text_money_" + detailId).val(money);
+
+    //计算总金额
+    var totalMoney = 0;
+    $(":text[name='text_money']").each(function(){
+        var value = parseFloat(this.value);
+        if(value)
+            totalMoney += value;
+    });
+    $("#label_totalMoney").text("总金额：" + totalMoney + " 元");
 }
