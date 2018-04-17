@@ -22,8 +22,9 @@ $(function ($) {
 
     });
 
-    $(":radio").click(printout.calcMoney);
-    $(":text").keyup(printout.calcMoney);
+    // $(":radio").click(printout.calcMoney);
+    // $(":text").keyup(printout.calcMoney);
+    printout.calcMoney();
 
 });
 
@@ -121,8 +122,46 @@ printout.createPrintPage = function (divRecipe) {
 }
 
 printout.calcMoney = function(){
+
+    //遍历所有收费项目
+    $("select[name='select_chargingitem']").each(function(){
+        $tr = $(this).parents("tr");
+        var detailId = $tr.attr("NutrientAdviceDetail_DBKEY");
+        var RecipeAndProduct_DBKey = $tr.attr("RecipeAndProduct_DBKey");
+    
+        var $option = $(this).children(":selected");
+        var spec = $option.attr("spec");
+        var price1 = $option.attr("price1");
+        var price2 = $option.attr("price2");
+
+        //加载对应规格
+        var specArr = spec.split("#");
+        for (let index = 0; index < specArr.length; index++) {
+            $("#select_spec_" + detailId).append("<option>" + specArr[index] + "</option>");
+        }
+
+        //单价
+        $("#text_price_" + detailId).val(price1);
+
+        //金额
+        var num = $("#text_num_" + detailId).val();
+        $("#text_money_" + detailId).val(num * price1);
+
+        //计算总金额
+        var totalMoney = 0;
+        $(":text[name='text_money']").each(function(){
+            var value = parseFloat(this.value);
+            if(value)
+                totalMoney += value;
+        });
+        $("#label_totalMoney").text("总金额：" + totalMoney + " 元");
+
+    });
+
+    return; 
     $tr = $(this).parents("tr");
-    var detailId = $tr.prop("id");
+    var detailId = $tr.attr("NutrientAdviceDetail_DBKEY");
+    var RecipeAndProduct_DBKey = $tr.attr("RecipeAndProduct_DBKey");
     var num = $("#text_num_" + detailId).val(); //数量
     var price = $tr.find(":radio").filter(":checked").attr("price"); //单价
     var money = num * price;
@@ -137,4 +176,13 @@ printout.calcMoney = function(){
             totalMoney += value;
     });
     $("#label_totalMoney").text("总金额：" + totalMoney + " 元");
+
+    //保存结果
+    var sql = "insert into chargingadvicedetail(NutrientAdviceDetail_DBKEY,RecipeAndProduct_DBKey,ChargingNum,ChargingPrice,ChargingMoney) values('{NutrientAdviceDetail_DBKEY}','{RecipeAndProduct_DBKey}','{ChargingNum}','{ChargingPrice}','{ChargingMoney}') ON DUPLICATE KEY UPDATE RecipeAndProduct_DBKey=VALUES(RecipeAndProduct_DBKey),ChargingNum=VALUES(ChargingNum),ChargingPrice=VALUES(ChargingPrice),ChargingMoney=VALUES(ChargingMoney);";
+
+    var sql2 = sql.format({NutrientAdviceDetail_DBKEY:detailId, RecipeAndProduct_DBKey:RecipeAndProduct_DBKey, ChargingNum: num, ChargingPrice : price, ChargingMoney:money});
+
+    $.post(pageExt.libPath + "exec2.php", { sql:sql2 },function(data){
+        var d = data;
+    },"json");
 }

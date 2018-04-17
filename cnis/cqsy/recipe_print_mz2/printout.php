@@ -73,13 +73,12 @@ $baseInfo = $db->fetch_row($sql);
 $sql = "select MeasureUnit_DBKey '0',MeasureUnitName '1' from measureunit";
 $unitDict = $db->fetch_cols($sql);
 
-$sql = "select d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,f.ChargingItemName,f.ChargingItemPrice1,f.ChargingItemPrice2,f.ChargingItemPrice3,f.ChargingItemPrice4,c.NutrientAdviceDetail_DBKEY,
+$sql = "select d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,c.NutrientAdviceDetail_DBKEY,d.RecipeAndProduct_DBKey,
 cast(c.AdviceAmount as SIGNED INTEGER) AdviceAmount, c.CurrentPrice from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
 inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
-left join chargingitems f on f.RecipeAndProduct_DBKey = d.RecipeAndProduct_DBKey
 where a.NutrientAdviceSummary_DBKey = $recipeNo order by d.RecipeAndProduct_DBKey";
 $recipeRecords = $db->fetch_all($sql);
 
@@ -91,11 +90,9 @@ $recipeRecords = $db->fetch_all($sql);
             <th>规格</th>
             <th>数量</th>
             <th>收费项目</th>
-            <th>数量</th>
-            <th>单价A</th>
-            <th>单价B</th>
-            <th>单价C</th>
-            <th>单价D</th>
+            <th>规格</th>
+            <th>单价</th>
+            <th>数量</th>            
             <th>金额</th>
             </tr>
         </thead>
@@ -118,25 +115,43 @@ $recipeRecords = $db->fetch_all($sql);
                 $specification = $value["NutrientProductSpecification"]." ".$unitDict[$value["MeasureUnit_DBKey"]]."/".$unitDict[$value["minUnit_DBKey"]];   
             }
 
-            echo "<tr id=".$value["NutrientAdviceDetail_DBKEY"].">
+
+      
+
+            echo "<tr NutrientAdviceDetail_DBKEY=".$value["NutrientAdviceDetail_DBKEY"]." RecipeAndProduct_DBKey=".$value["RecipeAndProduct_DBKey"].">
             <td>".$value["RecipeAndProductName"]."</td>
             <td>".$specification."</td>
             <td>".$value["AdviceAmount"]." ".$value["Unit"]."</td>
-            <td>".$value["ChargingItemName"]."</td>
+            <td>".getChargingItems($value["RecipeAndProduct_DBKey"])."</td>
+            <td>
+                <select id='select_spec_".$value["NutrientAdviceDetail_DBKEY"]."' >
+                </select>
+            </td>
+            <td><input id='text_price_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
             <td><input id='text_num_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='1'/></td>
-            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_A_".$value["NutrientAdviceDetail_DBKEY"]."' price='".$value["ChargingItemPrice1"]."' type='radio' /><label for='radio_A_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice1"]." 元</label></td>
-            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_B_".$value["NutrientAdviceDetail_DBKEY"]."' price='".$value["ChargingItemPrice2"]."' type='radio' /><label for='radio_B_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice2"]." 元</label></td>
-            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_C_".$value["NutrientAdviceDetail_DBKEY"]."' price='".$value["ChargingItemPrice3"]."' type='radio' /><label for='radio_C_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice3"]." 元</label></td>
-            <td><input name='radio_".$value["NutrientAdviceDetail_DBKEY"]."' id='radio_D_".$value["NutrientAdviceDetail_DBKEY"]."' price='".$value["ChargingItemPrice4"]."' type='radio' /><label for='radio_D_".$value["NutrientAdviceDetail_DBKEY"]."'>".$value["ChargingItemPrice4"]." 元</label></td>
             <td><input name='text_money' id='text_money_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
             </tr>
             ";
         }
         ?>     
-        <tr><td colspan='10' style="text-align:right"><font id="label_totalMoney" color="blue">总金额：_ 元</font></td></tr>       
+        <tr><td colspan='11' style="text-align:right"><font id="label_totalMoney" color="blue">总金额：_ 元</font></td></tr>       
         </tbody>
     </table>
 <?php
-global $db;
+
 }
+
+//查找收费项目
+function getChargingItems($RecipeAndProduct_DBKey){
+    global $db;
+    $select = "<select name='select_chargingitem'>";
+    $sql = "select b.* from chargingitemsrelation a inner join chargingitems b on a.ChargingItemID = b.ChargingItemID  where RecipeAndProduct_DBKey = $RecipeAndProduct_DBKey";
+    $chargingItems = $db->fetch_all($sql);
+    foreach ($chargingItems as $key => $value) {
+        $select .= "<option spec='".$value["ChargingItemSpec"]."' price1='".$value["ChargingItemPrice1"]."' price2='".$value["ChargingItemPrice2"]."' >".$value["ChargingItemName"]."</option>";
+    }
+    $select .= "</select>";
+    return $select;
+}
+
 ?>
