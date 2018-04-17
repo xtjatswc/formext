@@ -124,11 +124,11 @@ $recipeRecords = $db->fetch_all($sql);
             <td>".$value["AdviceAmount"]." ".$value["Unit"]."</td>
             <td>".getChargingItems($value["RecipeAndProduct_DBKey"])."</td>
             <td>
-                <select id='select_spec_".$value["NutrientAdviceDetail_DBKEY"]."' >
+                <select name='select_spec' id='select_spec_".$value["NutrientAdviceDetail_DBKEY"]."' >
                 </select>
             </td>
             <td><input id='text_price_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
-            <td><input id='text_num_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='1'/></td>
+            <td><input name='text_num' id='text_num_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='1'/></td>
             <td><input name='text_money' id='text_money_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
             </tr>
             ";

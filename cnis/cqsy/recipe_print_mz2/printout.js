@@ -23,7 +23,8 @@ $(function ($) {
     });
 
     // $(":radio").click(printout.calcMoney);
-    // $(":text").keyup(printout.calcMoney);
+    $(":text").keyup(printout.calcMoney);
+    $("select").change(printout.calcMoney);
     printout.calcMoney();
 
 });
@@ -123,6 +124,9 @@ printout.createPrintPage = function (divRecipe) {
 
 printout.calcMoney = function(){
 
+    //触发事件控件
+    var eventName = $(this).attr("name");
+
     //遍历所有收费项目
     $("select[name='select_chargingitem']").each(function(){
         $tr = $(this).parents("tr");
@@ -136,16 +140,23 @@ printout.calcMoney = function(){
 
         //加载对应规格
         var specArr = spec.split("#");
-        for (let index = 0; index < specArr.length; index++) {
-            $("#select_spec_" + detailId).append("<option>" + specArr[index] + "</option>");
+        if(!eventName || eventName == "select_chargingitem"){
+            $("#select_spec_" + detailId).empty();
+            for (let index = 0; index < specArr.length; index++) {
+                $("#select_spec_" + detailId).append("<option>" + specArr[index] + "</option>");
+            }
         }
 
-        //单价
-        $("#text_price_" + detailId).val(price1);
+        //根据规格取单价
+        var price = price1;
+        if(specArr.length == 2 &&  $("#select_spec_" + detailId).prop('selectedIndex') == 1){
+            price = price2;
+        }
+        $("#text_price_" + detailId).val(price);
 
         //金额
         var num = $("#text_num_" + detailId).val();
-        $("#text_money_" + detailId).val(num * price1);
+        $("#text_money_" + detailId).val(num * price);
 
         //计算总金额
         var totalMoney = 0;
