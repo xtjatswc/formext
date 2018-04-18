@@ -42,11 +42,11 @@ function randerBodyCallBack(){
         <input type="button" value="检测打印插件" onclick="util.CheckLodopIsInstall()" />
         <input type="button" value="设置" onclick="printout.printSetting()" />
         <input type="button" value="打印维护" onclick="printout.printSetup()" />
+        <input id="btnSave" type="button" value="保存" onclick="printout.save()" />        
         <input id="btnPrint" type="button" value="打印" onclick="printout.print()" />        
         <div style="display:none">
             <input type="button" value="打印设计" onclick="printout.printDesign()" />
             <input type="button" value="打印预览" onclick="printout.preview()" />
-            <input id="btnPrint" type="button" value="打印" onclick="printout.print()" />
         </div>
     </div>
     <br/>
@@ -93,6 +93,7 @@ $recipeRecords = $db->fetch_all($sql);
             <th>规格</th>
             <th>单价</th>
             <th>数量</th>            
+            <th>单位</th>            
             <th>金额</th>
             </tr>
         </thead>
@@ -129,6 +130,7 @@ $recipeRecords = $db->fetch_all($sql);
             </td>
             <td><input id='text_price_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
             <td><input name='text_num' id='text_num_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='1'/></td>
+            <td><input name='text_unit' id='text_unit_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
             <td><input name='text_money' id='text_money_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
             </tr>
             ";
@@ -148,7 +150,7 @@ function getChargingItems($RecipeAndProduct_DBKey){
     $sql = "select b.* from chargingitemsrelation a inner join chargingitems b on a.ChargingItemID = b.ChargingItemID  where RecipeAndProduct_DBKey = $RecipeAndProduct_DBKey";
     $chargingItems = $db->fetch_all($sql);
     foreach ($chargingItems as $key => $value) {
-        $select .= "<option spec='".$value["ChargingItemSpec"]."' price1='".$value["ChargingItemPrice1"]."' price2='".$value["ChargingItemPrice2"]."' >".$value["ChargingItemName"]."</option>";
+        $select .= "<option ChargingItemID='".$value["ChargingItemID"]."' spec='".$value["ChargingItemSpec"]."' price1='".$value["ChargingItemPrice1"]."' price2='".$value["ChargingItemPrice2"]."' unit='".$value["ChargingItemUnit"]."' >".$value["ChargingItemName"]."</option>";
     }
     $select .= "</select>";
     return $select;
