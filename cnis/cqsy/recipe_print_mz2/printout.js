@@ -185,15 +185,17 @@ printout.save = function(){
         var num = $("#text_num_" + detailId).val();
         var price = $("#text_price_" + detailId).val();
         var money = $("#text_money_" + detailId).val();
+        var ChargingItemUnit = $("#text_unit_" + detailId).val();
 
         var $option = $(this).children(":selected");
         var ChargingItemID = $option.attr("ChargingItemID");
         var ChargingItemName = $option.text();
+        var ChargingItemSpec = $("#select_spec_" + detailId).children(":selected").text();
 
         //保存结果
-        var sql = "insert into chargingadvicedetail(NutrientAdviceDetail_DBKEY,RecipeAndProduct_DBKey,ChargingItemID,ChargingItemName,ChargingNum,ChargingPrice,ChargingMoney) values('{NutrientAdviceDetail_DBKEY}','{RecipeAndProduct_DBKey}','{ChargingItemID}','{ChargingItemName}','{ChargingNum}','{ChargingPrice}','{ChargingMoney}') ON DUPLICATE KEY UPDATE RecipeAndProduct_DBKey=VALUES(RecipeAndProduct_DBKey),ChargingItemID=VALUES(ChargingItemID),ChargingItemName=VALUES(ChargingItemName),ChargingNum=VALUES(ChargingNum),ChargingPrice=VALUES(ChargingPrice),ChargingMoney=VALUES(ChargingMoney);";
+        var sql = "insert into chargingadvicedetail(NutrientAdviceDetail_DBKEY,RecipeAndProduct_DBKey,ChargingItemID,ChargingItemName,ChargingItemSpec,ChargingItemUnit,ChargingNum,ChargingPrice,ChargingMoney) values('{NutrientAdviceDetail_DBKEY}','{RecipeAndProduct_DBKey}','{ChargingItemID}','{ChargingItemName}','{ChargingItemSpec}','{ChargingItemUnit}','{ChargingNum}','{ChargingPrice}','{ChargingMoney}') ON DUPLICATE KEY UPDATE RecipeAndProduct_DBKey=VALUES(RecipeAndProduct_DBKey),ChargingItemID=VALUES(ChargingItemID),ChargingItemName=VALUES(ChargingItemName),ChargingItemSpec=VALUES(ChargingItemSpec),ChargingItemUnit=VALUES(ChargingItemUnit),ChargingNum=VALUES(ChargingNum),ChargingPrice=VALUES(ChargingPrice),ChargingMoney=VALUES(ChargingMoney);";
 
-        var sql2 = sql.format({NutrientAdviceDetail_DBKEY:detailId, RecipeAndProduct_DBKey:RecipeAndProduct_DBKey,ChargingItemID:ChargingItemID,ChargingItemName:ChargingItemName, ChargingNum: num, ChargingPrice : price, ChargingMoney:money});
+        var sql2 = sql.format({NutrientAdviceDetail_DBKEY:detailId, RecipeAndProduct_DBKey:RecipeAndProduct_DBKey,ChargingItemID:ChargingItemID,ChargingItemName:ChargingItemName,ChargingItemSpec:ChargingItemSpec, ChargingItemUnit:ChargingItemUnit, ChargingNum: num, ChargingPrice : price, ChargingMoney:money});
 
         $.post(pageExt.libPath + "exec2.php", { sql:sql2 },function(data){
             var d = data;
