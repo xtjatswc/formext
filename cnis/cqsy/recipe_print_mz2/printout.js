@@ -26,7 +26,7 @@ $(function ($) {
     $(":text").keyup(printout.calcMoney);
     $("select").change(printout.calcMoney);
     printout.calcMoney();
-
+    printout.reload();
 });
 
 printout.printSetting = function () {
@@ -164,15 +164,47 @@ printout.calcMoney = function(){
         $("#text_unit_" + detailId).val(unit);
 
         //计算总金额
-        var totalMoney = 0;
-        $(":text[name='text_money']").each(function(){
-            var value = parseFloat(this.value);
-            if(value)
-                totalMoney += value;
-        });
-        $("#label_totalMoney").text("总金额：" + totalMoney.toFixed(2) + " 元");
+        printout.calcTotalMoney();
+    });
+}
+
+//计算总金额
+printout.calcTotalMoney = function(){
+    var totalMoney = 0;
+    $(":text[name='text_money']").each(function(){
+        var value = parseFloat(this.value);
+        if(value)
+            totalMoney += value;
+    });
+    $("#label_totalMoney").text("总金额：" + totalMoney.toFixed(2) + " 元");
+}
+
+//回显收费信息
+printout.reload = function(){
+    //遍历所有收费项目
+    $("select[name='select_chargingitem']").each(function(){
+        $tr = $(this).parents("tr");
+        var detailId = $tr.attr("NutrientAdviceDetail_DBKEY");
+        var RecipeAndProduct_DBKey = $tr.attr("RecipeAndProduct_DBKey");
+
+        var sql = "select * from chargingadvicedetail where NutrientAdviceDetail_DBKEY = '{NutrientAdviceDetail_DBKEY}'";
+        var sql2 = sql.format({NutrientAdviceDetail_DBKEY:detailId});
+        $.getJSON(pageExt.libPath + "query.php", {sql : sql2}, function( data, status, xhr ) {
+            for(j = 0; j < data.length; j++) {        
+                util.getSelectOptionByValue("#select_chargingitem_" + detailId, data[j].ChargingItemID).attr("selected",true);
+                util.getSelectOptionByText("#select_spec_" + detailId, data[j].ChargingItemSpec).attr("selected",true);
+                $("#text_price_" + detailId).val(data[j].ChargingPrice);
+                $("#text_num_" + detailId).val(data[j].ChargingNum);
+                $("#text_unit_" + detailId).val(data[j].ChargingItemUnit);
+                $("#text_money_" + detailId).val(data[j].ChargingMoney);
+            } 
+
+            printout.calcTotalMoney();
+        });   
+
 
     });
+        
 }
 
 printout.save = function(){

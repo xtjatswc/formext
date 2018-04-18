@@ -123,7 +123,7 @@ $recipeRecords = $db->fetch_all($sql);
             <td>".$value["RecipeAndProductName"]."</td>
             <td>".$specification."</td>
             <td>".$value["AdviceAmount"]." ".$value["Unit"]."</td>
-            <td>".getChargingItems($value["RecipeAndProduct_DBKey"])."</td>
+            <td>".getChargingItems($value["RecipeAndProduct_DBKey"], $value["NutrientAdviceDetail_DBKEY"])."</td>
             <td>
                 <select name='select_spec' id='select_spec_".$value["NutrientAdviceDetail_DBKEY"]."' >
                 </select>
@@ -144,13 +144,13 @@ $recipeRecords = $db->fetch_all($sql);
 }
 
 //查找收费项目
-function getChargingItems($RecipeAndProduct_DBKey){
+function getChargingItems($RecipeAndProduct_DBKey, $NutrientAdviceDetail_DBKEY){
     global $db;
-    $select = "<select name='select_chargingitem'>";
+    $select = "<select name='select_chargingitem' id='select_chargingitem_".$NutrientAdviceDetail_DBKEY."'>";
     $sql = "select b.* from chargingitemsrelation a inner join chargingitems b on a.ChargingItemID = b.ChargingItemID  where RecipeAndProduct_DBKey = $RecipeAndProduct_DBKey";
     $chargingItems = $db->fetch_all($sql);
     foreach ($chargingItems as $key => $value) {
-        $select .= "<option ChargingItemID='".$value["ChargingItemID"]."' spec='".$value["ChargingItemSpec"]."' price1='".$value["ChargingItemPrice1"]."' price2='".$value["ChargingItemPrice2"]."' unit='".$value["ChargingItemUnit"]."' >".$value["ChargingItemName"]."</option>";
+        $select .= "<option value='".$value["ChargingItemID"]."' ChargingItemID='".$value["ChargingItemID"]."' spec='".$value["ChargingItemSpec"]."' price1='".$value["ChargingItemPrice1"]."' price2='".$value["ChargingItemPrice2"]."' unit='".$value["ChargingItemUnit"]."' >".$value["ChargingItemName"]."</option>";
     }
     $select .= "</select>";
     return $select;
