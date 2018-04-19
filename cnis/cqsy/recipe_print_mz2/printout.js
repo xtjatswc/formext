@@ -87,7 +87,7 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("style1").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
     
-    LODOP.ADD_PRINT_BARCODE("5.5mm","1.8mm","35.58mm","10.13mm","93Extended",printout.urlParams.recipeNo);
+    LODOP.ADD_PRINT_BARCODE("22.7mm","22.4mm","35.58mm","10.13mm","93Extended",printout.urlParams.recipeNo);
 
     LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "145mm", "150mm", strStyle + divRecipe);
     LODOP.SET_PRINT_STYLEA(0,"Horient",3); 

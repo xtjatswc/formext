@@ -60,16 +60,6 @@ function randerBodyCallBack(){
 global $db;
 
 $recipeNo = $_GET["recipeNo"];
-$sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, b.HospitalizationNumber, c.PatientName, c.PatientNo,
-c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
- d.DepartmentName, e.UserName, b.DiseaseListVal from nutrientadvicesummary a
-inner join patienthospitalizebasicinfo b on a.PatientHospitalize_DBKey = b.PatientHospitalize_DBKey
-inner join patientbasicinfo c on b.PATIENT_DBKEY = c.PATIENT_DBKEY
-inner join department d on d.Department_DBKey = b.Department_DBKey
-left join user e on e.User_DBKey = a.CreateBy
-where a.NutrientAdviceSummary_DBKey = $recipeNo";
-$baseInfo = $db->fetch_row($sql);
-
 //取单位
 $sql = "select MeasureUnit_DBKey '0',MeasureUnitName '1' from measureunit";
 $unitDict = $db->fetch_cols($sql);
@@ -82,7 +72,6 @@ inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_D
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 where a.NutrientAdviceSummary_DBKey = $recipeNo order by d.RecipeAndProduct_DBKey";
 $recipeRecords = $db->fetch_all($sql);
-
 ?>
     <table class="gridtable ">
         <thead>
