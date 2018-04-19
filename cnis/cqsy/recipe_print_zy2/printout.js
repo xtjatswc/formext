@@ -179,7 +179,8 @@ printout.calcTotalMoney = function(){
         if(value)
             totalMoney += value;
     });
-    $("#label_totalMoney").text("总金额：" + totalMoney.toFixed(2) + " 元");
+    totalMoney = totalMoney * $("#theAdviceDays").text();
+    $("#label_totalMoney").text("总金额：" + totalMoney.toFixed(2) + " 元 （共" + $("#theAdviceDays").text() + "天）");
 }
 
 //回显收费信息
