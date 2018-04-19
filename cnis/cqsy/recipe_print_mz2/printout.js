@@ -1,6 +1,7 @@
 
 var printout = {};
 printout.urlParams = util.urlToObject(window.location.search);
+printout.isDomReady = false;
 
 $(function ($) {
 
@@ -11,6 +12,7 @@ $(function ($) {
             $("#printerName").html("#未设置#");
         }
 
+        printout.isDomReady = true;
     });
 
     // $(":radio").click(printout.calcMoney);
@@ -37,10 +39,10 @@ printout.preview = function () {
 }
 
 printout.print = function () {
-    // if (!printout.isDomReady) {
-    //     alert("页面没加载完，请重试！");
-    //     return;
-    // }
+    if (!printout.isDomReady) {
+        alert("页面没加载完，请重试！");
+        return;
+    }
 
     //先保存
     $("#btnSave").click();
