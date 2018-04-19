@@ -90,7 +90,7 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("style1").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
     
-    LODOP.ADD_PRINT_BARCODE("28mm","22.6mm","35.58mm","10.13mm","93Extended",printout.urlParams.recipeNo);
+    //LODOP.ADD_PRINT_BARCODE("28mm","22.6mm","35.58mm","10.13mm","93Extended",printout.urlParams.recipeNo);
 
     LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "145mm", "150mm", strStyle + divRecipe);
     LODOP.SET_PRINT_STYLEA(0,"Horient",3); 
@@ -137,6 +137,8 @@ printout.calcMoney = function(){
         var price1 = $option.attr("price1");
         var price2 = $option.attr("price2");
         var unit = $option.attr("unit");
+
+        if(typeof(spec) == "undefined") return true; //// false时相当于break, 如果return true 就相当于continure。 
 
         //加载对应规格
         var specArr = spec.split("#");

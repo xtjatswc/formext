@@ -76,6 +76,12 @@ $sn = 1;
 $totalMoney = 0;
 foreach ($recipeRecords as $key => $value) {
     $totalMoney = $totalMoney + $value["ChargingMoney"];
+
+    //数量为0的不显示
+    echo $value["ChargingNum"];
+    if($value["ChargingMoney"] == "0" || $value["ChargingMoney"] == "")    
+        continue;
+
     echo "<tr>
     <td>".$sn."、</td>
     <td>".$value["ChargingItemName"]."</td>
