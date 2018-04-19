@@ -42,6 +42,9 @@ printout.print = function () {
     //     return;
     // }
 
+    //先保存
+    $("#btnSave").click();
+
     if ($("#printerName").html() == "#未设置#") {
         if (confirm("未设置打印机，是否输出到默认打印机？")) {
             printout.printLoad(4);
@@ -238,9 +241,10 @@ printout.save = function(){
 
     //alert("保存成功！");
 
+    $("#divRecipe").load("order.php?recipeNo=" + printout.urlParams.recipeNo);
+
     $.ajaxSetup({
         async: true
     });
 
-    $("#divRecipe").load("order.php?recipeNo=" + printout.urlParams.recipeNo);
 }
