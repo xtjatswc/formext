@@ -13,188 +13,158 @@ $page = new form_rander\page($db);
 $page->randerPage();
 
 //css样式
-function randerStylesheetCallBack()
-{
+function randerStylesheetCallBack(){
     ?>
 	<style id="style1">
     body {font-family:微软雅黑;}
     table {width:100%}
-    td,th {font-size: 10.5pt;padding:3px;text-align:left}
-    h3,h4 {margin:0px;}
+    td,th {font-size: 10.5pt;padding:3px;}
+    h3,h4 {margin:0px;text-align:center;}
+    table.gridtable {width:auto;}
+    table.gridtable td{padding:5px;}
+    input[type='text'] {width:50px;text-align:center;}
+    table.orderTable td{text-align:left;}
     </style>
     <?php
 }
 
 //javascript
-function randerJavascriptCallBack()
-{
+function randerJavascriptCallBack(){
     $version = form_rander\page::$_pageCfg["version"];
     ?>
-	<script language="javascript" type="text/javascript" src="printout.js?v=<?php echo $version ?>"></script>
+	<script language="javascript" type="text/javascript" src="printout.js?v=<?php echo $version ?>"></script>    
     <?php
 }
 
 //body
-function randerBodyCallBack()
-{
+function randerBodyCallBack(){    
     ?>
     <div>
         <input type="button" value="检测打印插件" onclick="util.CheckLodopIsInstall()" />
         <input type="button" value="设置" onclick="printout.printSetting()" />
         <input type="button" value="打印维护" onclick="printout.printSetup()" />
+        <input id="btnSave" type="button" value="保存预览" onclick="printout.save()" />        
+        <input id="btnPrint" type="button" value="打印" onclick="printout.print()" />        
         <div style="display:none">
             <input type="button" value="打印设计" onclick="printout.printDesign()" />
             <input type="button" value="打印预览" onclick="printout.preview()" />
-            <input id="btnPrint" type="button" value="打印" onclick="printout.print()" />
         </div>
     </div>
     <br/>
-    打印机:
+    打印机:      
     <font id="printerName" color="blue"></font>&nbsp;&nbsp;<font id="lsMsg" color="red"></font>
     <br/>
     <font id="labelTip" color="red"></font>
-    <br/>
+    <br/>    
 <?php
 global $db;
 
-    $sql = "select SysConfigValue from sysconfig where SysConfigCode = 'SystemPrint'";
-    $printTitle = $db->fetch_var($sql);
+$recipeNo = $_GET["recipeNo"];
+//取单位
+$sql = "select MeasureUnit_DBKey '0',MeasureUnitName '1' from measureunit";
+$unitDict = $db->fetch_cols($sql);
 
-    $recipeNo = $_GET["recipeNo"];
-    $sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, b.HospitalizationNumber, c.PatientName, c.PatientNo,
-c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
- d.DepartmentName, e.UserName, b.DiseaseListVal, f.BedCode, DATE_FORMAT(a.AdviceBeginDate, '%Y-%m-%d') AdviceBeginDate, DATE_FORMAT(a.AdviceEndDate, '%Y-%m-%d') AdviceEndDate
- , datediff(a.AdviceEndDate, a.AdviceBeginDate) + 1 AdviceDays
- from nutrientadvicesummary a
-inner join patienthospitalizebasicinfo b on a.PatientHospitalize_DBKey = b.PatientHospitalize_DBKey
-inner join patientbasicinfo c on b.PATIENT_DBKEY = c.PATIENT_DBKEY
-inner join department d on d.Department_DBKey = b.Department_DBKey
-left join user e on e.User_DBKey = a.CreateBy
-left join bednumber f on f.BedNumber_DBKey = b.BedNumber_DBKey
-where a.NutrientAdviceSummary_DBKey = $recipeNo";
-    $baseInfo = $db->fetch_row($sql);
-
-    ?>
-<div style="width:800px;border:1px solid black;padding:5px">
-    <div id="divRecipe" style="padding:10px;padding-top:5px">
-    <div style="text-align:center;font-size:15pt"><?php echo $printTitle ?></div>
-    <h3 style="text-align:center">
-    肠内营养(EN)医嘱单首页
-    </h3>
-    <table>
-        <tr>
-            <td>住院号：<?php echo $baseInfo["HospitalizationNumber"] ?></td>
-            <td>科室：<?php echo $baseInfo["DepartmentName"] ?></td>
-            <td>床号：<?php echo $baseInfo["BedCode"] ?></td>
-            <td>开始日期：<?php echo $baseInfo["AdviceBeginDate"] ?></td>
-        </tr>
-        <tr>
-            <td>姓名：<?php echo $baseInfo["PatientName"] ?></td>
-            <td>性别：<?php echo $baseInfo["Gender"] ?></td>
-            <td>年龄：<?php echo $baseInfo["Age"] ?>岁</td>
-            <td>结束日期：<?php echo $baseInfo["AdviceEndDate"] ?></td>
-        </tr>
-    </table>
-    <hr/>
-    <!-- 疾病及诊断：<?php echo $baseInfo["DiseaseListVal"] ?>
-    <hr/> -->
-    <table>
-        <tr>
-            <th>收费项目</th>
-            <th>数量</th>
-            <th>单价</th>
-            <th>金额</th>
-        </tr>
-        <?php
-$sql = "select d.RecipeAndProduct_DBKey, d.RecipeAndProductName, concat( c.Specification, f.MeasureUnitName,'/' ,g.MeasureUnitName, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）')
-Specification, c.SingleMetering, e.SysCodeName,
-c.Directions, c.AdviceAmount, c.CurrentPrice,
-case d.wrapperType when 1 then c.AdviceAmount * c.CurrentPrice else c.AdviceAmount / c.Specification * c.CurrentPrice end TotalMoney
-, f.MeasureUnitName, g.MeasureUnitName minUnitName,d.wrapperType,e.SysCodeShortName
-from nutrientadvicesummary a
+$sql = "select d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,e.SysCodeShortName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,c.NutrientAdviceDetail_DBKEY,d.RecipeAndProduct_DBKey,f.SysCodeName PreparationMode,
+cast(c.AdviceAmount as SIGNED INTEGER) AdviceAmount, c.CurrentPrice from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
 inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
-left join measureunit f on f.MeasureUnit_DBKey = d.MeasureUnit_DBKey
-left join measureunit g on g.MeasureUnit_DBKey = d.minUnit_DBKey
-where c.Directions is not null and a.NutrientAdviceSummary_DBKey = $recipeNo";
-    $recipeRecords = $db->fetch_all($sql);
+left join syscode f on f.SysCode = c.PreparationMode and f.SystemCodeTypeName = 'PreparationMode'
+where a.NutrientAdviceSummary_DBKey = $recipeNo order by d.RecipeAndProduct_DBKey";
+$recipeRecords = $db->fetch_all($sql);
+?>
+    <table class="gridtable ">
+        <thead>
+            <tr>
+            <th>品名</th>
+            <th>规格</th>
+            <th>数量</th>
+            <th>制剂方式</th>
+            <th>频次</th>
+            <th>总量</th>
+            <th>收费项目</th>
+            <th>规格</th>
+            <th>单价</th>
+            <th>数量</th>            
+            <th>单位</th>            
+            <th>金额</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($recipeRecords as $key => $value) {
+            $specification = "";//规格
+            $array = explode("_", $value["UnitKey"]);
 
-    $TMoney = 0.0;
-    foreach ($recipeRecords as $key => $value) {
+            if($array[1] == "A" &&  $value["menuType"] == "2"){
+                //组合配方
 
-        //从映射表取对应的收费项目
-        $sql = "select * from chargingitems a where a.RecipeAndProduct_DBKey = " . $value["RecipeAndProduct_DBKey"];
-        $chargingItems = $db->fetch_row($sql);
-        $chargingName = "";
-        $chargingAmount = "";
-        $chargingPrice = 0.0;
-        $chargingMoney = 0.0;
-
-        if ($chargingItems) {
-            $chargingName = $chargingItems["ChargingItemName"];
-            //数量换算取整
-            $chargingAmount = ceil($value["AdviceAmount"] * $value["SysCodeShortName"] / $chargingItems["RecipeAndProductNum"] * $chargingItems["ChargingItemNum"]);
-            if ($chargingAmount == 0) {
-                $chargingAmount = 1;
+                $specification = $value["NutrientProductSpecification"]." ".$unitDict[$value["MeasureUnit_DBKey"]]."/".$unitDict[$value["BaseUnit_DBKey"]];    
+            }else if($array[1] == "A" &&  $value["menuType"] == "1"){          
+                //倍康素 箱      
+                $specification = $value["MinNum"]." ".$unitDict[$value["minUnit_DBKey"]]."/".$unitDict[$value["BaseUnit_DBKey"]];    
+            }else if($array[1] == "B"){
+                //倍康素 罐
+                $specification = $value["NutrientProductSpecification"]." ".$unitDict[$value["MeasureUnit_DBKey"]]."/".$unitDict[$value["minUnit_DBKey"]];    
+            }else if($array[1] == "C" || $array[1] == "E"){
+                //佳膳 拆
+                $specification = $value["NutrientProductSpecification"]." ".$unitDict[$value["MeasureUnit_DBKey"]]."/".$unitDict[$value["minUnit_DBKey"]];   
             }
 
-            $chargingPrice = $chargingItems["ChargingItemPrice"];
-            $chargingMoney = $chargingAmount * $chargingPrice;
-        }else{
-            $chargingName = "未匹配到收费项目";
+            //总量
+            $totalNum = 0;
+            if($value["PreparationMode"] == "自助冲剂"){
+                $totalNum = $value["AdviceAmount"] * $value["SysCodeShortName"];
+            }else{
+                $totalNum = $value["AdviceAmount"];
+            }
+      
+
+            echo "<tr NutrientAdviceDetail_DBKEY=".$value["NutrientAdviceDetail_DBKEY"]." RecipeAndProduct_DBKey=".$value["RecipeAndProduct_DBKey"].">
+            <td>".$value["RecipeAndProductName"]."</td>
+            <td>".$specification."</td>
+            <td>".$value["AdviceAmount"]." ".$value["Unit"]."</td>
+            <td>".$value["PreparationMode"]."</td>
+            <td>".$value["SysCodeName"]."</td>
+            <td>".$totalNum." ".$value["Unit"]."</td>
+            <td>".getChargingItems($value["RecipeAndProduct_DBKey"], $value["NutrientAdviceDetail_DBKEY"])."</td>
+            <td>
+                <select name='select_spec' id='select_spec_".$value["NutrientAdviceDetail_DBKEY"]."' >
+                </select>
+            </td>
+            <td><input id='text_price_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
+            <td><input name='text_num' id='text_num_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='1'/></td>
+            <td><input name='text_unit' id='text_unit_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
+            <td><input name='text_money' id='text_money_".$value["NutrientAdviceDetail_DBKEY"]."' type='text' value='' disabled='disabled'/></td>
+            </tr>
+            ";
         }
-
-        $unit = "";
-        if ($value["wrapperType"] == "1") {
-            $unit = $value["minUnitName"];
-        } else {
-            $unit = $value["MeasureUnitName"];
-        }
-
-        echo "<tr>
-            <td>" . $chargingName . "</td>
-            <td>" . $chargingAmount . "</td>
-            <td>" . $chargingPrice . " 元</td>
-            <td>" . round($chargingMoney, 3) . " 元</td>
-            </tr>";
-        $TMoney = $TMoney + $chargingMoney;
-    }
-
-    $remaining = 5 - count($recipeRecords);
-    if ($remaining > 0) {
-        for ($i = 0; $i < $remaining; $i++) {
-            echo "<tr><td>&nbsp;	</td></tr>
-                ";
-        }
-    }
-
-    ?>
+        ?>     
+        <tr><td colspan='12' style="text-align:right"><font id="label_totalMoney" color="blue">总金额：_ 元</font></td></tr>       
+        </tbody>
     </table>
-    <table>
-        <tr>
-            <td>医师：<?php echo $baseInfo["UserName"] ?></td>
-            <td style="width:40%">签章：</td>
-            <td>日期：<?php echo $baseInfo["CreateTime"] ?></td>
-        </tr>
-    </table>
-    <hr/>
-    <table>
-        <tr>
-            <td>药费：<?php echo round($TMoney * $baseInfo["AdviceDays"], 2) ?> 元（共<?php echo $baseInfo["AdviceDays"] ?>天）</td>
-            <td>审核/收费：</td>
-            <td>审核/调配：</td>
-            <td>核对/发药：</td>
-        </tr>
-    </table>
-    <font style="font-size:10pt">
-    根据《中国食药局》相关要求：为保障患者食品安全，除食品质量原因外，食品一经发出，不得退换。
-    </font>
-    <h4>
-    注：价格以收费时为准 当天交费，过期无效
-    </h4>
+    <br/>
+    <br/>
+    <br/>
+    <div  style="border:1px solid black; width:650px;">
+        <div id="divRecipe" style="text-align:left;padding:15px"></div>
     </div>
-</div>
-    <?php
+<?php
+
 }
+
+//查找收费项目
+function getChargingItems($RecipeAndProduct_DBKey, $NutrientAdviceDetail_DBKEY){
+    global $db;
+    $select = "<select name='select_chargingitem' id='select_chargingitem_".$NutrientAdviceDetail_DBKEY."'>";
+    $sql = "select b.* from chargingitemsrelation a inner join chargingitems b on a.ChargingItemID = b.ChargingItemID  where RecipeAndProduct_DBKey = $RecipeAndProduct_DBKey";
+    $chargingItems = $db->fetch_all($sql);
+    foreach ($chargingItems as $key => $value) {
+        $select .= "<option value='".$value["ChargingItemID"]."' ChargingItemID='".$value["ChargingItemID"]."' spec='".$value["ChargingItemSpec"]."' price1='".$value["ChargingItemPrice1"]."' price2='".$value["ChargingItemPrice2"]."' unit='".$value["ChargingItemUnit"]."' >".$value["ChargingItemName"]."</option>";
+    }
+    $select .= "</select>";
+    return $select;
+}
+
+?>

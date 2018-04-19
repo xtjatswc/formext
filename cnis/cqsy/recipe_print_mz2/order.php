@@ -100,7 +100,7 @@ foreach ($recipeRecords as $key => $value) {
 <tr>
 <td>金额：<?php echo $totalMoney?>（元）</td>
 <td></td>
-<td>医师：</td>
+<td>医师：<?php echo $baseInfo["UserName"]?></td>
 <td></td>
 </tr>
 </table>
