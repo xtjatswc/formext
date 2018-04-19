@@ -24,7 +24,8 @@ function randerStylesheetCallBack()
     table.gridtable {width:auto;}
     table.gridtable td{padding:5px;}
     input[type='text'] {width:50px;text-align:center;}
-    table.orderTable td{text-align:left;}
+    table.adviceList {width:100%;border-collapse:collapse;}
+    table.adviceList td{text-align:left;border:1px solid black;}
     </style>
     <?php
 }

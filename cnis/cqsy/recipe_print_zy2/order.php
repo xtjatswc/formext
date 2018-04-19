@@ -47,17 +47,18 @@ where a.NutrientAdviceSummary_DBKey = $recipeNo";
     <!-- 疾病及诊断：<?php echo $baseInfo["DiseaseListVal"] ?>
     <hr/> -->
         <?php
-$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,c.NutrientAdviceDetail_DBKEY,d.RecipeAndProduct_DBKey,
+$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,c.NutrientAdviceDetail_DBKEY,d.RecipeAndProduct_DBKey,g.SysCodeName PreparationMode,case c.Directions when 1 then '口服' else '管伺' end Directions,
 cast(c.AdviceAmount as SIGNED INTEGER) AdviceAmount, c.CurrentPrice from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
 inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 inner join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = c.NutrientAdviceDetail_DBKEY
+left join syscode g on g.SysCode = c.PreparationMode and g.SystemCodeTypeName = 'PreparationMode'
 where a.NutrientAdviceSummary_DBKey = $recipeNo   and c.CreateProgram is not null order by d.RecipeAndProduct_DBKey";
 $recipeRecords = $db->fetch_all($sql);
 ?>
-<table style="width:auto;margin-left:50px;">
+<table class="adviceList">
 <?php
 $sn = 1;
 $totalMoney = 0;
@@ -71,9 +72,13 @@ foreach ($recipeRecords as $key => $value) {
     echo "<tr>
     <td>".$sn."、</td>
     <td>".$value["ChargingItemName"]."</td>
-    <td>（¥".$value["ChargingPrice"]."）</td>
-    <td> X ".$value["ChargingNum"]."</td>
+    <td>".$value["ChargingPrice"]." 元</td>
+    <td>".$value["ChargingNum"]."</td>
     <td>".$value["ChargingItemUnit"]."</td>
+    <td>".$value["SysCodeName"]."</td>
+    <td>".$value["PreparationMode"]."</td>
+    <td>".$value["Directions"]."</td>
+    <td>".$value["ChargingMoney"]." 元</td>
     </tr>";
     $sn++;
 }
