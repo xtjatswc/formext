@@ -132,8 +132,8 @@ $recipeRecords = $db->fetch_all($sql);
     <br/>
     <br/>
     <br/>
-    <div  style="border:1px solid black;padding:5px; width:650px;">
-        <div id="divRecipe" style="text-align:left"></div>
+    <div  style="border:1px solid black; width:650px;">
+        <div id="divRecipe" style="text-align:left;padding:15px"></div>
     </div>
 <?php
 

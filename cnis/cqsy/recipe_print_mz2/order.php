@@ -12,7 +12,7 @@ left join user e on e.User_DBKey = a.CreateBy
 where a.NutrientAdviceSummary_DBKey = $recipeNo";
 $baseInfo = $db->fetch_row($sql);
 
-$sql = "select f.ChargingItemName,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,c.NutrientAdviceDetail_DBKEY,d.RecipeAndProduct_DBKey,
+$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,c.NutrientAdviceDetail_DBKEY,d.RecipeAndProduct_DBKey,
 cast(c.AdviceAmount as SIGNED INTEGER) AdviceAmount, c.CurrentPrice from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
@@ -70,9 +70,30 @@ $recipeRecords = $db->fetch_all($sql);
 
 <h3 style="text-align:left;">RP</h3>
 
+<table style="width:auto;margin-left:50px;">
+<?php
+$sn = 1;
+$totalMoney = 0;
+foreach ($recipeRecords as $key => $value) {
+    $totalMoney = $totalMoney + $value["ChargingMoney"];
+    echo "<tr>
+    <td>".$sn."、</td>
+    <td>".$value["ChargingItemName"]."</td>
+    <td>（¥".$value["ChargingPrice"]."）</td>
+    <td> X ".$value["ChargingNum"]."</td>
+    <td>".$value["ChargingItemUnit"]."</td>
+    </tr>";
+    $sn++;
+}
+?>
+</table>
+
+<br/>
+<br/>
+
 <table>
 <tr>
-<td>金额（元）</td>
+<td>金额：<?php echo $totalMoney?>（元）</td>
 <td></td>
 <td>医师：</td>
 <td></td>
