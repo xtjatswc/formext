@@ -19,10 +19,11 @@ function randerStylesheetCallBack(){
     body {font-family:微软雅黑;}
     table {width:100%}
     td,th {font-size: 10.5pt;padding:3px;}
-    h3,h4 {margin:0px;}
+    h3,h4 {margin:0px;text-align:center;}
     table.gridtable {width:auto;}
     table.gridtable td{padding:5px;}
     input[type='text'] {width:50px;text-align:center;}
+    table.orderTable td{text-align:left;}
     </style>
     <?php
 }
@@ -139,6 +140,12 @@ $recipeRecords = $db->fetch_all($sql);
         <tr><td colspan='11' style="text-align:right"><font id="label_totalMoney" color="blue">总金额：_ 元</font></td></tr>       
         </tbody>
     </table>
+    <br/>
+    <br/>
+    <br/>
+    <div  style="border:1px solid black;padding:5px; width:650px;">
+        <div id="divRecipe" style="text-align:left"></div>
+    </div>
 <?php
 
 }

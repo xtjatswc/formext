@@ -11,15 +11,6 @@ $(function ($) {
             $("#printerName").html("#未设置#");
         }
 
-        if ($("#printerName").html() == "#未设置#") {
-            if (confirm("未设置打印机，是否输出到默认打印机？")) {
-                $("#btnPrint").click();
-            }
-        } else {
-            $("#btnPrint").click();
-
-        }
-
     });
 
     // $(":radio").click(printout.calcMoney);
@@ -51,8 +42,13 @@ printout.print = function () {
     //     return;
     // }
 
-    //printout.printLoad(4);
-    //alert("请等待打印完毕后，再关闭该页面！");
+    if ($("#printerName").html() == "#未设置#") {
+        if (confirm("未设置打印机，是否输出到默认打印机？")) {
+            printout.printLoad(4);
+        }
+    }else
+        printout.printLoad(4);
+
 }
 
 printout.printLoad = function (flag) {
@@ -91,7 +87,7 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("style1").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
     
-    LODOP.ADD_PRINT_BARCODE("7.12mm","6.59mm","44.58mm","10.13mm","93Extended",printout.urlParams.recipeNo);
+    LODOP.ADD_PRINT_BARCODE("5.5mm","1.8mm","35.58mm","10.13mm","93Extended",printout.urlParams.recipeNo);
 
     LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "145mm", "150mm", strStyle + divRecipe);
     LODOP.SET_PRINT_STYLEA(0,"Horient",3); 
@@ -208,6 +204,11 @@ printout.reload = function(){
 }
 
 printout.save = function(){
+
+    $.ajaxSetup({
+        async: false
+    });
+
     //遍历所有收费项目
     $("select[name='select_chargingitem']").each(function(){
         $tr = $(this).parents("tr");
@@ -235,6 +236,11 @@ printout.save = function(){
 
     });
 
-    alert("保存成功！");
+    //alert("保存成功！");
 
+    $.ajaxSetup({
+        async: true
+    });
+
+    $("#divRecipe").load("order.php?recipeNo=" + printout.urlParams.recipeNo);
 }
