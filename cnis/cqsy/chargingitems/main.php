@@ -17,21 +17,10 @@ function randerStylesheetCallBack()
 {
     ?>
 	<style id="style1">
-        .wrapper{
-			padding: 10px;
-			margin: 0 auto;
-			width: 900px;
-			min-height: 500px;
-			border:1px solid #ccc;
-			border-radius: 5px;
-		}
-		.left{
-			float: left;
-		}
-		.right{
-			float: left;
-			margin-left: 20px;
-		}
+*{ margin:0; padding:0}  
+body, html{ height:100%; width:100%; overflow:hidden;} /*这个高度很重要*/  
+#frametable .header{ height:40px; background:#ddd; border-bottom:2px solid #999;}  
+#frametable .left{ width:250px; border-right:2px solid #999; background:#ddd; height:100%;}  
     </style>
     <?php
 }
@@ -48,14 +37,34 @@ function randerJavascriptCallBack()
 function randerBodyCallBack()
 {
 ?>
-<div class="wrapper">
+<table id="frametable" cellpadding="0" cellspacing="0" width="100%" height="100%" style="width: 100%;">  
+    <tr>  
+        <td colspan="2" height="40">  
+            <div class="header">  
+                <!-- header menu -->  
+            </div>  
+        </td>  
+    </tr>  
+    <tr>  
+        <td valign="top" width="150" height="100%"> <!--这个高度很重要-->  
+            <div class="left">
+                <iframe src="recipe_product.php" frameborder="1" width="100%" allowtransparency="true" height="100%"  frameborder="0" scrolling="yes" style="overflow:visible;"></iframe>
+            </div>  
+        </td>  
+        <td valign="top" width="100%" height="100%"> <!--这个高度很重要-->  
+            <iframe id="iframe" name="main" src="charging_items.php" width="100%" allowtransparency="true" height="100%" frameborder="0" scrolling="yes" style="overflow:visible;"></iframe>  
+        </td>  
+    </tr>  
+</table>  
+
+<!-- <div class="wrapper">
     <div class="left">
-        <iframe src="recipe_product.php" frameborder="1" width="200" height="500"></iframe>
+        <iframe src="recipe_product.php" frameborder="1" width="300" height="600"></iframe>
     </div>
     <div class="right">
-        <iframe src="charging_items.php" frameborder="1" width="300" height="500"></iframe>
+        <iframe src="charging_items.php" frameborder="1" width="1000" height="600"></iframe>
     </div>
-</div>
+</div> -->
 <?php
 
 }    
