@@ -9,7 +9,7 @@ form_rander\form::$_pageCfg = array(
     'isPrintNo' => "0", //是否打印序号列
     'primaryKey' => "ChargingItemID", //主键，复选框对应的值
     'EnableDel' => "1", //是否启用删除按钮
-    'pageSize' => 50, //每页显示记录条数
+    'pageSize' => 200, //每页显示记录条数
     'debug' => $globalCfg["debug"],
 );
 
