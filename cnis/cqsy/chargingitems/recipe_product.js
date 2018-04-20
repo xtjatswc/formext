@@ -8,5 +8,6 @@ $(function ($) {
 
 product.productClick = function(){
     var RecipeAndProduct_DBKey = $(this).attr("id");
-    MP.send('MP_RECIPE_PRODUCT_CHANGE', { RecipeAndProduct_DBKey: RecipeAndProduct_DBKey });
+    var productName = $(this).attr("productName");
+    MP.send('MP_RECIPE_PRODUCT_CHANGE', { RecipeAndProduct_DBKey: RecipeAndProduct_DBKey, productName : productName });
 }

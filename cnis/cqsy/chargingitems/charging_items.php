@@ -34,12 +34,19 @@ function randerJavascriptCallBack()
 //body
 function randerBodyCallBack()
 {
+    ?>
+    <div style="text-align:center;"><input type="button" value="保存对应关系" onclick="charging.saveRelation()" /></div>
+    <font id="productName" color="blue"></font>
+    <br/>
+    <br/>
+    收费项目列表：
+    <?php
     global $db;
     $sql = "select * from chargingitems";
     $recipe = $db->fetch_all($sql);
     echo "<ul>";
     foreach ($recipe as $key => $value) {    
-       echo "<li><input type='checkbox' name='checkbox_charging_item' id='checkbox_charging_item_".$value["ChargingItemID"]."' /><label for='".$value["ChargingItemID"]."'>".$value["ChargingItemName"]."</label></li>";
+       echo "<li><input type='checkbox' name='checkbox_charging_item' id='checkbox_charging_item_".$value["ChargingItemID"]."' ChargingItemID='".$value["ChargingItemID"]."'/><label for='checkbox_charging_item_".$value["ChargingItemID"]."'>".$value["ChargingItemName"]."</label></li>";
     }
     echo "</ul>";
     ?>
