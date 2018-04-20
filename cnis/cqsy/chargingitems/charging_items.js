@@ -60,3 +60,13 @@ charging.saveRelation = function(){
 
     alert("保存成功！");
 }
+
+charging.newChargingItem = function(){
+    var sql2 = "insert into chargingitems(ChargingItemName, SortNo, Enabled) values ('收费项目', '-1', 1);";
+
+    $.post(formExt.libPath + "exec2.php", { sql:sql2 },function(data){
+        console.log(data);
+    },"json");
+
+    self.location.reload();
+}

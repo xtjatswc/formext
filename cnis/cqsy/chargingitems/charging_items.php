@@ -23,7 +23,7 @@ $form->_sqlCfg = array(
 );
 
 $form->_listColumnCfg = array(
-    'ChargingItemID' => array('isDisplay' => '0','displayName' => 'ChargingItemID','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
+    'ChargingItemID' => array('isDisplay' => '1','displayName' => '项目ID','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
     'ChargingItemCode' => array('isDisplay' => '1','displayName' => '项目编码','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
     'ChargingItemName' => array('isDisplay' => '1','displayName' => '项目名称','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
     'ChargingItemSpec' => array('isDisplay' => '1','displayName' => '规格','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
@@ -31,7 +31,7 @@ $form->_listColumnCfg = array(
     'ChargingItemPrice1' => array('isDisplay' => '1','displayName' => '单价1','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
     'ChargingItemPrice2' => array('isDisplay' => '1','displayName' => '单价2','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
     'SortNo' => array('isDisplay' => '1','displayName' => '排序编号','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
-    'Enabled' => array('isDisplay' => '1','displayName' => '状态','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
+    'Enabled' => array('isDisplay' => '0','displayName' => '状态','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
 
 );
 
@@ -60,7 +60,7 @@ function randerSearchWhereCallBack($sql){
 function randerToolBarCallBack(){
     ?>
     
-    <input type="button" value="打开" onclick="patientinfo.openInfo()"/>
+    <input type="button" value="新增" onclick="charging.newChargingItem()"/>
     <br>
     <font id="productName" color="blue"></font>
     <div style="text-align:left;"><input type="button" value="保存对应关系" onclick="charging.saveRelation()" /></div>
