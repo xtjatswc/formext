@@ -17,17 +17,20 @@ $form = new form_rander\form($db);
 
 $form->_sqlCfg = array(
     'deleteSql' => "delete from chargingitems where ChargingItemID in ({0})", //删除sql
+    'editSql1' => "update chargingitems set {columnName} = :value where
+    ChargingItemID = :ChargingItemID",
+
 );
 
 $form->_listColumnCfg = array(
     'ChargingItemID' => array('isDisplay' => '0','displayName' => 'ChargingItemID','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
-    'ChargingItemCode' => array('isDisplay' => '1','displayName' => '项目编码','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => '', 'editSqlKey' => ''),
-    'ChargingItemName' => array('isDisplay' => '1','displayName' => '项目名称','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => '', 'editSqlKey' => ''),
-    'ChargingItemSpec' => array('isDisplay' => '1','displayName' => '规格','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => '', 'editSqlKey' => ''),
-    'ChargingItemUnit' => array('isDisplay' => '1','displayName' => '单位','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => '', 'editSqlKey' => ''),
-    'ChargingItemPrice1' => array('isDisplay' => '1','displayName' => '单价1','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => '', 'editSqlKey' => ''),
-    'ChargingItemPrice2' => array('isDisplay' => '1','displayName' => '单价2','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => '', 'editSqlKey' => ''),
-    'SortNo' => array('isDisplay' => '1','displayName' => '排序编号','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => '', 'editSqlKey' => ''),
+    'ChargingItemCode' => array('isDisplay' => '1','displayName' => '项目编码','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemName' => array('isDisplay' => '1','displayName' => '项目名称','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemSpec' => array('isDisplay' => '1','displayName' => '规格','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemUnit' => array('isDisplay' => '1','displayName' => '单位','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemPrice1' => array('isDisplay' => '1','displayName' => '单价1','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemPrice2' => array('isDisplay' => '1','displayName' => '单价2','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'SortNo' => array('isDisplay' => '1','displayName' => '排序编号','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
     'Enabled' => array('isDisplay' => '1','displayName' => '是否启用','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
 
 );
