@@ -39,7 +39,7 @@ function randerBodyCallBack()
     $recipe = $db->fetch_all($sql);
     echo "<ul>";
     foreach ($recipe as $key => $value) {    
-       echo "<li><input type='checkbox' name='checkbox_charging_item' id='".$value["ChargingItemID"]."' /><label for='".$value["ChargingItemID"]."'>".$value["ChargingItemName"]."</label></li>";
+       echo "<li><input type='checkbox' name='checkbox_charging_item' id='checkbox_charging_item_".$value["ChargingItemID"]."' /><label for='".$value["ChargingItemID"]."'>".$value["ChargingItemName"]."</label></li>";
     }
     echo "</ul>";
     ?>
