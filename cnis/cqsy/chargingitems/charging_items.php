@@ -31,11 +31,12 @@ $form->_listColumnCfg = array(
     'ChargingItemPrice1' => array('isDisplay' => '1','displayName' => '单价1','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
     'ChargingItemPrice2' => array('isDisplay' => '1','displayName' => '单价2','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
     'SortNo' => array('isDisplay' => '1','displayName' => '排序编号','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
-    'Enabled' => array('isDisplay' => '1','displayName' => '是否启用','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
+    'Enabled' => array('isDisplay' => '1','displayName' => '状态','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
 
 );
 
 $form->_listDisplayCfg = array(
+    'Enabled' => array('1' => '启用','0' => '禁用'),
 );
 
 //Y-m-d H:i:s
@@ -60,6 +61,9 @@ function randerToolBarCallBack(){
     ?>
     
     <input type="button" value="打开" onclick="patientinfo.openInfo()"/>
+    <br>
+    <font id="productName" color="blue"></font>
+    <div style="text-align:left;"><input type="button" value="保存对应关系" onclick="charging.saveRelation()" /></div>
 <?php
 }
 
@@ -72,30 +76,6 @@ function randerCellCallBack($row, $key, $value){
     return $value;
 }
 
-
-// //body
-// function randerBodyCallBack()
-// {
-//     ?>
-//     <div style="text-align:left;"><input type="button" value="保存对应关系" onclick="charging.saveRelation()" /></div>
-//     <font id="productName" color="blue"></font>
-//     <br/>
-//     <br/>
-//     收费项目列表：
-//     <?php
-//     global $db;
-//     $sql = "select * from chargingitems";
-//     $recipe = $db->fetch_all($sql);
-//     echo "<ul>";
-//     foreach ($recipe as $key => $value) {    
-//        echo "<li><input type='checkbox' name='checkbox_charging_item' id='checkbox_charging_item_".$value["ChargingItemID"]."' ChargingItemID='".$value["ChargingItemID"]."'/><label for='checkbox_charging_item_".$value["ChargingItemID"]."'>".$value["ChargingItemName"]."</label></li>";
-//     }
-//     echo "</ul>";
-//     ?>
-
-// <?php
-
-// }    
 
 
 
