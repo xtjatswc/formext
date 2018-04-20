@@ -156,7 +156,7 @@ printout.calcMoney = function(){
         if(specArr.length == 2 &&  $("#select_spec_" + detailId).prop('selectedIndex') == 1){
             price = price2;
         }
-        $("#text_price_" + detailId).val(price);
+        $("#text_price_" + detailId).val(parseFloat(price).toFixed(2));
 
         //金额
         var num = $("#text_num_" + detailId).val();
@@ -197,10 +197,10 @@ printout.reload = function(){
             for(j = 0; j < data.length; j++) {        
                 util.getSelectOptionByValue("#select_chargingitem_" + detailId, data[j].ChargingItemID).attr("selected",true);
                 util.getSelectOptionByText("#select_spec_" + detailId, data[j].ChargingItemSpec).attr("selected",true);
-                $("#text_price_" + detailId).val(data[j].ChargingPrice);
+                $("#text_price_" + detailId).val(parseFloat(data[j].ChargingPrice).toFixed(2));
                 $("#text_num_" + detailId).val(data[j].ChargingNum);
                 $("#text_unit_" + detailId).val(data[j].ChargingItemUnit);
-                $("#text_money_" + detailId).val(data[j].ChargingMoney);
+                $("#text_money_" + detailId).val(parseFloat(data[j].ChargingMoney).toFixed(2));
             } 
 
             printout.calcTotalMoney();

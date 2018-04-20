@@ -7,5 +7,6 @@ $(function ($) {
 });
 
 product.productClick = function(){
-    MP.send('msg', { sayHi: "hello world" });
+    var RecipeAndProduct_DBKey = $(this).attr("id");
+    MP.send('MP_RECIPE_PRODUCT_CHANGE', { RecipeAndProduct_DBKey: RecipeAndProduct_DBKey });
 }
