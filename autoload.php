@@ -11,7 +11,7 @@
 require_once("form_rander/errhandler.php");
 
 $db = new form_rander\dbhelper();
-$db->connect('pdo', 'mysql', '127.0.0.1', 'root', 'root', 'cnis_hf', 3306);
+$db->connect('pdo', 'mysql', '127.0.0.1', 'root', 'root', 'cnis', 3306);
 
 $globalCfg = array(
     'clientFlag' => "cqsy", //

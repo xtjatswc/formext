@@ -16,10 +16,11 @@ where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) limit 0,1";
 $result = $db->fetch_row($sql);
 
 //制剂数据
-$sql = "select b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType from nutrientadvicedetail a
+$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType from nutrientadvicedetail a
 INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 left join measureunit d on d.MeasureUnit_DBKey = b.minUnit_DBKey
+left join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = a.NutrientAdviceDetail_DBKEY
 where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
 $tblDetail = $db->fetch_all($sql);
 ?>
@@ -52,9 +53,9 @@ foreach ($tblDetail as $key => $value) {
     }
 
     echo "<tr>
-            <td>" . $value["RecipeAndProductName"] . "</td>
-            <td>" . $value["AdviceAmount"] . " ". $unit . "</td>
-            <td>" . $value["NutrientAdviceDetailRemark"] . "</td>
+            <td>" . $value["ChargingItemName"] . "</td>
+            <td>" . $value["ChargingNum"] . " ". $unit . "</td>
+            <td>" . $value["ChargingItemUnit"] . "</td>
           </tr>";
 }
 ?>

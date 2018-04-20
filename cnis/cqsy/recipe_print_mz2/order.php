@@ -12,7 +12,7 @@ left join user e on e.User_DBKey = a.CreateBy
 where a.NutrientAdviceSummary_DBKey = $recipeNo";
 $baseInfo = $db->fetch_row($sql);
 
-$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,c.NutrientAdviceDetail_DBKEY,d.RecipeAndProduct_DBKey,
+$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, d.RecipeAndProductName,c.Unit, c.UnitKey, c.SingleMetering, e.SysCodeName,d.NutrientProductSpecification,d.MeasureUnit_DBKey,d.minUnit_DBKey,d.menuType,d.BaseUnit_DBKey,c.totalMoney,d.MinNum,d.wrapperType,c.NutrientAdviceDetail_DBKEY,d.RecipeAndProduct_DBKey,case c.Directions when 1 then '口服' else '管伺' end Directions,
 cast(c.AdviceAmount as SIGNED INTEGER) AdviceAmount, c.CurrentPrice from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
@@ -87,6 +87,7 @@ foreach ($recipeRecords as $key => $value) {
     <td>（¥".$value["ChargingPrice"]."）</td>
     <td> X ".$value["ChargingNum"]."</td>
     <td>".$value["ChargingItemUnit"]."</td>
+    <td>&nbsp;&nbsp;&nbsp;".$value["Directions"]."</td>
     </tr>";
     $sn++;
 }
