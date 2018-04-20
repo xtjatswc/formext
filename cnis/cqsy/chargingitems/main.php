@@ -20,7 +20,7 @@ function randerStylesheetCallBack()
 *{ margin:0; padding:0}  
 body, html{ height:100%; width:100%; overflow:hidden;} /*这个高度很重要*/  
 #frametable .header{ height:40px; background:#ddd; border-bottom:2px solid #999;}  
-#frametable .left{ width:250px; border-right:2px solid #999; background:#ddd; height:100%;}  
+#frametable .left{ width:280px; border-right:2px solid #999; background:#ddd; height:100%;}  
     </style>
     <?php
 }
