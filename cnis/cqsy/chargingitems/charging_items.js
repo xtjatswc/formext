@@ -64,9 +64,17 @@ charging.saveRelation = function(){
 charging.newChargingItem = function(){
     var sql2 = "insert into chargingitems(ChargingItemName, SortNo, Enabled) values ('收费项目', '-1', 1);";
 
+    $.ajaxSetup({
+        async: false
+    });
+
     $.post(formExt.libPath + "exec2.php", { sql:sql2 },function(data){
         console.log(data);
     },"json");
+
+    $.ajaxSetup({
+        async: true
+    });
 
     self.location.reload();
 }

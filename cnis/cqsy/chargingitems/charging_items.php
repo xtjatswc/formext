@@ -43,7 +43,7 @@ $form->_listDisplayCfg = array(
 $form->_searcher->_searchCfg = array(
 );
 
-$sql = 'select * from chargingitems order by SortNo asc '.$form->_pager->getLimit();
+$sql = 'select * from chargingitems order by SortNo asc,ChargingItemID desc '.$form->_pager->getLimit();
 
 $rows = $form->randerForm($sql);
 //$form->getColumns($rows);
