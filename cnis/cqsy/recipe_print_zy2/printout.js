@@ -197,7 +197,9 @@ printout.reload = function(){
             for(j = 0; j < data.length; j++) {        
                 util.getSelectOptionByValue("#select_chargingitem_" + detailId, data[j].ChargingItemID).attr("selected",true);
                 //切换规格
-                var specArr = data[j].ChargingItemSpec.split("#");
+                var $option = $("#select_chargingitem_" + detailId).children(":selected");
+                var spec = $option.attr("spec");        
+                var specArr = spec.split("#");
                 $("#select_spec_" + detailId).empty();
                 for (let index = 0; index < specArr.length; index++) {
                     $("#select_spec_" + detailId).append("<option>" + specArr[index] + "</option>");
