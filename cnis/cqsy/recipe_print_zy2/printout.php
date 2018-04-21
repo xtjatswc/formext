@@ -75,7 +75,7 @@ inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_D
 inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 left join syscode f on f.SysCode = c.PreparationMode and f.SystemCodeTypeName = 'PreparationMode'
-where a.NutrientAdviceSummary_DBKey = $recipeNo  and c.CreateProgram is not null  order by d.RecipeAndProduct_DBKey";
+where a.NutrientAdviceSummary_DBKey = $recipeNo  and c.CreateProgram is not null  order by c.NutrientAdviceDetail_DBKEY";
     $recipeRecords = $db->fetch_all($sql);
     ?>
 医嘱单号：<?php echo $recipeNo ?> &nbsp;&nbsp;&nbsp;

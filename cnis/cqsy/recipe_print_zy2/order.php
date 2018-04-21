@@ -55,7 +55,7 @@ inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_D
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 inner join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = c.NutrientAdviceDetail_DBKEY
 left join syscode g on g.SysCode = c.PreparationMode and g.SystemCodeTypeName = 'PreparationMode'
-where a.NutrientAdviceSummary_DBKey = $recipeNo   and c.CreateProgram is not null order by d.RecipeAndProduct_DBKey,f.NutrientAdviceDetail_DBKEY";
+where a.NutrientAdviceSummary_DBKey = $recipeNo   and c.CreateProgram is not null order by f.NutrientAdviceDetail_DBKEY";
 $recipeRecords = $db->fetch_all($sql);
 ?>
 <table class="adviceList">
