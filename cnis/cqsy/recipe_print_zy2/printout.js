@@ -126,7 +126,7 @@ printout.createPrintPage = function (divRecipe) {
 printout.calcMoney = function(){
 
     //触发事件控件
-    var eventName = $(this).attr("name");
+    var eventName = $(this).attr("id");
 
     //遍历所有收费项目
     $("select[name='select_chargingitem']").each(function(){
@@ -144,7 +144,7 @@ printout.calcMoney = function(){
 
         //加载对应规格
         var specArr = spec.split("#");
-        if(!eventName || eventName == "select_chargingitem"){
+        if(!eventName || eventName == "select_chargingitem_" + detailId){
             $("#select_spec_" + detailId).empty();
             for (let index = 0; index < specArr.length; index++) {
                 $("#select_spec_" + detailId).append("<option>" + specArr[index] + "</option>");
