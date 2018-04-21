@@ -21,7 +21,7 @@ INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_D
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 left join measureunit d on d.MeasureUnit_DBKey = b.minUnit_DBKey
 left join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = a.NutrientAdviceDetail_DBKEY
-where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
+where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) and f.ChargingNum <> 0";
 $tblDetail = $db->fetch_all($sql);
 ?>
 
