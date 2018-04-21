@@ -76,7 +76,7 @@ printout.printLoad = function (flag) {
 
 printout.createPrintPage = function (divRecipe) {
 
-    LODOP.PRINT_INITA(0, 0, "148mm", "160mm", "门诊医嘱单打印");
+    LODOP.PRINT_INITA(0, 0, "148mm", "160mm", "住院医嘱单打印");
     //LODOP.SET_PRINTER_INDEX(getSelectedPrintIndex());    
     if (util.printerSetting.PrinterName == "#未设置#") {
         $("#lsMsg").html("尚未设置默认的医嘱单打印机！");
