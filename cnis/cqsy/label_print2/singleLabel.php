@@ -45,17 +45,9 @@ $tblDetail = $db->fetch_all($sql);
     <tbody>
         <?php
 foreach ($tblDetail as $key => $value) {
-    $unit = "";
-    if ($value["wrapperType"] == "1") {
-        $unit = $value["minUnitName"];
-    } else {
-        $unit = $value["MeasureUnitName"];
-    }
-
     echo "<tr>
-            <td>" . $value["ChargingItemName"] . "</td>
-            <td>" . $value["ChargingNum"] . " ". $unit . "</td>
-            <td>" . $value["ChargingItemUnit"] . "</td>
+            <td>" . $value["ChargingItemName"] . " ". $value["ChargingItemSpec"] ."</td>
+            <td>" . $value["ChargingNum"] . " ". $value["ChargingItemUnit"] . "</td>
           </tr>";
 }
 ?>
@@ -68,8 +60,9 @@ foreach ($tblDetail as $key => $value) {
                     <table style="margin-top:-1px;">
                         <tr>
                         <td><nobr>时间：</nobr><br/><nobr><?php echo $result["TakeOrder"] ?></nobr></td>
-                        <td>制剂方式：<?php echo $result["PreparationMode"] ?>
-                            途径：<?php echo $result["Directions"] ?>
+                        <td>
+                            <nobr>制剂方式：<?php echo $result["PreparationMode"] ?></nobr>
+                            <nobr>途径：<?php echo $result["Directions"] ?></nobr>
                         </td>
                         </tr>
                     </table>
