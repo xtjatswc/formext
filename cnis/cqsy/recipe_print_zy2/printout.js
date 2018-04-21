@@ -196,6 +196,13 @@ printout.reload = function(){
         $.getJSON(pageExt.libPath + "query.php", {sql : sql2}, function( data, status, xhr ) {
             for(j = 0; j < data.length; j++) {        
                 util.getSelectOptionByValue("#select_chargingitem_" + detailId, data[j].ChargingItemID).attr("selected",true);
+                //切换规格
+                var specArr = data[j].ChargingItemSpec.split("#");
+                $("#select_spec_" + detailId).empty();
+                for (let index = 0; index < specArr.length; index++) {
+                    $("#select_spec_" + detailId).append("<option>" + specArr[index] + "</option>");
+                }
+
                 util.getSelectOptionByText("#select_spec_" + detailId, data[j].ChargingItemSpec).attr("selected",true);
                 $("#text_price_" + detailId).val(parseFloat(data[j].ChargingPrice).toFixed(2));
                 $("#text_num_" + detailId).val(data[j].ChargingNum);
@@ -230,7 +237,7 @@ printout.save = function(){
 
         var $option = $(this).children(":selected");
         var ChargingItemID = $option.attr("ChargingItemID");
-        var ChargingItemName = $option.text();
+        var ChargingItemName = $option.attr("ChargingItemName");
         var ChargingItemSpec = $("#select_spec_" + detailId).children(":selected").text();
 
         //保存结果
