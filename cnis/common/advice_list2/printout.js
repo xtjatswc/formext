@@ -12,6 +12,7 @@ $(function ($) {
         }
     });
 
+    printout.loadAdviceList();
 });
 
 printout.printSetting = function () {
@@ -108,5 +109,23 @@ printout.createPrintPage = function (divRecipe) {
 
     LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);//语句控制显示标尺
     LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED", 1);//横向时的正向显示
+
+}
+
+printout.loadAdviceList = function(){
+
+    var urlParams = util.urlToObject(window.location.search);
+
+    var url = pageExt.cnisPath + "index.php?r=preparation&ac=enteralmedication/search&page=1&limit=1000";
+    $.getJSON(url, urlParams, function (data, status, xhr) {
+        if(data.success){
+            for (j = 0; j < data.records.length; j++) {
+                
+            }
+        }else{            
+            alert("请求错误，请尝试重新打开页面！" + (data.ErrorMessage ? "ErrorMessage => " + data.ErrorMessage : ""));
+        }
+
+    });
 
 }
