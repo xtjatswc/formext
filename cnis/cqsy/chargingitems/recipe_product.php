@@ -33,17 +33,19 @@ function randerJavascriptCallBack()
 //body
 function randerBodyCallBack()
 {
-    ?>
-    肠内制剂：
+    ?>    
     <?php
     global $db;
     $sql = "select RecipeAndProduct_DBKey, RecipeAndProductName from recipeandproduct where RecipProductTableInsideType = 1 order by RecipeAndProductName";
     $recipe = $db->fetch_all($sql);
-    echo "<ul>";
+    echo "<fieldset>
+    <legend>肠内制剂</legend>
+    <div class='controlgroup-vertical'>";
     foreach ($recipe as $key => $value) {    
-       echo "<li><input type='radio' name='radio_recipe_product' id='".$value["RecipeAndProduct_DBKey"]."' productName='".$value["RecipeAndProductName"]."'/><label for='".$value["RecipeAndProduct_DBKey"]."'>".$value["RecipeAndProductName"]."</label></li>";
+       echo "<input type='radio' name='radio_recipe_product' id='".$value["RecipeAndProduct_DBKey"]."' productName='".$value["RecipeAndProductName"]."'/><label for='".$value["RecipeAndProduct_DBKey"]."'>".$value["RecipeAndProductName"]."</label>";
     }
-    echo "</ul>";    
+    echo "</div>
+    </fieldset>";    
     ?>
 
 <?php

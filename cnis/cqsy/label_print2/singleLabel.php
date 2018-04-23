@@ -47,7 +47,7 @@ $tblDetail = $db->fetch_all($sql);
         <?php
 foreach ($tblDetail as $key => $value) {
     //数量要除以频次
-    $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 2);
+    $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 1);
     echo "<tr>
             <td>" . $value["ChargingItemName"] . " ". $value["ChargingItemSpec"] ."</td>
             <td>" . $ChargingNum . " ". $value["ChargingItemUnit"] . "</td>

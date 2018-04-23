@@ -4,6 +4,10 @@ $(function ($) {
 
     $(":radio").click(product.productClick);
 
+    $( ".controlgroup-vertical" ).controlgroup({
+        "direction": "vertical"
+    });
+
 });
 
 product.productClick = function(){
