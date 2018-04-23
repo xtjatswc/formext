@@ -59,12 +59,12 @@ function randerBodyCallBack()
     $printTitle = $db->fetch_var($sql);
 
 ?>
-<div style="width:1000px;">
+<div style="">
 <div id="divRecipe">
 <h3 style="text-align:center;margin-top:10px;">
     <?php echo $printTitle ?> 肠内医嘱列表
 </h3>
-<table class="gridtable">
+<table id="tblAdviceList" class="gridtable">
     <tr>
         <th>医嘱单号</th>
         <th>病区</th>

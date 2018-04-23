@@ -119,8 +119,11 @@ printout.loadAdviceList = function(){
     var url = pageExt.cnisPath + "index.php?r=preparation&ac=enteralmedication/search&page=1&limit=1000";
     $.getJSON(url, urlParams, function (data, status, xhr) {
         if(data.success){
+            $tbl = $("#tblAdviceList");
             for (j = 0; j < data.records.length; j++) {
-                
+                var tr = "<tr><td>{nadvicedbkey}</td><td>{DepartmentName}</td><td>{BedCode}</td><td>{PatientName}</td><td>{Age}</td><td>{HospitalizationNumber}</td><td>{takerorder}</td><td>{PreparationMode}</td><td>{ChargingItemName}</td><td>{singleName}</td><td>{PreparationStatus}</td></tr>";
+                tr = tr.format(data.records[j]);
+                $tbl.append(tr);
             }
         }else{            
             alert("请求错误，请尝试重新打开页面！" + (data.ErrorMessage ? "ErrorMessage => " + data.ErrorMessage : ""));
