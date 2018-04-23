@@ -59,6 +59,18 @@ where a.NutrientAdviceSummary_DBKey = $recipeNo   and c.CreateProgram is not nul
 $recipeRecords = $db->fetch_all($sql);
 ?>
 <table class="adviceList">
+<tr>
+    <th>序号</th>
+    <th>收费项目</th>
+    <th>规格</th>
+    <th>单价</th>
+    <th>数量</th>
+    <th>单位</th>
+    <th>频次</th>
+    <th>制剂方式</th>
+    <th>途径</th>
+    <th>金额</th>
+</tr>
 <?php
 $sn = 1;
 $totalMoney = 0;
@@ -69,9 +81,11 @@ foreach ($recipeRecords as $key => $value) {
     if($value["ChargingMoney"] == "0" || $value["ChargingMoney"] == "")    
         continue;
 
-    echo "<tr>
+    echo "    
+    <tr>
     <td>".$sn."、</td>
     <td>".$value["ChargingItemName"]."</td>
+    <td>".$value["ChargingItemSpec"]."</td>
     <td>".$value["ChargingPrice"]." 元</td>
     <td>".$value["ChargingNum"]."</td>
     <td>".$value["ChargingItemUnit"]."</td>

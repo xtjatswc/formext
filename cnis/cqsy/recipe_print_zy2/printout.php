@@ -26,6 +26,14 @@ function randerStylesheetCallBack()
     input[type='text'] {width:50px;text-align:center;}
     table.adviceList {width:100%;border-collapse:collapse;}
     table.adviceList td{text-align:left;border:1px solid black;}
+    table.adviceList th {
+        border-width: 1px;
+        padding: 2px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+        text-align:center;
+    }
     </style>
     <?php
 }
