@@ -171,7 +171,7 @@ foreach ($recipeRecords as $key => $value) {
     <br/>
     <br/>
     <br/>
-    <div  style="border:1px solid black; width:650px;">
+    <div  style="border:1px solid black; width:750px;">
         <div id="divRecipe" style="text-align:left;padding:5px"></div>
     </div>
 <?php

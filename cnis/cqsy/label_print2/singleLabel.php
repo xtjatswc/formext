@@ -16,10 +16,11 @@ where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) limit 0,1";
 $result = $db->fetch_row($sql);
 
 //制剂数据
-$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType from nutrientadvicedetail a
+$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType, e.SysCodeName,e.SysCodeShortName from nutrientadvicedetail a
 INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 left join measureunit d on d.MeasureUnit_DBKey = b.minUnit_DBKey
+left join syscode e on e.SysCode = a.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 left join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = a.NutrientAdviceDetail_DBKEY
 where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) and f.ChargingNum <> 0";
 $tblDetail = $db->fetch_all($sql);
@@ -45,9 +46,11 @@ $tblDetail = $db->fetch_all($sql);
     <tbody>
         <?php
 foreach ($tblDetail as $key => $value) {
+    //数量要除以频次
+    $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 2);
     echo "<tr>
             <td>" . $value["ChargingItemName"] . " ". $value["ChargingItemSpec"] ."</td>
-            <td>" . $value["ChargingNum"] . " ". $value["ChargingItemUnit"] . "</td>
+            <td>" . $ChargingNum . " ". $value["ChargingItemUnit"] . "</td>
           </tr>";
 }
 ?>
