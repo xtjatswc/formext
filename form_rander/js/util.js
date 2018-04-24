@@ -453,6 +453,17 @@ util.printerchange = function(callback){
 }
 
 util.bootstrap = function(){
+    //加载打印设置下拉框
+    if($("#printerSel").length > 0){
+        $.ajaxSetup({
+            async: false
+        });    
+        $("#printerSel").load(pageExt.libPath + "printerSel.php");
+        $.ajaxSetup({
+            async: true
+        });    
+    }
+
     if($("#SelPrinterSet").length > 0){
         if($.cookie(util.printerSetting.PrinterTypeKey)){
             util.printerSetting.PrinterType = $.cookie(util.printerSetting.PrinterTypeKey);
