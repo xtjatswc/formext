@@ -66,21 +66,23 @@ function randerBodyCallBack()
         <?php echo $printTitle ?> 肠内医嘱列表
         </h1>
     </capiton>
-    <thead>
+    <thead>    
         <tr>
-            <th>医嘱单号</th>
-            <th>病区</th>
+            <th>医嘱日期</th>
+            <th>病区（科室）</th>
             <th>床号</th>
             <th>姓名</th>
             <th>年龄</th>
             <th>住院号</th>
-            <th>执行时间</th>
-            <th>制剂方式</th>
             <th>收费名称</th>
+            <th>规格</th>
+            <th>数量</th>
+            <th>总量</th>
             <th>制剂名称</th>
-            <th>配制状态</th>
         </tr>
     </thead>
+    <tbody>
+    </tbody>
     <?php
 }
 ?>

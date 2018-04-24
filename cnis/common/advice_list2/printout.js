@@ -119,12 +119,29 @@ printout.loadAdviceList = function(){
     var url = pageExt.cnisPath + "index.php?r=preparation&ac=enteralmedication/search&page=1&limit=1000";
     $.getJSON(url, urlParams, function (data, status, xhr) {
         if(data.success){
-            $tbl = $("#tblAdviceList");
+            $tbody = $("#tblAdviceList tbody");
             for (j = 0; j < data.records.length; j++) {
-                var tr = "<tr><td>{nadvicedbkey}</td><td>{DepartmentName}</td><td>{BedCode}</td><td>{PatientName}</td><td>{Age}</td><td>{HospitalizationNumber}</td><td>{takerorder}</td><td>{PreparationMode}</td><td>{ChargingItemName}</td><td>{singleName}</td><td>{PreparationStatus}</td></tr>";
+                var tr = "<tr><td>{AdviceDate}</td><td>{DepartmentName}</td><td>{BedCode}</td><td>{PatientName}</td><td>{Age}</td><td>{HospitalizationNumber}</td><td>{ChargingItemName}</td><td>{111}</td><td>{222}</td><td>{333}</td><td>{singleName}</td></tr>";
                 tr = tr.format(data.records[j]);
-                $tbl.append(tr);
+                $tbody.append(tr);
             }
+
+            $('#tblAdviceList').tablesMergeCell({
+                cols: [0,1,2,3,4,5]
+            });
+        
+            // $('#process-demo-2').tablesMergeCell({
+            //     automatic: false,
+            //     cols: [0],
+            //     rows: [0,1,2]
+            // });
+    
+            // $('#process-demo-3').tablesMergeCell({
+            //     automatic: false,
+            //     cols: [0,3],
+            //     rows: [[3,4,5],[6,7]]
+            // });
+
         }else{            
             alert("请求错误，请尝试重新打开页面！" + (data.ErrorMessage ? "ErrorMessage => " + data.ErrorMessage : ""));
         }
