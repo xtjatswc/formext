@@ -447,8 +447,8 @@ util.printerchange = function(callback){
     $( "#SelPrinterSet" ).selectmenu({
         change: function(event, ui) {
             util.printerSetting.PrinterType = ui.item.value;
-            util.printersetup(callback);　
-    　　}
+            util.printersetup(callback);
+        }
     });
 }
 
