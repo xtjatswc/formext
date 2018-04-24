@@ -114,12 +114,23 @@ printout.loadAdviceList = function(){
 
     var urlParams = util.urlToObject(window.location.search);
 
-    var url = pageExt.cnisPath + "index.php?r=preparation&ac=enteralmedication/search&page=1&limit=1000";
+    var url = pageExt.cnisPath + "index.php?r=preparation&ac=enteralmedication/searchprint&page=1&limit=1000";
     $.getJSON(url, urlParams, function (data, status, xhr) {
         if(data.success){
             $tbody = $("#tblAdviceList tbody");
             for (j = 0; j < data.records.length; j++) {
-                var tr = "<tr><td>{AdviceDate}</td><td>{DepartmentName}</td><td>{BedCode}</td><td>{PatientName}</td><td>{Age}</td><td>{HospitalizationNumber}</td><td>{ChargingItemName}</td><td>{111}</td><td>{222}</td><td>{333}</td><td>{singleName}</td></tr>";
+                data.records[j].merginKey = "<div style='display:none'>{AdviceDate}{HospitalizationNumber}</div>".format(data.records[j]);;
+                var tr = "<tr><td>{AdviceDate}</td> \
+                <td>{DepartmentName}{merginKey} \
+                </td><td>{BedCode}{merginKey}</td> \
+                <td>{PatientName}{merginKey}</td> \
+                <td>{Age}{merginKey}</td> \
+                <td>{HospitalizationNumber}{merginKey}</td> \
+                <td>{ChargingItemName}</td> \
+                <td>{ChargingItemSpec}</td> \
+                <td>{ChargingNum}</td> \
+                <td>{ChargingTotalNum}</td> \
+                <td>{RecipeAndProductName}</td></tr>";
                 tr = tr.format(data.records[j]);
                 $tbody.append(tr);
             }
