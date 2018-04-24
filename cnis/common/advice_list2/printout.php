@@ -18,7 +18,7 @@ function randerStylesheetCallBack()
     $version = form_rander\page::$_pageCfg["version"];
     ?>
 	<!-- <link id="cssPrint" rel="stylesheet" type="text/css" media="screen" href="printLabel.css?v=<?php echo $version ?>" />     -->
-	<link id="cssPrint" rel="stylesheet" type="text/css" href="printout-v1.0.1.css" />
+	<link id="cssPrint" rel="stylesheet" type="text/css" href="printout-v1.0.2.css" />
     <?php
 }
 
@@ -41,10 +41,10 @@ function randerBodyCallBack()
     ?>
     <div>
         <input type="button" value="检测打印插件" onclick="util.CheckLodopIsInstall()" />
+        <input type="button" value="设置" onclick="printout.printSetting()" />        
         <input type="button" value="打印维护" onclick="printout.printSetup()" />
         <input id="btnPrint" type="button" value="打印" onclick="printout.print()" />        
         <div style="display:none">
-            <input type="button" value="设置" onclick="printout.printSetting()" />
             <input type="button" value="打印设计" onclick="printout.printDesign()" />
             <input type="button" value="打印预览" onclick="printout.preview()" />
         </div>

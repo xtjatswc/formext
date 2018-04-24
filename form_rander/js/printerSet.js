@@ -19,7 +19,7 @@ $(function($){
                 util.getSelectOptionByText("#PrinterList" + data[j].PrinterType, data[j].PrinterName).attr("selected",true);
             
                 //设置纸张
-                printerSet.CreatePagSizeList(j + 1);
+                printerSet.CreatePagSizeList(data[j].PrinterType);
                 
                 util.getSelectOptionByValue("#Orient" + data[j].PrinterType, data[j].Orient).attr("selected",true);
                 util.getSelectOptionByText("#PagSizeList" + data[j].PrinterType, data[j].PageName).attr("selected",true);
@@ -31,7 +31,7 @@ $(function($){
     });
 
     $(".PrinterList").change(function(){
-        printerSet.CreatePagSizeList($(this).attr("index"));
+        printerSet.CreatePagSizeList($(this).attr("PrinterType"));
         $(this).css("background-color","#FFFFCC");
     });
 
@@ -54,30 +54,30 @@ printerSet.CreatePrinterList = function(){
     };	
 };
 
-printerSet.CreatePagSizeList = function(index){
+printerSet.CreatePagSizeList = function(PrinterType){
     //LODOP=getLodop(); 
     //clearPageListChild();
-    $("#PagSizeList" + index).empty();
-    var strPageSizeList=LODOP.GET_PAGESIZES_LIST($("#PrinterList" + index).val(),"\n");
+    $("#PagSizeList" + PrinterType).empty();
+    var strPageSizeList=LODOP.GET_PAGESIZES_LIST($("#PrinterList" + PrinterType).val(),"\n");
     var Options=new Array(); 
      Options=strPageSizeList.split("\n");   
-     $('#PagSizeList' + index).append("<option value='-1'>#未设置#</option>");    
+     $('#PagSizeList' + PrinterType).append("<option value='-1'>#未设置#</option>");    
     for (i in Options)    
     {    
       var option=document.createElement('option');   
       option.innerHTML=Options[i];
       option.value=Options[i];
-        //document.getElementById('PagSizeList' + index).appendChild(option);
-        $('#PagSizeList' + index).append(option);
+        //document.getElementById('PagSizeList' + PrinterType).appendChild(option);
+        $('#PagSizeList' + PrinterType).append(option);
 
     }  
  }	
 
 printerSet.saveSetting = function(){
+    $(".gridtable tr[PrinterType]").each(function(){
+        printerSet.singleSave($(this).attr("PrinterType"));
+    });
 
-    for(var i = 1; i <= $(".gridtable tr").length - 1; i++){
-        printerSet.singleSave(i);
-    }
     alert("保存成功！");
 }
 

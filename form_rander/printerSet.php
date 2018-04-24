@@ -39,7 +39,7 @@ function randerBodyCallBack(){
 <ul>
     <li>下面的设置仅对当前电脑有效！</li>
     <li>如果未设置，则按电脑默认配置执行打印任务！</li>
-    <li>如果设置了纸张名称，就不需要设置纸张高度和宽度！</li>
+    <li>如果设置了纸张名称，就不需要设置纸张宽度和高度！</li>
 </ul>    
 </font>
 <input type="button" value="保存设置" onclick="printerSet.saveSetting()"/>
@@ -57,17 +57,12 @@ function randerBodyCallBack(){
 </thead>
 <tbody>
 <?php
-$printer = array(
-    1 => "标签打印机",
-    2 => "肠内医嘱单打印机",
-    3 => "人体成分报告打印机",
-    4 => "医嘱交接单打印机",
-);
+global $printer;
 foreach ($printer as $key => $value) {
 ?>
-    <tr>
+    <tr PrinterType="<?php echo $key?>">
         <td><?php echo $value?></td>
-        <td><select class="PrinterList" id="PrinterList<?php echo $key?>" index="<?php echo $key?>" size="1"></select>
+        <td><select class="PrinterList" id="PrinterList<?php echo $key?>" PrinterType="<?php echo $key?>" size="1"></select>
         </td>
         <td><select class="Orient" id="Orient<?php echo $key?>" size="1"></select>
         </td>

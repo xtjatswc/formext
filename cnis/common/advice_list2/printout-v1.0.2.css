@@ -1,0 +1,13 @@
+table {border-collapse:collapse;}
+table table{ border-style:hidden;}
+table.gridtable td
+{
+    border:1px solid black;font-size: 10pt;padding:3px; 
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 3px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
