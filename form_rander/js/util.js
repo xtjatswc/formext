@@ -365,6 +365,8 @@ util.getSelectOptionByValue = function (selector, optionValue){
 
 //打印设置
 util.printerSetting = {
+    PrinterTypeKey: "", //存打印设置的cookie键
+    PrinterType: "",
     PrinterName: "",
     Orient: 0,
     PageName: "",
@@ -375,6 +377,8 @@ util.printerSetting = {
 //引导lodop
 util.PcSN = "";
 util.bootstrapLodop = function(printerType, callback){
+    util.printerSetting.PrinterType = printerType;
+
     var timer = window.setInterval(function () {
         if(document.readyState==="complete"){
             //全局变量
@@ -405,29 +409,75 @@ util.bootstrapLodop = function(printerType, callback){
             window.clearInterval(timer);
 
             //获取打印设置
-            var sql = "select * from printersetup where PcID = '{PcID}' and printerType=" + printerType;
-            var sql2 = sql.format({ PcID: util.PcSN });
-            $.getJSON(pageExt.libPath + "query.php", { sql: sql2 }, function (data, status, xhr) {
-                if (data.length > 0) {
-                      
-                    util.printerSetting.PrinterName = data[0].PrinterName;
-                    util.printerSetting.Orient = data[0].Orient;
-                    if(data[0].PageName != "#未设置#"){
-                        util.printerSetting.PageName = data[0].PageName;
-                    }
-    
-                    if(data[0].PageWidth != ""){
-                        util.printerSetting.PageWidth = data[0].PageWidth + "mm";
-                    }
-    
-                    if(data[0].PageHeigth != ""){
-                        util.printerSetting.PageHeigth = data[0].PageHeigth + "mm";
-                    }
-                }
-
-                callback();
-            });
+            util.printersetup(callback);
                 
         }
     },500); 
+}
+
+//获取打印设置
+util.printersetup = function(callback){
+    var sql = "select * from printersetup where PcID = '{PcID}' and printerType=" + util.printerSetting.PrinterType;
+    var sql2 = sql.format({ PcID: util.PcSN });
+    $.getJSON(pageExt.libPath + "query.php", { sql: sql2 }, function (data, status, xhr) {
+        if (data.length > 0) {
+              
+            util.printerSetting.PrinterName = data[0].PrinterName;
+            util.printerSetting.Orient = data[0].Orient;
+            if(data[0].PageName != "#未设置#"){
+                util.printerSetting.PageName = data[0].PageName;
+            }
+
+            if(data[0].PageWidth != ""){
+                util.printerSetting.PageWidth = data[0].PageWidth + "mm";
+            }
+
+            if(data[0].PageHeigth != ""){
+                util.printerSetting.PageHeigth = data[0].PageHeigth + "mm";
+            }
+        }
+
+        callback();
+    });
+}
+
+//切换打印设置
+util.printerchange = function(callback){
+    util.getSelectOptionByValue("#SelPrinterSet", util.printerSetting.PrinterType).attr("selected",true);
+    $( "#SelPrinterSet" ).selectmenu({
+        change: function(event, ui) {
+            util.printerSetting.PrinterType = ui.item.value;
+            util.printersetup(callback);　
+    　　}
+    });
+}
+
+util.bootstrap = function(){
+    if($("#SelPrinterSet").length > 0){
+        if($.cookie(util.printerSetting.PrinterTypeKey)){
+            util.printerSetting.PrinterType = $.cookie(util.printerSetting.PrinterTypeKey);
+        }else{
+            $.cookie(util.printerSetting.PrinterTypeKey, util.printerSetting.PrinterType, { expires: 180, path: '/' });
+        }
+    }
+
+    util.bootstrapLodop(util.printerSetting.PrinterType, function(){
+        if(util.printerSetting.PrinterName){
+            $("#printerName").html(util.printerSetting.PrinterName);
+        }else{
+            $("#printerName").html("#未设置#");
+        }
+
+        //切换打印设置时
+        if($("#SelPrinterSet").length > 0){
+            util.printerchange(function(){
+                if(util.printerSetting.PrinterName){
+                    $("#printerName").html(util.printerSetting.PrinterName);
+                }else{
+                    $("#printerName").html("#未设置#");
+                }
+                $.cookie(util.printerSetting.PrinterTypeKey, util.printerSetting.PrinterType, { expires: 180, path: '/' });
+            });    
+        }
+    });
 }

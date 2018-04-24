@@ -1,16 +1,14 @@
 
 var printout = {};
 printout.urlParams = util.urlToObject(window.location.search);
+printout.PrinterTypeKey = "PrinterTypeKey_63673d59-0480-44fd-a448-6817ba4b673b";
+printout.defPrinterType = 102;
 
 $(function ($) {
 
-    util.bootstrapLodop(4, function(){
-        if(util.printerSetting.PrinterName){
-            $("#printerName").html(util.printerSetting.PrinterName);
-        }else{
-            $("#printerName").html("#未设置#");
-        }
-    });
+    util.printerSetting.PrinterTypeKey = printout.PrinterTypeKey;
+    util.printerSetting.PrinterType = printout.defPrinterType;
+    util.bootstrap();
 
     printout.loadAdviceList();
 });
