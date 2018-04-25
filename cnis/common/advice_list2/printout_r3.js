@@ -1,7 +1,7 @@
 
 var printout = {};
 printout.urlParams = util.urlToObject(window.location.search);
-printout.PrinterTypeKey = "PrinterTypeKey_63673d59-0480-44fd-a448-6817ba4b673b";
+printout.PrinterTypeKey = "PrinterTypeKey_e124215b-42ab-4a10-bd93-38821f6f8b62";
 printout.defPrinterType = 101;
 
 $(function ($) {
@@ -113,31 +113,39 @@ printout.createPrintPage = function (divRecipe) {
 
 printout.loadAdviceList = function(){
 
-    var urlParams = util.urlToObject(window.location.search);
+    var strType = "";
+    var DepartmentNameDisplay = "display:none;";
+    var TakeOrderDisplay = "display:none;";
+    if(printout.urlParams.type==1){
+        strType = "a";
+        DepartmentNameDisplay = "";
+        TakeOrderDisplay = "";
+    }else if(printout.urlParams.type==2){
+        strType = "b";
+        DepartmentNameDisplay = "";
+    }else if(printout.urlParams.type==3){
+        strType = "c";
+    }
 
-    var url = pageExt.cnisPath + "index.php?r=preparation&ac=enteralmedication/searchprint&page=1&limit=1000";
-    $.getJSON(url, urlParams, function (data, status, xhr) {
+    var url = pageExt.cnisPath + "index.php?r=preparation&ac=enteralmedication/search" + strType + "&page=1&limit=10000";
+    $.getJSON(url, printout.urlParams, function (data, status, xhr) {
         if(data.success){
             $tbody = $("#tblAdviceList tbody");
             for (j = 0; j < data.records.length; j++) {
-                data.records[j].merginKey = "<div style='display:none'>{AdviceDate}{HospitalizationNumber}</div>".format(data.records[j]);;
-                var tr = "<tr><td>{AdviceDate}</td> \
-                <td>{DepartmentName}{merginKey} \
-                </td><td>{BedCode}{merginKey}</td> \
-                <td>{PatientName}{merginKey}</td> \
-                <td>{Age}{merginKey}</td> \
-                <td>{HospitalizationNumber}{merginKey}</td> \
-                <td>{ChargingItemName}</td> \
-                <td>{ChargingItemSpec}</td> \
-                <td>{ChargingNum}</td> \
-                <td>{ChargingTotalNum}</td> \
-                <td>{RecipeAndProductName}</td></tr>";
+                //data.records[j].merginKey = "<div style='display:none'>{AdviceDate}{HospitalizationNumber}</div>".format(data.records[j]);;
+                var tr = "<tr> \
+                <td style='" + DepartmentNameDisplay + "'>{DepartmentName}</td> \
+                <td style='" + TakeOrderDisplay + "'>{TakeOrder}</td> \
+                <td>{RecipeAndProductName}</td> \
+                <td>{pack}</td> \
+                <td>{total}</td> \
+                </tr>";
                 tr = tr.format(data.records[j]);
                 $tbody.append(tr);
             }
 
             $('#tblAdviceList').tablesMergeCell({
-                cols: [0,1,2,3,4,5]
+                cols: [0,1]
             });
         
             // $('#process-demo-2').tablesMergeCell({
