@@ -48,7 +48,7 @@ printout.print = function () {
 printout.printLoad = function (flag) {
 
     var $divRecipe = $("#divRecipe");
-    printout.createPrintPage($divRecipe[0].outerHTML);
+    printout.createPrintPage($divRecipe[0].innerHTML);
     if (flag == 1) {
         LODOP.PRINT_DESIGN();
         return false;
@@ -81,9 +81,10 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
     
-    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "145mm", "150mm", strStyle + divRecipe);
+    LODOP.ADD_PRINT_TABLE("1.01mm", "1.01mm", "145mm", "150mm", strStyle + divRecipe);
     LODOP.SET_PRINT_STYLEA(0,"Horient",3); 
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
+    //LODOP.SET_PRINT_STYLEA(0,"TableHeightScope",1);
 
     //LODOP.ADD_PRINT_TABLE("1.59mm","1.01mm","85.01mm","28mm",strStyle + document.getElementById("tblNutrientadvicedetail").outerHTML);
     //LODOP.SET_PRINT_STYLEA(0,"Vorient",3);

@@ -62,12 +62,12 @@ function randerBodyCallBack()
 ?>
 <div id="divRecipe">
 <table id="tblAdviceList" class="gridtable">
-    <caption>
-        <h1 style="text-align:center;margin-top:10px;">
-        <?php echo $printTitle ?> 肠内医嘱列表
-        </h1>
-    </capiton>
     <thead>    
+        <tr>
+        <th style="text-align:center;margin-top:10px;font-size:16pt;font-weight: bold;border:none;background-color: white;" colspan="11">
+        <?php echo $printTitle ?> 肠内医嘱列表
+        </th>
+        </tr>
         <tr>
             <th>医嘱日期</th>
             <th>病区（科室）</th>
