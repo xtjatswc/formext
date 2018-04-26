@@ -492,3 +492,59 @@ util.bootstrap = function(){
         }
     });
 }
+
+util.initDialog = function(params){
+
+    // dialog.dialog( "option", "title", "Dialog Title" );
+    // params = {
+    //     dialogID : "dialog1",
+    //     cfg : {
+    //         appendTo: "#printerName", //弹框生成的代码追加到哪个元素
+    //         title: "Dialog Title2",
+    //         autoOpen: false, //默认关闭还是开启
+    //         resizable: true,
+    //         closeText: "关闭",
+    //         draggable: true, //是否允许移动位置
+    //         //position: { my: "right bottom", at: "left+600px top+300px ", of: window  } , //dialog相对于窗口的位置：可以是'center', 'left', 'right', 'top', 'bottom',也可以是偏移量
+    //         height: "auto", //auto或具体数值
+    //         width: "90%",  
+    //         // maxWidth: 600, 
+    //         // maxHeight: 300,  
+    //         // minWidth: 200, 
+    //         // minHeight: 100,  
+    //         modal: true,    //模态窗口        
+    //         buttons: {
+    //             "Delete all items": function() {
+    //                 $(this).dialog( "close" );
+    //             },
+    //             确认: function() {
+    //                 $(this).dialog( "close" );
+    //             }
+    //         },
+    //         close: function() {
+    //             //alert("colse!");
+    //         },
+    //         open: function() {
+    //             //alert("open!");
+    //         },
+    //         show: {
+    //             effect: "blind",
+    //             duration: 200
+    //         },
+    //         hide: {
+    //             effect: "clip",
+    //             duration: 200
+    //         }
+    //     },
+    // };
+
+    var $dialog = $("#" + params.dialogID);
+    if($dialog.length == 0){
+        $dialog = $("<div id='" + params.dialogID + "'></div>").appendTo($("body"));
+        if(params.cfg){
+            $dialog.dialog(params.cfg);
+        }    
+    }
+
+    return $dialog;
+}
