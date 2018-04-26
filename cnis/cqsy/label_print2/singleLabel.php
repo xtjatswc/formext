@@ -51,10 +51,17 @@ foreach ($tblDetail as $key => $value) {
     if($result["PreparationMode"] != "自助冲剂"){
         $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 1);
     }
+
     //规格 液 or 粉
     $ChargingItemSpec = $value["ChargingItemSpec"];
-    if(strpos($value["ChargingItemName"],'肠内营养液')!==false && $value["Unit"] != "ml(液)"){
-        $ChargingItemSpec = "";
+    if(strpos($value["ChargingItemName"],'肠内营养液')!==false){
+        if($value["Unit"] == "ml(液)"){
+            //液 不显示数量
+            $ChargingNum = "";
+        }else{
+            //粉 不显示规格(隐掉100ml 250ml)
+            $ChargingItemSpec = "";
+        }
     }
 
     echo "<tr>
@@ -83,12 +90,62 @@ foreach ($tblDetail as $key => $value) {
     </td>
     </tr>
 </table>
+<?php
+$nutrients = calc_recipe_nutrients($detailDBKeys);
+?>
 <table style="margin-top:-1px" >
     <tr>
-    <td>能量：<br/><?php echo $result["PatientName"] ?></td>
-    <td>蛋白质：<br/><?php echo $result["DepartmentName"] ?></td>
-    <td>脂肪：<br/><?php echo $result["Bed"] ?></td>
-    <td>碳水化合物：<br/><?php echo $result["Bed"] ?></td>
+    <td>能量：<br/><?php echo $nutrients["Energy"] ?> kcal</td>
+    <td>蛋白质：<br/><?php echo $nutrients["Protein"] ?> g</td>
+    <td>脂肪：<br/><?php echo $nutrients["Fat"] ?> g</td>
+    <td>碳水化合物：<br/><?php echo $nutrients["Carbohydrate"] ?> g</td>
     </tr>
 </table>
 </div>
+<?php
+
+function calc_recipe_nutrients($detailDBKeys){
+    global $db;
+    $Energy = 0;
+    $Protein = 0;
+    $Fat = 0;
+    $Carbohydrate = 0;
+
+    $sql = "select a.RecipeAndProductName,d.UnitKey,d.AdviceAmount,d.netContent,d.netContentUnit,a.NutrientProductSpecification
+    ,b.Energy,b.Protein,b.Fat,b.Carbohydrate,e.SysCodeShortName,h.SysCodeName PreparationMode from recipeandproduct a 
+    inner join recipefoodrelation c on c.RecipeAndProduct_DBKey = a.RecipeAndProduct_DBKey
+    inner join chinafoodcomposition b on b.ChinaFoodComposition_DBKey = c.ChinaFoodComposition_DBKey
+    inner join nutrientadvicedetail d on d.RecipeAndProduct_DBKey = a.RecipeAndProduct_DBKey
+    left join syscode e on e.SysCode = d.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
+    left join syscode h on h.SysCode = d.PreparationMode and h.SystemCodeTypeName = 'PreparationMode'
+    where d.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
+    $tblDetail = $db->fetch_all($sql);
+    foreach ($tblDetail as $key => $value) {
+        $nutrientsNum = $value["netContent"];  //总g数 ml数
+        if($value["PreparationMode"] == "自助冲剂"){
+            //自助冲剂需要除以频次
+            $nutrientsNum = round($nutrientsNum / $value["SysCodeShortName"]);
+        }
+
+        // $array = explode("_", $value["UnitKey"]);
+        // if ($array[1] == "B") {
+        //     //倍康素 罐
+        //     $nutrientsNum = $value["AdviceAmount"] * $value["NutrientProductSpecification"];
+        // }else if ($array[1] == "C") {
+        //     //佳膳 拆
+        //     $nutrientsNum = $value["AdviceAmount"];
+        // }
+
+        $Energy += round($nutrientsNum * $value["Energy"] / 100, 1);
+        $Protein += round($nutrientsNum * $value["Protein"] / 100, 1);
+        $Fat += round($nutrientsNum * $value["Fat"] / 100, 1);
+        $Carbohydrate += round($nutrientsNum * $value["Carbohydrate"] / 100, 1);
+    }
+
+    return array(
+        "Energy" => $Energy,
+        "Protein" => $Protein,
+        "Fat" => $Fat,
+        "Carbohydrate" => $Carbohydrate,
+    );
+}
