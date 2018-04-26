@@ -16,7 +16,7 @@ where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) limit 0,1";
 $result = $db->fetch_row($sql);
 
 //制剂数据
-$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType, e.SysCodeName,e.SysCodeShortName from nutrientadvicedetail a
+$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType, e.SysCodeName,e.SysCodeShortName,a.Unit from nutrientadvicedetail a
 INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 left join measureunit d on d.MeasureUnit_DBKey = b.minUnit_DBKey
@@ -46,10 +46,19 @@ $tblDetail = $db->fetch_all($sql);
     <tbody>
         <?php
 foreach ($tblDetail as $key => $value) {
-    //数量要除以频次
-    $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 1);
+    //除自助冲剂外，数量要除以频次
+    $ChargingNum = round($value["ChargingNum"], 1);
+    if($result["PreparationMode"] != "自助冲剂"){
+        $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 1);
+    }
+    //规格 液 or 粉
+    $ChargingItemSpec = $value["ChargingItemSpec"];
+    if(strpos($value["ChargingItemName"],'肠内营养液')!==false && $value["Unit"] != "ml(液)"){
+        $ChargingItemSpec = "";
+    }
+
     echo "<tr>
-            <td>" . $value["ChargingItemName"] . " ". $value["ChargingItemSpec"] ."</td>
+            <td>" . $value["ChargingItemName"] . " ". $ChargingItemSpec . "</td>
             <td>" . $ChargingNum . " ". $value["ChargingItemUnit"] . "</td>
           </tr>";
 }
@@ -62,7 +71,6 @@ foreach ($tblDetail as $key => $value) {
                 <td style="padding:0px">
                     <table style="margin-top:-1px;">
                         <tr>
-                        <td><nobr>时间：</nobr><br/><nobr><?php echo $result["TakeOrder"] ?></nobr></td>
                         <td>
                             <nobr>制剂方式：<?php echo $result["PreparationMode"] ?></nobr>
                             <nobr>途径：<?php echo $result["Directions"] ?></nobr>
@@ -73,6 +81,14 @@ foreach ($tblDetail as $key => $value) {
             </tr>
         </table>
     </td>
+    </tr>
+</table>
+<table style="margin-top:-1px" >
+    <tr>
+    <td>能量：<br/><?php echo $result["PatientName"] ?></td>
+    <td>蛋白质：<br/><?php echo $result["DepartmentName"] ?></td>
+    <td>脂肪：<br/><?php echo $result["Bed"] ?></td>
+    <td>碳水化合物：<br/><?php echo $result["Bed"] ?></td>
     </tr>
 </table>
 </div>
