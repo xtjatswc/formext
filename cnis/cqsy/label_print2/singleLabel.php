@@ -112,10 +112,11 @@ function calc_recipe_nutrients($detailDBKeys){
     $Carbohydrate = 0;
 
     $sql = "select a.RecipeAndProductName,d.UnitKey,d.AdviceAmount,d.netContent,d.netContentUnit,a.NutrientProductSpecification
-    ,b.Energy,b.Protein,b.Fat,b.Carbohydrate,e.SysCodeShortName,h.SysCodeName PreparationMode from recipeandproduct a 
+    ,b.Energy,b.Protein,b.Fat,b.Carbohydrate,e.SysCodeShortName,f.ChargingNum,h.SysCodeName PreparationMode from recipeandproduct a 
     inner join recipefoodrelation c on c.RecipeAndProduct_DBKey = a.RecipeAndProduct_DBKey
     inner join chinafoodcomposition b on b.ChinaFoodComposition_DBKey = c.ChinaFoodComposition_DBKey
     inner join nutrientadvicedetail d on d.RecipeAndProduct_DBKey = a.RecipeAndProduct_DBKey
+		inner join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = d.NutrientAdviceDetail_DBKEY
     left join syscode e on e.SysCode = d.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
     left join syscode h on h.SysCode = d.PreparationMode and h.SystemCodeTypeName = 'PreparationMode'
     where d.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
@@ -123,8 +124,10 @@ function calc_recipe_nutrients($detailDBKeys){
     foreach ($tblDetail as $key => $value) {
         $nutrientsNum = $value["netContent"];  //总g数 ml数
         if($value["PreparationMode"] == "自助冲剂"){
-            //自助冲剂需要除以频次
-            $nutrientsNum = round($nutrientsNum / $value["SysCodeShortName"]);
+            // //自助冲剂需要除以频次
+            // $nutrientsNum = round($nutrientsNum / $value["SysCodeShortName"]);
+            //自助冲剂每个标签计算数量1的能量、蛋脂糖
+            $nutrientsNum = round($nutrientsNum / $value["ChargingNum"], 1);
         }
 
         // $array = explode("_", $value["UnitKey"]);

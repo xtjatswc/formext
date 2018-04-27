@@ -2,6 +2,8 @@ var printLabel = {};
 
 //页面是否加载完毕
 printLabel.isDomReady = false;
+//打印份数
+printLabel.spinnerPrintCopies;
 
 
 
@@ -73,18 +75,19 @@ GROUP BY \
 
             $("#labelTip").html("");
 
-            if ($("#printerName").html() == "#未设置#") {
-                if (confirm("未设置打印机，是否输出到默认打印机？")) {
-                    $("#btnPrint").click();
-                }
-            } else {
-                $("#btnPrint").click();
+            // if ($("#printerName").html() == "#未设置#") {
+            //     if (confirm("未设置打印机，是否输出到默认打印机？")) {
+            //         $("#btnPrint").click();
+            //     }
+            // } else {
+            //     $("#btnPrint").click();
 
-            }
+            // }
 
         }
     }, 500);
 
+    printLabel.spinnerPrintCopies = $( "#spinnerPrintCopies" ).spinner({min:1});
 
 });
 
@@ -105,12 +108,30 @@ printLabel.preview = function () {
 }
 
 printLabel.print = function () {
+
+    var printCopies = printLabel.spinnerPrintCopies.spinner( "value" );
+    if(printCopies == null){
+        var dialog = util.initDialog({dialogID:"dialog1",cfg:{closeText:"关闭",title:"提示",modal:true}});
+        dialog.html("请输入正确的打印份数！");
+        dialog.dialog("open");
+        printLabel.spinnerPrintCopies.select();
+        return;
+    }
+
+    if ($("#printerName").html() == "#未设置#") {
+        if (!confirm("未设置打印机，是否输出到默认打印机？")) {
+            return;
+        }
+    } 
+    
     if (!printLabel.isDomReady) {
         alert("页面没加载完，请重试！");
         return;
     }
 
-    printLabel.printLoad(4);
+    for (let index = 0; index < printCopies; index++) {
+        printLabel.printLoad(4);        
+    }
     alert("请等待打印完毕后，再关闭该页面！");
 }
 
