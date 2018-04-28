@@ -499,6 +499,7 @@ util.initDialog = function(params){
     // params = {
     //     dialogID : "dialog1",
     //     context : "弹框内容！",
+    //     countdown : 1000,
     //     cfg : {
     //         appendTo: "#printerName", //弹框生成的代码追加到哪个元素
     //         title: "Dialog Title2",
@@ -542,9 +543,17 @@ util.initDialog = function(params){
     var $dialog = $("#" + params.dialogID);
     if($dialog.length == 0){
         $dialog = $("<div id='" + params.dialogID + "'></div>").appendTo($("body"));
+
         if(params.cfg){
-            $dialog.html(params.context);
+            !params.context || $dialog.html(params.context);
+            //倒计时
+            !params.countdown || $dialog.on( "dialogopen", function( event, ui ) {
+                window.setTimeout(function(){
+                    $dialog.dialog( "close" );
+                },params.countdown); 
+            } );
             $dialog.dialog(params.cfg);
+
         }    
     }
 

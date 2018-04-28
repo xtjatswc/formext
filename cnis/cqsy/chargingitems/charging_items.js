@@ -58,7 +58,17 @@ charging.saveRelation = function(){
         async: true
     });
 
-    alert("保存成功！");
+    //alert("保存成功！");
+    var dialog1 = util.initDialog({
+        dialogID:"dialog1",
+        context:"保存成功！",
+        countdown:1000,
+        cfg:{
+            title:"1秒后关闭",
+            position: { my: "left top", at: "left top", of: $("#mainGridTable")  },
+        },
+    });
+    dialog1.dialog("open");
 }
 
 charging.newChargingItem = function(){
