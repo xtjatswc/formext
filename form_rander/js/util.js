@@ -498,6 +498,7 @@ util.initDialog = function(params){
     // dialog.dialog( "option", "title", "Dialog Title" );
     // params = {
     //     dialogID : "dialog1",
+    //     context : "弹框内容！",
     //     cfg : {
     //         appendTo: "#printerName", //弹框生成的代码追加到哪个元素
     //         title: "Dialog Title2",
@@ -542,6 +543,7 @@ util.initDialog = function(params){
     if($dialog.length == 0){
         $dialog = $("<div id='" + params.dialogID + "'></div>").appendTo($("body"));
         if(params.cfg){
+            $dialog.html(params.context);
             $dialog.dialog(params.cfg);
         }    
     }

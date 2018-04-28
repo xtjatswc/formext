@@ -111,8 +111,12 @@ printLabel.print = function () {
 
     var printCopies = printLabel.spinnerPrintCopies.spinner( "value" );
     if(printCopies == null){
-        var dialog = util.initDialog({dialogID:"dialog1",cfg:{closeText:"关闭",title:"提示",modal:true}});
-        dialog.html("请输入正确的打印份数！");
+        var dialog = util.initDialog({
+            dialogID:"dialog1",
+            context:"请输入正确的打印份数！",
+            cfg:
+            {closeText:"关闭",title:"消息",modal:true}
+        });
         dialog.dialog("open");
         printLabel.spinnerPrintCopies.select();
         return;
