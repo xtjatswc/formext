@@ -501,9 +501,10 @@ util.initDialog = function(params){
     //     context : "弹框内容！",
     //     countdown : 1000,
     //     cfg : {
-    //         appendTo: "#printerName", //弹框生成的代码追加到哪个元素
+    //         appendTo: "#divLabels", //弹框生成的代码追加到哪个元素的子级中，可以是div，form等，但不能是label，否则会出异常，后来理解这个属性的意义了：有时需要将表单元素放到form标签内做提交用
     //         title: "Dialog Title2",
     //         autoOpen: false, //默认关闭还是开启
+    //         dialogClass: "no-close", //给dialog附加class
     //         resizable: true,
     //         closeText: "关闭",
     //         draggable: true, //是否允许移动位置
@@ -542,19 +543,21 @@ util.initDialog = function(params){
 
     var $dialog = $("#" + params.dialogID);
     if($dialog.length == 0){
-        $dialog = $("<div id='" + params.dialogID + "'></div>").appendTo($("body"));
+        $dialog = $("<div id='" + params.dialogID + "'></div>").appendTo($("body"));    
+        params.context && $dialog.html(params.context);    
+    }
 
-        if(params.cfg){
-            !params.context || $dialog.html(params.context);
-            //倒计时
-            !params.countdown || $dialog.on( "dialogopen", function( event, ui ) {
-                window.setTimeout(function(){
-                    $dialog.dialog( "close" );
-                },params.countdown); 
-            } );
-            $dialog.dialog(params.cfg);
+    if(!$dialog.attr("initialized")){
+        //倒计时
+        params.countdown && $dialog.on( "dialogopen", function( event, ui ) {
+            window.setTimeout(function(){
+                $dialog.dialog( "close" );
+            },params.countdown); 
+        } );
 
-        }    
+        params.cfg && $dialog.dialog(params.cfg);
+
+        $dialog.attr("initialized", true);
     }
 
     return $dialog;
