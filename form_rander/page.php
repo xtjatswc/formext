@@ -40,6 +40,7 @@ class page
 <script src="<?php echo $lib ?>js\tablesMergeCell.js"></script>
 <script src="<?php echo $lib ?>js\mp.js"></script>
 <script src="<?php echo $lib ?>lodop\LodopFuncs.js"></script>
+<script src="<?php echo $lib ?>js\head<?php echo $min?>.js"></script>
 <script src="<?php echo $lib ?>js\My97DatePicker\WdatePicker.js"></script>
 <script src="<?php echo $lib ?>js\jquery.table2excel.js?v=<?php echo $version?>"></script>
 <script src="<?php echo $lib ?>js\util<?php echo $min?>.js?v=<?php echo $version?>"></script>
