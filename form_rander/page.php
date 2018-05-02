@@ -32,10 +32,10 @@ class page
     echo call_user_func("randerStylesheetCallBack");
 ?>
 
-<script src="<?php echo $lib ?>js\jquery-3.3.1.min.js"></script>
+<script src="<?php echo $lib ?>js\jquery-3.3.1<?php echo $min?>.js"></script>
 <script src="<?php echo $lib ?>js\jquery.validate.js"></script>
 <script src="<?php echo $lib ?>js\jquery.validate.unobtrusive.js"></script>
-<script src="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui.min.js"></script>
+<script src="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui<?php echo $min?>.js"></script>
 <script src="<?php echo $lib ?>js\jquery.cookie.js"></script>
 <script src="<?php echo $lib ?>js\tablesMergeCell.js"></script>
 <script src="<?php echo $lib ?>js\mp.js"></script>

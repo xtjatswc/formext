@@ -217,10 +217,11 @@ echo "</tbody>
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $lib ?>css\style.css?v=<?php echo $version?>" />
     <link rel="stylesheet" type="text/css" media="print" href="<?php echo $lib ?>css\style-print.css?v=<?php echo $version?>" />
     <link href="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui.css" rel="stylesheet">
-    <script src="<?php echo $lib ?>js\jquery-3.3.1.min.js"></script>
-    <script src="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui.min.js"></script>
+    <script src="<?php echo $lib ?>js\jquery-3.3.1<?php echo $min?>.js"></script>
+    <script src="<?php echo $lib ?>js\jquery-ui-1.12.1\jquery-ui<?php echo $min?>.js"></script>
     <script src="<?php echo $lib ?>js\jquery.cookie.js"></script>
-    <script src="<?php echo $lib ?>js\mp.js"></script>    
+    <script src="<?php echo $lib ?>js\mp.js"></script>  
+    <script src="<?php echo $lib ?>js\head<?php echo $min?>.js"></script>      
     <script src="<?php echo $lib ?>js\My97DatePicker\WdatePicker.js"></script>
     <script src="<?php echo $lib ?>js\jquery.table2excel.js?v=<?php echo $version?>"></script>
     <script src="<?php echo $lib ?>js\util<?php echo $min?>.js?v=<?php echo $version?>"></script>
