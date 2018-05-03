@@ -22,7 +22,7 @@ left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 left join measureunit d on d.MeasureUnit_DBKey = b.minUnit_DBKey
 left join syscode e on e.SysCode = a.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 left join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = a.NutrientAdviceDetail_DBKEY
-where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) and f.ChargingNum <> 0";
+where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) and f.ChargingNum <> 0 order by a.NutrientAdviceDetail_DBKEY";
 $tblDetail = $db->fetch_all($sql);
 ?>
 
@@ -111,15 +111,17 @@ function calc_recipe_nutrients($detailDBKeys){
     $Fat = 0;
     $Carbohydrate = 0;
 
+    $singleFlag = true;
+
     $sql = "select a.RecipeAndProductName,d.UnitKey,d.AdviceAmount,d.netContent,d.netContentUnit,a.NutrientProductSpecification
-    ,b.Energy,b.Protein,b.Fat,b.Carbohydrate,e.SysCodeShortName,f.ChargingNum,h.SysCodeName PreparationMode from recipeandproduct a 
+    ,b.Energy,b.Protein,b.Fat,b.Carbohydrate,e.SysCodeShortName,f.ChargingNum,h.SysCodeName PreparationMode, d.Unit from recipeandproduct a 
     inner join recipefoodrelation c on c.RecipeAndProduct_DBKey = a.RecipeAndProduct_DBKey
     inner join chinafoodcomposition b on b.ChinaFoodComposition_DBKey = c.ChinaFoodComposition_DBKey
     inner join nutrientadvicedetail d on d.RecipeAndProduct_DBKey = a.RecipeAndProduct_DBKey
 		inner join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = d.NutrientAdviceDetail_DBKEY
     left join syscode e on e.SysCode = d.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
     left join syscode h on h.SysCode = d.PreparationMode and h.SystemCodeTypeName = 'PreparationMode'
-    where d.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
+    where d.NutrientAdviceDetail_DBKEY in ($detailDBKeys) order by d.NutrientAdviceDetail_DBKEY ";
     $tblDetail = $db->fetch_all($sql);
     foreach ($tblDetail as $key => $value) {
         $nutrientsNum = $value["netContent"];  //总g数 ml数
@@ -128,6 +130,10 @@ function calc_recipe_nutrients($detailDBKeys){
             // $nutrientsNum = round($nutrientsNum / $value["SysCodeShortName"]);
             //自助冲剂每个标签计算数量1的能量、蛋脂糖
             $nutrientsNum = round($nutrientsNum / $value["ChargingNum"], 1);
+        }
+
+        if($value["PreparationMode"] == "组合冲剂" && $value["Unit"] == "ml(液)"){
+            $singleFlag = false;
         }
 
         // $array = explode("_", $value["UnitKey"]);
@@ -139,10 +145,20 @@ function calc_recipe_nutrients($detailDBKeys){
         //     $nutrientsNum = $value["AdviceAmount"];
         // }
 
-        $Energy += round($nutrientsNum * $value["Energy"] / 100, 1);
-        $Protein += round($nutrientsNum * $value["Protein"] / 100, 1);
-        $Fat += round($nutrientsNum * $value["Fat"] / 100, 1);
-        $Carbohydrate += round($nutrientsNum * $value["Carbohydrate"] / 100, 1);
+        $Energy += round($nutrientsNum * $value["Energy"] / 100, 2);
+        $Protein += round($nutrientsNum * $value["Protein"] / 100, 2);
+        $Fat += round($nutrientsNum * $value["Fat"] / 100, 2);
+        $Carbohydrate += round($nutrientsNum * $value["Carbohydrate"] / 100, 2);
+    }
+
+    //如果是组合冲剂，并且不包含液体，则能量、蛋脂糖还需要除以'收费数量（取第一条明细的收费数量）'
+    if($tblDetail[0]["PreparationMode"] == "组合冲剂" && $singleFlag){
+
+        $singleNum = $tblDetail[0]["ChargingNum"];
+        $Energy = round($Energy / $singleNum, 2);
+        $Protein = round($Protein / $singleNum, 2);
+        $Fat = round($Fat / $singleNum, 2);
+        $Carbohydrate = round($Carbohydrate / $singleNum, 2);
     }
 
     return array(
