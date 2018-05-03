@@ -54,7 +54,7 @@ function randerBodyCallBack(){
   <input id="spinnerPrintCopies" name="spinnerPrintCopies" value="1">
   <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
 </p>
-
+<p>制作日期： <input type="text" id="datepicker"></p>
 <div id="divLabels" style="width:290px">
          
 </div>

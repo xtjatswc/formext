@@ -88,7 +88,8 @@ GROUP BY \
     }, 500);
 
     printLabel.spinnerPrintCopies = $( "#spinnerPrintCopies" ).spinner({min:1});
-
+    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).val(util.getDate());
 });
 
 printLabel.printSetting = function () {
@@ -192,7 +193,7 @@ printLabel.createPrintPage = function (labelInfo) {
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.ADD_PRINT_TEXT("94.24mm", "23.97mm", "35.45mm", "5.29mm", "制作日期：" + util.getDate());
+    LODOP.ADD_PRINT_TEXT("94.24mm", "23.97mm", "35.45mm", "5.29mm", "制作日期：" + $( "#datepicker" ).val());
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
