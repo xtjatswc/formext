@@ -32,7 +32,7 @@ $tblDetail = $db->fetch_all($sql);
         <td>
 
 <?php
-if($result["DepartmentName"] == "ICU2"){
+if($result["DepartmentName"] == "ICU"){
 ?>    
 <div>
 <div style="text-align:center;width:100%;font-size:16pt;">
