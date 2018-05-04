@@ -1,5 +1,6 @@
 <?php
     function __autoload($class){
+    $class = str_replace('\\','/',$class);
     $filePath = __DIR__.DIRECTORY_SEPARATOR.$class.".php";
     if(file_exists($filePath)){
         require_once($filePath);
