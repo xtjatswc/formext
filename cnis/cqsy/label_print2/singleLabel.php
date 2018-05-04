@@ -16,7 +16,7 @@ where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) limit 0,1";
 $result = $db->fetch_row($sql);
 
 //制剂数据
-$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType, e.SysCodeName,e.SysCodeShortName,a.Unit from nutrientadvicedetail a
+$sql = "select f.ChargingItemName,f.ChargingPrice,f.ChargingItemSpec,f.ChargingNum,f.ChargingItemUnit,f.ChargingMoney, b.RecipeAndProductName,a.AdviceAmount,case a.NutrientAdviceDetailRemark when '无' then '' else a.NutrientAdviceDetailRemark end NutrientAdviceDetailRemark,c.MeasureUnitName,d.MeasureUnitName minUnitName, b.wrapperType, e.SysCodeName,e.SysCodeShortName,a.Unit,b.wrapperType from nutrientadvicedetail a
 INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_DBKey
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 left join measureunit d on d.MeasureUnit_DBKey = b.minUnit_DBKey
@@ -32,8 +32,11 @@ $tblDetail = $db->fetch_all($sql);
     <tr>
     <td>姓名：<?php echo $result["PatientName"] ?></td>
     <td>科室：<?php echo $result["DepartmentName"] ?></td>
-    <td>床号：<?php echo $result["Bed"] ?></td>
     </tr>
+    <tr>
+    <td>床号：<?php echo $result["Bed"] ?></td>    
+    <td>住院号：<?php echo $result["HospitalizationNumber"] ?></td>
+    </tr>    
 </table>
 <table  style="margin-top:-1px" >
     <tr>
@@ -100,9 +103,43 @@ $nutrients = calc_recipe_nutrients($detailDBKeys);
     <td>脂肪：<br/><?php echo $nutrients["Fat"] ?> g</td>
     <td>碳水化合物：<br/><?php echo $nutrients["Carbohydrate"] ?> g</td>
     </tr>
+    <tr>
+    <?php
+    $usage = usage($tblDetail);
+    if($usage != ""){
+    ?>
+    <td colspan="4">
+     <?php echo $usage; ?>
+    </td>
+    <?php }?>
+    </tr>
 </table>
 </div>
 <?php
+
+//用法用量
+function usage($tblDetail){
+    $isLiquid = false; //是否为液体
+    //
+    foreach ($tblDetail as $key => $value) {
+        if($value["Unit"] == "ml(液)"){
+            $isLiquid = true;
+            break;
+        }
+    }
+
+    if($isLiquid){
+        //液体
+        return "贮存方法：2-4℃冷藏<br/>电话：60353060  重医大附三院临床营养科制";
+    }else if($tblDetail[0]["wrapperType"] == "1"){
+        //整包装不用显示用法用量，流食也是整包装的
+    }else{
+        //粉剂
+        return "用法用量：每袋加&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ml温开水，用清洁工具调配后口服<br/>电话：60353060  重医大附三院临床营养科制";
+    }
+
+    return "";
+}
 
 function calc_recipe_nutrients($detailDBKeys){
     global $db;

@@ -63,6 +63,7 @@ GROUP BY \
             $("#divLabel_" + data[j].NutrientAdviceDetail_DBKEY2).load("singleLabel.php?v=" + Math.random() + "&detailDBKeys=" + data[j].NutrientAdviceDetail_DBKEY);
 
         }
+
     });
 
     //检查dom是否加载完毕
@@ -83,7 +84,8 @@ GROUP BY \
             //     $("#btnPrint").click();
 
             // }
-
+            
+            $("td").prop("contentEditable", true);
         }
     }, 500);
 
@@ -179,7 +181,7 @@ printLabel.createPrintPage = function (labelInfo) {
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
-    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "85mm", "91.97mm", strStyle + labelInfo);
+    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "72mm", "91.97mm", strStyle + labelInfo);
     // LODOP.SET_PRINT_STYLEA(0,"Horient",3); //别水平拉伸，不然死活看不见页脚
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
 
