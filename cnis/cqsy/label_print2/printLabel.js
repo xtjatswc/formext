@@ -84,7 +84,7 @@ GROUP BY \
             //     $("#btnPrint").click();
 
             // }
-            
+
             $("td").prop("contentEditable", true);
         }
     }, 500);
@@ -181,7 +181,7 @@ printLabel.createPrintPage = function (labelInfo) {
     LODOP.SET_PRINT_MODE("POS_BASEON_PAPER", false);
     var strStyle = document.getElementById("cssPrint").outerHTML;//"<style> table,td,th {border-width: 1px;border-style: solid;border-collapse: collapse}</style>"
 
-    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "72mm", "91.97mm", strStyle + labelInfo);
+    LODOP.ADD_PRINT_HTM("1.01mm", "1.01mm", "72mm", "87.97mm", strStyle + labelInfo);
     // LODOP.SET_PRINT_STYLEA(0,"Horient",3); //别水平拉伸，不然死活看不见页脚
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
 
@@ -190,12 +190,12 @@ printLabel.createPrintPage = function (labelInfo) {
     //LODOP.SET_PRINT_STYLEA(0,"Offset2Top","-10mm"); //设置次页偏移把区域向上扩
     //LODOP.SET_PRINT_STYLEA(0,"LinkedItem",-1);
 
-    LODOP.ADD_PRINT_TEXT("94.24mm", "1.32mm", "21.17mm", "5.29mm", "第#页/共&页");
+    LODOP.ADD_PRINT_TEXT("91.24mm", "1.32mm", "21.17mm", "5.29mm", "第#页/共&页");
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.ADD_PRINT_TEXT("94.24mm", "23.97mm", "35.45mm", "5.29mm", "制作日期：" + $( "#datepicker" ).val());
+    LODOP.ADD_PRINT_TEXT("91.24mm", "23.97mm", "35.45mm", "5.29mm", "日期：" + $( "#datepicker" ).val());
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);

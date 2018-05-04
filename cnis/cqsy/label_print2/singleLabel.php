@@ -130,12 +130,12 @@ function usage($tblDetail){
 
     if($isLiquid){
         //液体
-        return "贮存方法：2-4℃冷藏<br/>电话：60353060  重医大附三院临床营养科制";
+        return "贮存方法：2-4℃冷藏，未开封冷藏保存48小时<br/>电话：60353060<br/>重医大附三院临床营养科制";
     }else if($tblDetail[0]["wrapperType"] == "1"){
         //整包装不用显示用法用量，流食也是整包装的
     }else{
         //粉剂
-        return "用法用量：每袋加&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ml温开水，用清洁工具调配后口服<br/>电话：60353060  重医大附三院临床营养科制";
+        return "用法用量：每袋加&nbsp;&nbsp;&nbsp;&nbsp;ml温开水，用清洁工具调配后口服<br/>电话：60353060<br/>重医大附三院临床营养科制";
     }
 
     return "";
