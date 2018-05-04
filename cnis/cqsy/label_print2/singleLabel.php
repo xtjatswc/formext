@@ -30,11 +30,28 @@ $tblDetail = $db->fetch_all($sql);
 <table>
     <tr>
         <td>
+
+<?php
+if($result["DepartmentName"] == "ICU2"){
+?>    
+<div>
+<div style="text-align:center;width:100%;font-size:16pt;">
+<?php echo $result["Bed"] ?>床<br/>
+<?php echo $result["PatientName"] ?>
+</div>    
+住院号：<?php echo $result["HospitalizationNumber"] ?>
+</div>
+<?php
+}else{
+?>    
 <div>
 科室：<?php echo $result["DepartmentName"] ?>&nbsp;&nbsp;&nbsp;床号：<?php echo $result["Bed"] ?><br/>
 姓名：<?php echo $result["PatientName"] ?><br/>
 住院号：<?php echo $result["HospitalizationNumber"] ?>
 </div>
+<?php
+}
+?>
 
         </td>
     </tr>
@@ -85,7 +102,8 @@ $nutrients = calc_recipe_nutrients($detailDBKeys);
         </td>
     </tr>
 </table>
-<table>
+
+<table style="margin-top:5px;">
 <tr>
     <td>能量</td>
     <td><?php echo $nutrients["Energy"] ?>kcal</td>
