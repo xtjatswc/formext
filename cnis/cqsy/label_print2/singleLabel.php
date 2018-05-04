@@ -27,27 +27,21 @@ $tblDetail = $db->fetch_all($sql);
 ?>
 
 <div class="labelContent">
+<table>
+    <tr>
+        <td>
+<div>
+科室：<?php echo $result["DepartmentName"] ?>&nbsp;&nbsp;&nbsp;床号：<?php echo $result["Bed"] ?><br/>
+姓名：<?php echo $result["PatientName"] ?><br/>
+住院号：<?php echo $result["HospitalizationNumber"] ?>
+</div>
 
-<table class="baseTable">
-    <tr>
-    <td>姓名：<?php echo $result["PatientName"] ?></td>
-    <td>科室：<?php echo $result["DepartmentName"] ?></td>
+        </td>
     </tr>
-    <tr>
-    <td>床号：<?php echo $result["Bed"] ?></td>    
-    <td>住院号：<?php echo $result["HospitalizationNumber"] ?></td>
-    </tr>    
-</table>
-<table  style="margin-top:-1px" >
-    <tr>
-    <td style="border-right:none">品名</td>
-    <td style="padding:0px">
-        <table style="margin-top:-1px;margin-bottom:-1px">
-            <tr>
-                <td style="padding:0px">
-                <table  class="recipeTable" id="tblNutrientadvicedetail" >
-    <tbody>
-        <?php
+</table>    
+
+<table style="margin-top:5px;width:100%">
+<?php
 foreach ($tblDetail as $key => $value) {
     //除自助冲剂外，数量要除以频次
     $ChargingNum = round($value["ChargingNum"], 1);
@@ -68,52 +62,58 @@ foreach ($tblDetail as $key => $value) {
     }
 
     echo "<tr>
-            <td>" . $value["ChargingItemName"] . " ". $ChargingItemSpec . "</td>
-            <td>" . $ChargingNum . " ". $value["ChargingItemUnit"] . "</td>
-          </tr>";
+    <td>".$value["ChargingItemName"] . $ChargingItemSpec."</td>
+    <td>".$ChargingNum . $value["ChargingItemUnit"]."</td>
+    </tr>";
 }
 ?>
-    </tbody>
-</table>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding:0px">
-                    <table style="margin-top:-1px;">
-                        <tr>
-                        <td>
-                            <nobr>制剂方式：<?php echo $result["PreparationMode"] ?></nobr>
-                            <nobr>途径：<?php echo $result["Directions"] ?></nobr>
-                        </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </td>
-    </tr>
-</table>
+</table>    
+
+</div>
+
 <?php
 $nutrients = calc_recipe_nutrients($detailDBKeys);
 ?>
-<table style="margin-top:-1px" >
+
+<table>
     <tr>
-    <td>能量：<br/><?php echo $nutrients["Energy"] ?> kcal</td>
-    <td>蛋白质：<br/><?php echo $nutrients["Protein"] ?> g</td>
-    <td>脂肪：<br/><?php echo $nutrients["Fat"] ?> g</td>
-    <td>碳水化合物：<br/><?php echo $nutrients["Carbohydrate"] ?> g</td>
-    </tr>
-    <tr>
-    <?php
-    $usage = usage($tblDetail);
-    if($usage != ""){
-    ?>
-    <td colspan="4">
-     <?php echo $usage; ?>
-    </td>
-    <?php }?>
+        <td>
+<div>
+<nobr><?php echo $result["PreparationMode"] ?></nobr>&nbsp;&nbsp;&nbsp;
+<nobr><?php echo $result["Directions"] ?></nobr><br/>    
+</div>
+        </td>
     </tr>
 </table>
+<table>
+<tr>
+    <td>能量</td>
+    <td><?php echo $nutrients["Energy"] ?>kcal</td>
+    <td>蛋白质</td>
+    <td><?php echo $nutrients["Protein"] ?>g</td>
+    </tr>
+    <tr>
+    <td>脂肪</td>
+    <td><?php echo $nutrients["Fat"] ?>g</td>
+    <td>碳水化合物</td>
+    <td><?php echo $nutrients["Carbohydrate"] ?>g</td>
+    </tr>
+</table>
+<div>
+
+<table style="margin-top:5px;">
+    <tr>
+        <td>
+<?php
+    $usage = usage($tblDetail);
+    if($usage != ""){
+        echo $usage;
+    }
+?>
+        </td>
+    </tr>
+</table>
+
 </div>
 <?php
 

@@ -18,7 +18,7 @@ function randerStylesheetCallBack(){
     $version = form_rander\page::$_pageCfg["version"];
     ?>
 	<!-- <link id="cssPrint" rel="stylesheet" type="text/css" media="screen" href="printLabel.css?v=<?php echo $version ?>" />     -->
-	<link id="cssPrint" rel="stylesheet" type="text/css" href="print-1.0.3.css" />    
+	<link id="cssPrint" rel="stylesheet" type="text/css" href="print-1.0.5.css" />    
     <?php
 }
 
@@ -55,7 +55,7 @@ function randerBodyCallBack(){
   <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
 </p>
 <p>标签日期： <input type="text" id="datepicker"></p>
-<div id="divLabels" style="width:290px">
+<div id="divLabels" style="width:220px">
          
 </div>
 
