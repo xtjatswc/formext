@@ -36,7 +36,7 @@ $(function($){
         var editKey = $td.attr("editKey");
         if(editKey){
             var arr = editKey.split(",");
-            for (let index = 0; index < arr.length; index++) {
+            for (var index = 0; index < arr.length; index++) {
                 var key = arr[index];
                 var theValue = $td.parent().children("[columnName='"+ key +"']").text();
                 para[":" + key] = theValue;

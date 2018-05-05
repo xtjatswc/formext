@@ -146,7 +146,7 @@ printout.calcMoney = function(){
         var specArr = spec.split("#");
         if(!eventName || eventName == "select_chargingitem_" + detailId){
             $("#select_spec_" + detailId).empty();
-            for (let index = 0; index < specArr.length; index++) {
+            for (var index = 0; index < specArr.length; index++) {
                 $("#select_spec_" + detailId).append("<option>" + specArr[index] + "</option>");
             }
         }
@@ -201,7 +201,7 @@ printout.reload = function(){
                 var spec = $option.attr("spec");        
                 var specArr = spec.split("#");
                 $("#select_spec_" + detailId).empty();
-                for (let index = 0; index < specArr.length; index++) {
+                for (var index = 0; index < specArr.length; index++) {
                     $("#select_spec_" + detailId).append("<option>" + specArr[index] + "</option>");
                 }
 

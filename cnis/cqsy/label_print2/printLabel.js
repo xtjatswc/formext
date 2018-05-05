@@ -136,7 +136,7 @@ printLabel.print = function () {
         return;
     }
 
-    for (let index = 0; index < printCopies; index++) {
+    for (var index = 0; index < printCopies; index++) {
         printLabel.printLoad(4);        
     }
     alert("请等待打印完毕后，再关闭该页面！");
