@@ -62,6 +62,7 @@ if($result["DepartmentName"] == "ICU"){
 foreach ($tblDetail as $key => $value) {
     //除自助冲剂外，数量要除以频次
     $ChargingNum = round($value["ChargingNum"], 1);
+    $ChargingItemUnit = $value["ChargingItemUnit"];
     if($result["PreparationMode"] != "自助冲剂"){
         $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 1);
     }
@@ -70,8 +71,9 @@ foreach ($tblDetail as $key => $value) {
     $ChargingItemSpec = $value["ChargingItemSpec"];
     if(strpos($value["ChargingItemName"],'肠内营养液')!==false){
         if($value["Unit"] == "ml(液)"){
-            //液 不显示数量
+            //液 不显示数量、单位
             $ChargingNum = "";
+            $ChargingItemUnit = "";
         }else{
             //粉 不显示规格(隐掉100ml 250ml)
             $ChargingItemSpec = "";
@@ -80,7 +82,7 @@ foreach ($tblDetail as $key => $value) {
 
     echo "<tr>
     <td>".$value["ChargingItemName"] . $ChargingItemSpec."</td>
-    <td>".$ChargingNum . $value["ChargingItemUnit"]."</td>
+    <td>".$ChargingNum . $ChargingItemUnit."</td>
     </tr>";
 }
 ?>
@@ -96,8 +98,8 @@ $nutrients = calc_recipe_nutrients($detailDBKeys);
     <tr>
         <td>
 <div>
-<nobr><?php echo $result["PreparationMode"] ?></nobr>&nbsp;&nbsp;&nbsp;
-<nobr><?php echo $result["Directions"] ?></nobr><br/>    
+<!-- <nobr><?php echo $result["PreparationMode"] ?></nobr>&nbsp;&nbsp;&nbsp; -->
+<nobr>途径：<?php echo $result["Directions"] ?></nobr><br/>    
 </div>
         </td>
     </tr>
