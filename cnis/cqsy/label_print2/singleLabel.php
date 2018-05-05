@@ -69,8 +69,8 @@ foreach ($tblDetail as $key => $value) {
 
     //规格 液 or 粉
     $ChargingItemSpec = $value["ChargingItemSpec"];
-    if(strpos($value["ChargingItemName"],'肠内营养液')!==false){
-        if($value["Unit"] == "ml(液)"){
+    //if(strpos($value["ChargingItemName"],'肠内营养液')!==false){
+        if($tblDetail[0]["Unit"] == "ml(液)"){
             //液 不显示数量、单位
             $ChargingNum = "";
             $ChargingItemUnit = "";
@@ -78,7 +78,7 @@ foreach ($tblDetail as $key => $value) {
             //粉 不显示规格(隐掉100ml 250ml)
             $ChargingItemSpec = "";
         }
-    }
+    //}
 
     echo "<tr>
     <td>".$value["ChargingItemName"] . $ChargingItemSpec."</td>
