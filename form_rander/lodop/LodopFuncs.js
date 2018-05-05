@@ -70,13 +70,13 @@ function getLodop(oOBJECT,oEMBED){
 	    if (!LODOP && document.readyState!=="complete") {alert("C-Lodop没准备好，请稍后再试！"); return;};
             if (!LODOP) {
 		 if (isIE) document.write(strCLodopInstall); else
-		 document.body.innerHTML=strCLodopInstall+document.body.innerHTML;
+		 lodopInstallLink(strCLodopInstall); //document.body.innerHTML=strCLodopInstall+document.body.innerHTML;
                  return;
             } else {
 
 	         if (CLODOP.CVERSION<"3.0.2.9") { 
 			if (isIE) document.write(strCLodopUpdate); else
-			document.body.innerHTML=strCLodopUpdate+document.body.innerHTML;
+			lodopInstallLink(strCLodopUpdate); //document.body.innerHTML=strCLodopUpdate+document.body.innerHTML;
 		 };
 		 if (oEMBED && oEMBED.parentNode) oEMBED.parentNode.removeChild(oEMBED);
 		 if (oOBJECT && oOBJECT.parentNode) oOBJECT.parentNode.removeChild(oOBJECT);	
@@ -99,12 +99,12 @@ function getLodop(oOBJECT,oEMBED){
             //=====Lodop插件未安装时提示下载地址:==========
             if ((LODOP==null)||(typeof(LODOP.VERSION)=="undefined")) {
                  if (navigator.userAgent.indexOf('Chrome')>=0)
-                     document.body.innerHTML=strHtmChrome+document.body.innerHTML;
+                    lodopInstallLink(strHtmChrome); //document.body.innerHTML=strHtmChrome+document.body.innerHTML;
                  if (navigator.userAgent.indexOf('Firefox')>=0)
-                     document.body.innerHTML=strHtmFireFox+document.body.innerHTML;
+                    lodopInstallLink(strHtmFireFox);//document.body.innerHTML=strHtmFireFox+document.body.innerHTML;
                  if (is64IE) document.write(strHtm64_Install); else
                  if (isIE)   document.write(strHtmInstall);    else
-                     document.body.innerHTML=strHtmInstall+document.body.innerHTML;
+                    lodopInstallLink(strHtmInstall);//document.body.innerHTML=strHtmInstall+document.body.innerHTML;
                  return LODOP;
             };
         };
@@ -112,7 +112,7 @@ function getLodop(oOBJECT,oEMBED){
             if (!needCLodop()){
             	if (is64IE) document.write(strHtm64_Update); else
             	if (isIE) document.write(strHtmUpdate); else
-            	document.body.innerHTML=strHtmUpdate+document.body.innerHTML;
+            	lodopInstallLink(strHtmUpdate);//document.body.innerHTML=strHtmUpdate+document.body.innerHTML;
 	    };
             return LODOP;
         };
@@ -124,3 +124,16 @@ function getLodop(oOBJECT,oEMBED){
     } catch(err) {alert("getLodop出错:"+err);};
 };
 
+function lodopInstallLink(linkHtml){
+    //官网的这个方法有问题，因为页面有jQuery异步加载数据时，下面的方法会覆盖掉jQuery加载的数据，变成初始页面
+    //document.body.innerHTML=linkHtml+document.body.innerHTML;
+
+    if(typeof jQuery == 'undefined'){
+        var div=document.createElement("div"); 
+        div.innerHTML=linkHtml; 
+        var first=document.body.firstChild;//得到页面的第一个元素 
+        document.body.insertBefore(div,first);//在得到的第一个元素之前插入 
+    }else{
+        $(document.body).prepend(linkHtml);
+    }
+}
