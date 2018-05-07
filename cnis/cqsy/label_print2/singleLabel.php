@@ -35,7 +35,7 @@ $tblDetail = $db->fetch_all($sql);
 if($result["DepartmentName"] == "中心ICU"){
 ?>    
 <div>
-<div style="text-align:center;width:100%;font-size:16pt;">
+<div style="text-align:center;width:100%;font-size:20pt;">
 <?php echo $result["Bed"] ?>床<br/>
 <?php echo $result["PatientName"] ?>
 </div>    
@@ -106,6 +106,9 @@ $nutrients = calc_recipe_nutrients($detailDBKeys);
 </table>
 
 <table style="margin-top:5px;">
+<tr>
+<td colspan="4">以下为每袋产品营养成分</td>
+</tr>
 <tr>
     <td>能量</td>
     <td><?php echo $nutrients["Energy"] ?>kcal</td>
