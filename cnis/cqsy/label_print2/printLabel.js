@@ -31,10 +31,10 @@ FROM \
 		SELECT \
 			c.NutrientAdviceSummary_DBKey, \
 			b.AdviceDate, \
-			a.TakeOrder, \
+			/*a.TakeOrder,*/ \
 			a.PreparationMode, \
 			CASE \
-		WHEN a.PreparationMode IN (2) THEN \
+		WHEN a.PreparationMode IN (2,3) THEN \
 			a.PreparationMode \
 		ELSE \
 			a.NutrientAdviceDetail_DBKEY \
@@ -50,7 +50,7 @@ FROM \
 GROUP BY \
 	NutrientAdviceSummary_DBKey, \
 	AdviceDate, \
-	TakeOrder, \
+	/*TakeOrder,*/\
     PreparationMode2";        
 
     var labelCount = -1;

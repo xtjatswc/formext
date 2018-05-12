@@ -174,7 +174,7 @@ function calc_recipe_nutrients($detailDBKeys){
     $singleFlag = true;
 
     $sql = "select a.RecipeAndProductName,d.UnitKey,d.AdviceAmount,d.netContent,d.netContentUnit,a.NutrientProductSpecification
-    ,b.Energy,b.Protein,b.Fat,b.Carbohydrate,e.SysCodeShortName,f.ChargingNum,h.SysCodeName PreparationMode, d.Unit from recipeandproduct a 
+    ,b.Energy,b.Protein,b.Fat,b.Carbohydrate,e.SysCodeShortName,f.ChargingNum,h.SysCodeName PreparationMode, d.Unit,d.TakeOrder from recipeandproduct a 
     inner join recipefoodrelation c on c.RecipeAndProduct_DBKey = a.RecipeAndProduct_DBKey
     inner join chinafoodcomposition b on b.ChinaFoodComposition_DBKey = c.ChinaFoodComposition_DBKey
     inner join nutrientadvicedetail d on d.RecipeAndProduct_DBKey = a.RecipeAndProduct_DBKey
@@ -189,7 +189,8 @@ function calc_recipe_nutrients($detailDBKeys){
             // //自助冲剂需要除以频次
             // $nutrientsNum = round($nutrientsNum / $value["SysCodeShortName"]);
             //自助冲剂每个标签计算数量1的能量、蛋脂糖
-            $nutrientsNum = round($nutrientsNum / $value["ChargingNum"], 1);
+            //$nutrientsNum = round($nutrientsNum / $tblDetail[0]["ChargingNum"], 1);
+            $nutrientsNum = $nutrientsNum * count(explode(',', $value["TakeOrder"]));
         }
 
         if($value["PreparationMode"] == "组合冲剂" && $value["Unit"] == "ml(液)"){
@@ -212,7 +213,7 @@ function calc_recipe_nutrients($detailDBKeys){
     }
 
     //如果是组合冲剂，并且不包含液体，则能量、蛋脂糖还需要除以'收费数量（取第一条明细的收费数量）'
-    if($tblDetail[0]["PreparationMode"] == "组合冲剂" && $singleFlag){
+    if(($tblDetail[0]["PreparationMode"] == "组合冲剂" && $singleFlag) || $tblDetail[0]["PreparationMode"] == "自助冲剂"){
 
         $singleNum = $tblDetail[0]["ChargingNum"];
         $Energy = round($Energy / $singleNum, 2);
