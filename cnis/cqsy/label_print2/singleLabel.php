@@ -32,10 +32,12 @@ $tblDetail = $db->fetch_all($sql);
         <td>
 
 <?php
+$isICU = false;
 if($result["DepartmentName"] == "中心ICU"){
+    $isICU = true;
 ?>    
 <div>
-<div style="text-align:center;width:100%;font-size:20pt;">
+<div style="text-align:center;width:100%;font-size:42pt;line-height:44pt">
 <?php echo $result["Bed"] ?>床<br/>
 <?php echo $result["PatientName"] ?>
 </div>    
@@ -99,28 +101,34 @@ $nutrients = calc_recipe_nutrients($detailDBKeys);
         <td>
 <div>
 <!-- <nobr><?php echo $result["PreparationMode"] ?></nobr>&nbsp;&nbsp;&nbsp; -->
+<?php if(!$isICU):?>
 <nobr>途径：<?php echo $result["Directions"] ?></nobr><br/>    
+<?php endif;?>
 </div>
         </td>
     </tr>
 </table>
 
 <table style="margin-top:5px;">
+<?php if(!$isICU):?>
 <tr>
 <td colspan="4">以下为每袋产品营养成分</td>
 </tr>
+<?php endif;?>
 <tr>
     <td>能量</td>
     <td><?php echo $nutrients["Energy"] ?>kcal</td>
     <td>蛋白质</td>
     <td><?php echo $nutrients["Protein"] ?>g</td>
     </tr>
+<?php if(!$isICU):?>    
     <tr>
     <td>脂肪</td>
     <td><?php echo $nutrients["Fat"] ?>g</td>
     <td>碳水化合物</td>
     <td><?php echo $nutrients["Carbohydrate"] ?>g</td>
     </tr>
+<?php endif;?>
 </table>
 <div>
 
@@ -161,7 +169,7 @@ function usage($tblDetail){
         return "用法用量：每袋加&nbsp;&nbsp;&nbsp;&nbsp;ml温开水，用清洁工具调配后口服<br/>电话：60353060<br/>重医大附三院临床营养科制";
     }
 
-    return "";
+    return "电话：60353060<br/>重医大附三院临床营养科制";
 }
 
 function calc_recipe_nutrients($detailDBKeys){
