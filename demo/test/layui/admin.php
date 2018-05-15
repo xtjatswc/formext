@@ -240,9 +240,35 @@
   
   <li class="layui-nav-item" style="height: 30px; text-align: center"></li>
 </ul>
-
     </div>
   </div>
+
+
+<div class="layui-tab layui-tab-brief" lay-filter="demoTitle">
+    <ul class="layui-tab-title site-demo-title">
+        <li class="layui-this">预览</li>
+        <li>查看代码</li>
+        <li>帮助</li>
+    </ul>
+    <div class="layui-body layui-tab-content site-demo site-demo-body">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-main">
+            aa
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-main">
+            bb
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-main">
+            cc
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="layui-footer footer footer-demo">
   <div class="layui-main">
