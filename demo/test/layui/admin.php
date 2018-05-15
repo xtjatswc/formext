@@ -12,13 +12,14 @@
 
   <link rel="stylesheet" href="../../../form_rander/js/layui-2.2.6/src/css/layui.css"  media="all">
   <link rel="stylesheet" href="modules/global.css?t=1525771196163-5" media="all">
+  <link rel="stylesheet" href="modules/admin.css?t=1525771196163-5" media="all">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
 <div class="layui-header header header-demo" spring="">
   <div class="layui-main">
     <a class="logo" href="/">
-      <img src="//res.layui.com/static/images/layui/logo.png" alt="layui">
+      <img src="../../../form_rander/js/layui-2.2.6/src/images/face/0.gif" alt="layui">
     </a>
     <div class="layui-form component">
       <select lay-search lay-filter="component">
@@ -68,20 +69,20 @@
     </div>
     <ul class="layui-nav">
       <li class="layui-nav-item ">
-        <a href="/doc/">文档<!-- <span class="layui-badge-dot"></span> --></a> 
+        <a lay-href="/doc/">文档<!-- <span class="layui-badge-dot"></span> --></a> 
       </li>
       <li class="layui-nav-item layui-this">
-        <a href="/demo/">示例<!--  --></a>
+        <a lay-href="/demo/">示例<!--  --></a>
       </li> 
       
       <li class="layui-nav-item layui-hide-xs">
-        <a href="http://fly.layui.com/" target="_blank">社区</a>
+        <a lay-href="http://fly.layui.com/" target="_blank">社区</a>
       </li>
       
       
       <li class="layui-nav-item">
         <!--<span class="layui-badge-dot" style="margin: -4px 3px 0;"></span>-->
-        <a href="javascript:;">周边</a>
+        <a lay-href="javascript:;">周边</a>
         <dl class="layui-nav-child">
           <dd class="layui-hide-sm layui-show-xs"><a href="http://fly.layui.com/" target="_blank">社区交流</a><hr></dd>
           <dd><a href="http://layim.layui.com/" target="_blank">即时聊天</a></dd>
@@ -94,7 +95,7 @@
       
       
       <li class="layui-nav-item layui-hide-xs" lay-unselect>
-        <a href="/admin/">官方后台模板<span class="layui-badge-dot"></span></a>
+        <a lay-href="/admin/">官方后台模板<span class="layui-badge-dot"></span></a>
       </li>
       
     </ul>
@@ -109,10 +110,13 @@
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       
-<ul class="layui-nav layui-nav-tree site-demo-nav">
+<ul class="layui-nav layui-nav-tree site-demo-nav" lay-shrink="all">
   
-  <li class="layui-nav-item layui-nav-itemed">
-    <a class="javascript:;" href="javascript:;">开发工具</a>
+  <li class="layui-nav-item">
+    <a class="javascript:;" href="javascript:;">
+        <i class="layui-icon layui-icon-home"></i>
+        <cite>主页</cite>
+    </a>
     <dl class="layui-nav-child">
       <dd>
         <a href="/demo/">调试预览</a>
@@ -121,7 +125,10 @@
   </li>
   
   <li class="layui-nav-item layui-nav-itemed">
-    <a class="javascript:;" href="javascript:;">布局</a>
+    <a class="javascript:;" href="javascript:;">
+        <i class="layui-icon layui-icon-component"></i>
+        <cite>布局</cite>
+    </a>
     <dl class="layui-nav-child">
       <dd class="">
         <a href="/demo/grid.html">栅格</a>
@@ -244,7 +251,7 @@
   </div>
 
 
-<div class="layui-tab layui-tab-brief" lay-filter="demoTitle">
+<div class="layui-tab layui-tab-brief" lay-filter="demoTitle" lay-allowclose="true">
     <ul class="layui-tab-title site-demo-title">
         <li class="layui-this">预览</li>
         <li>查看代码</li>
@@ -252,9 +259,7 @@
     </ul>
     <div class="layui-body layui-tab-content site-demo site-demo-body">
         <div class="layui-tab-item layui-show">
-            <div class="layui-main">
-            aa
-            </div>
+            <iframe src="http://www.sina.com" frameborder="0" class="layadmin-iframe"></iframe>
         </div>
         <div class="layui-tab-item">
             <div class="layui-main">

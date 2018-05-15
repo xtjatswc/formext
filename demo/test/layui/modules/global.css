@@ -265,7 +265,7 @@ body .layui-layer-dir .layui-layer-content{padding: 10px;}
 /* 演示 */
 body .layui-layout-admin .site-demo{bottom: 60px; padding: 0;}
 body .site-demo-nav .layui-nav-item{line-height: 40px}
-.layui-nav-item .layui-icon{position: relative; font-size: 20px;}
+.layui-nav-item .layui-icon{position: relative; /* font-size: 20px; */;}
 .layui-nav-item a cite{padding: 0 10px;}
 .site-demo .layui-main{margin: 15px; line-height: 22px;}
 .site-demo-editor{position: absolute; top: 0; bottom: 0; left: 0; width: 50%; }
