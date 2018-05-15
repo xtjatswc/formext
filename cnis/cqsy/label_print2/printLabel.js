@@ -31,7 +31,11 @@ FROM \
 		SELECT \
 			c.NutrientAdviceSummary_DBKey, \
 			b.AdviceDate, \
-			/*a.TakeOrder,*/ \
+            a.TakeOrder, \
+            CASE \
+        WHEN a.PreparationMode IN ( 3 ) THEN \
+        '自助冲剂时间段' ELSE a.TakeOrder  \
+        END TakeOrder2, \
 			a.PreparationMode, \
 			CASE \
 		WHEN a.PreparationMode IN (2,3) THEN \
@@ -50,7 +54,7 @@ FROM \
 GROUP BY \
 	NutrientAdviceSummary_DBKey, \
 	AdviceDate, \
-	/*TakeOrder,*/\
+	TakeOrder2,\
     PreparationMode2";        
 
     var labelCount = -1;
