@@ -110,7 +110,7 @@
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       
-<ul class="layui-nav layui-nav-tree site-demo-nav" lay-shrink="all">
+<ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="lay_nav_left" lay-shrink="all">
   
   <li class="layui-nav-item">
     <a class="javascript:;" href="javascript:;">
@@ -251,11 +251,11 @@
   </div>
 
 
-<div class="layui-tab layui-tab-brief" lay-filter="demoTitle" lay-allowclose="true">
+<div class="layui-tab layui-tab-brief" lay-filter="lay_tab_main" lay-allowclose="true">
     <ul class="layui-tab-title site-demo-title">
-        <li class="layui-this">预览</li>
-        <li>查看代码</li>
-        <li>帮助</li>
+        <li class="layui-this" lay-id="tab1">预览</li>
+        <li lay-id="tab2">查看代码</li>
+        <li lay-id="tab3">帮助</li>
     </ul>
     <div class="layui-body layui-tab-content site-demo site-demo-body">
         <div class="layui-tab-item layui-show">

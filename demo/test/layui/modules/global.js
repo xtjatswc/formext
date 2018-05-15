@@ -175,5 +175,23 @@ layui.define(['code', 'element', 'table', 'util'], function(exports){
   //   }
   // })
 
+  element.on('nav(lay_nav_left)', function(obj){
+    var id = new Date().getTime();
+    element.tabAdd('lay_tab_main', {
+      title: '新选项'+ (Math.random()*1000|0) //用于演示
+      ,content: '内容'+ (Math.random()*1000|0)
+      ,id: id //实际使用一般是规定好的id，这里以时间戳模拟下
+    });
+    element.tabChange('lay_tab_main', id);
+  })
+
+  //Hash地址的定位
+  var layid = location.hash.replace(/^#lay_tab_main=/, '');
+  element.tabChange('lay_tab_main', layid);
+  
+  element.on('tab(lay_tab_main)', function(elem){
+    location.hash = 'lay_tab_main='+ $(this).attr('lay-id');
+  });
+
   exports('global', {});
 });
