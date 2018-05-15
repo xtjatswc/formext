@@ -119,7 +119,7 @@
     </a>
     <dl class="layui-nav-child">
       <dd>
-        <a href="/demo/">调试预览</a>
+        <a lay-href="/demo/">调试预览</a>
       </dd>
     </dl>
   </li>
@@ -131,10 +131,10 @@
     </a>
     <dl class="layui-nav-child">
       <dd class="">
-        <a href="/demo/grid.html">栅格</a>
+        <a lay-href="/demo/grid.html">栅格</a>
       </dd>
       <dd class="">
-        <a href="/demo/admin.html">后台布局</a>
+        <a lay-href="/demo/admin.html">后台布局</a>
       </dd>
     </dl>
   </li>
@@ -259,7 +259,7 @@
     </ul>
     <div class="layui-body layui-tab-content site-demo site-demo-body">
         <div class="layui-tab-item layui-show">
-            <iframe src="http://www.sina.com" frameborder="0" class="layadmin-iframe"></iframe>
+            <iframe src="../../../form_rander/js/layui-2.2.6/examples/form.html" frameborder="0" class="layadmin-iframe"></iframe>
         </div>
         <div class="layui-tab-item">
             <div class="layui-main">
@@ -287,8 +287,10 @@
       <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
     </p>
     <p class="site-union">
-      <a href="https://www.upyun.com?from=layui" target="_blank" rel="nofollow" upyun><img src="//res.layui.com/static/images/other/upyun.png?t=1"></a>
-      <span>提供 CDN 赞助</span>
+      <a href="https://www.upyun.com?from=layui" target="_blank" rel="nofollow" upyun>      
+        <img src="../../../form_rander/js/layui-2.2.6/src/images/face/0.gif" alt="layui">
+        </a>
+        <span>提供 CDN 赞助</span>
     </p>
   </div>
 </div>

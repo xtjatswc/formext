@@ -17,11 +17,8 @@ layui.define(['code', 'element', 'table', 'util'], function(exports){
 
   //阻止IE7以下访问
   if(device.ie && device.ie < 8){
-    layer.alert('Layui最低支持ie8，您当前使用的是古老的 IE'+ device.ie + '，你丫的肯定不是程序猿！');
+    layer.alert('Layui最低支持ie8，您当前使用的是古老的 IE'+ device.ie + '，你肯定不是程序猿吧！');
   }
-
-  var home = $('#LAY_home');
-
 
   layer.ready(function(){
     var local = layui.data('layui');
@@ -68,7 +65,7 @@ layui.define(['code', 'element', 'table', 'util'], function(exports){
       key: 'notice_20171212'
       ,remove: true
     });
-    return;
+    //return;
 
     if(local.notice_20171212) return;
     layer.open({
@@ -134,16 +131,6 @@ layui.define(['code', 'element', 'table', 'util'], function(exports){
     var value = data.value;
     location.href = value === 'new' ? '/' : ('/' + value + '/doc/');
   });
-  
-
-  //首页banner
-  setTimeout(function(){
-    $('.site-zfj').addClass('site-zfj-anim');
-    setTimeout(function(){
-      $('.site-desc').addClass('site-desc-anim')
-    }, 5000)
-  }, 100);
-
 
   //数字前置补零
   var digit = function(num, length, end){
@@ -374,49 +361,6 @@ layui.define(['code', 'element', 'table', 'util'], function(exports){
   shadeMobile.on('click', function(){
     $('body').removeClass('site-mobile');
   });
-
-
-
-  //愚人节
-  ;!function(){
-    if(home.data('date') === '4-1'){
-
-      if(local['20180401']) return;
-
-      home.addClass('site-out-up');
-      setTimeout(function(){
-        layer.photos({
-          photos: {
-            "data": [{
-              "src": "//cdn.layui.com/upload/2018_4/168_1522515820513_397.png",
-            }]
-          }
-          ,anim: 2
-          ,shade: 1
-          ,move: false
-          ,end: function(){
-            layer.msg('愚公，快醒醒！', {
-              shade: 1
-            }, function(){
-              layui.data('layui', {
-                key: '20180401'
-                ,value: true
-              });
-            });
-          }
-          ,success: function(layero, index){
-            home.removeClass('site-out-up');
-
-            layero.find('#layui-layer-photos').on('click', function(){
-              layer.close(layero.attr('times'));
-            }).find('.layui-layer-imgsee').remove();
-          }
-        });
-      }, 1000*3);
-    }
-  }();
-
-
 
   exports('global', {});
 });
