@@ -4,7 +4,7 @@ require "../../../autoload.php";
 $detailDBKeys = $_GET["detailDBKeys"];
 
 $sql = "select  c.NutrientAdviceSummary_DBKey,d.HospitalizationNumber, e.PatientName, f.DepartmentName, g.Bed, h.SysCodeName PreparationMode,a.TakeOrder,
-case a.Directions when 1 then '口服' else '管伺' end Directions
+case a.Directions when 1 then '口服' else '管饲' end Directions
  from nutrientadvicedetail a INNER JOIN nutrientadvice b on a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey
 inner JOIN nutrientadvicesummary c on b.NutrientAdviceSummary_DBKey = c.NutrientAdviceSummary_DBKey
 inner join patienthospitalizebasicinfo d on d.PatientHospitalize_DBKey = c.PatientHospitalize_DBKey
@@ -221,14 +221,14 @@ function calc_recipe_nutrients($detailDBKeys){
     }
 
     //如果是组合冲剂，并且不包含液体，则能量、蛋脂糖还需要除以'收费数量（取第一条明细的收费数量）'
-    if(($tblDetail[0]["PreparationMode"] == "组合冲剂" && $singleFlag) || $tblDetail[0]["PreparationMode"] == "自助冲剂"){
+    //if(($tblDetail[0]["PreparationMode"] == "组合冲剂" && $singleFlag) || $tblDetail[0]["PreparationMode"] == "自助冲剂"){
 
         $singleNum = $tblDetail[0]["ChargingNum"];
         $Energy = round($Energy / $singleNum, 2);
         $Protein = round($Protein / $singleNum, 2);
         $Fat = round($Fat / $singleNum, 2);
         $Carbohydrate = round($Carbohydrate / $singleNum, 2);
-    }
+    //}
 
     return array(
         "Energy" => $Energy,

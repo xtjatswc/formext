@@ -4,7 +4,7 @@ require "../../../autoload.php";
 $detailDBKeys = $_GET["detailDBKeys"];
 
 $sql = "select  c.NutrientAdviceSummary_DBKey,d.HospitalizationNumber, e.PatientName, f.DepartmentName, g.Bed, h.SysCodeName PreparationMode,a.TakeOrder,
-case a.Directions when 1 then '口服' else '管伺' end Directions
+case a.Directions when 1 then '口服' else '管饲' end Directions
  from nutrientadvicedetail a INNER JOIN nutrientadvice b on a.NutrientAdvice_DBKey = b.NutrientAdvice_DBKey
 inner JOIN nutrientadvicesummary c on b.NutrientAdviceSummary_DBKey = c.NutrientAdviceSummary_DBKey
 inner join patienthospitalizebasicinfo d on d.PatientHospitalize_DBKey = c.PatientHospitalize_DBKey
