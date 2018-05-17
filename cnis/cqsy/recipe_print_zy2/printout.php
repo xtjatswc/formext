@@ -183,7 +183,7 @@ function getChargingItems($RecipeAndProduct_DBKey, $NutrientAdviceDetail_DBKEY)
 {
     global $db;
     $select = "<select name='select_chargingitem' id='select_chargingitem_" . $NutrientAdviceDetail_DBKEY . "'>";
-    $sql = "select b.* from chargingitemsrelation a inner join chargingitems b on a.ChargingItemID = b.ChargingItemID  where RecipeAndProduct_DBKey = $RecipeAndProduct_DBKey";
+    $sql = "select b.* from chargingitemsrelation a inner join chargingitems b on a.ChargingItemID = b.ChargingItemID  where RecipeAndProduct_DBKey = $RecipeAndProduct_DBKey order by b.SortNo";
     $chargingItems = $db->fetch_all($sql);
 
     foreach ($chargingItems as $key => $value) {
