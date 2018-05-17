@@ -24,75 +24,25 @@ left join syscode e on e.SysCode = a.AdviceDoTimeSegmental and e.SystemCodeTypeN
 left join chargingadvicedetail f on f.NutrientAdviceDetail_DBKEY = a.NutrientAdviceDetail_DBKEY
 where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys) and f.ChargingNum <> 0 order by a.NutrientAdviceDetail_DBKEY";
 $tblDetail = $db->fetch_all($sql);
-?>
 
-<div class="labelContent">
-<table>
-    <tr>
-        <td>
-
-<?php
 $isICU = false;
 if($result["DepartmentName"] == "中心ICU"){
     $isICU = true;
-?>    
-<div>
-<div style="text-align:center;width:100%;font-size:42pt;line-height:44pt">
-<?php echo $result["Bed"] ?>床<br/>
-<?php echo $result["PatientName"] ?>
-</div>    
-住院号：<?php echo $result["HospitalizationNumber"] ?>
-</div>
+}    
+
+?>
+
+<div class="labelContent">
+
 <?php
+if($isICU){
+    loadPatientInfo($result, $isICU);    
+    loadAdviceDetail($tblDetail, $result);
 }else{
-?>    
-<div>
-科室：<?php echo $result["DepartmentName"] ?>&nbsp;&nbsp;&nbsp;床号：<?php echo $result["Bed"] ?><br/>
-姓名：<?php echo $result["PatientName"] ?><br/>
-住院号：<?php echo $result["HospitalizationNumber"] ?>
-</div>
-<?php
+    loadAdviceDetail($tblDetail, $result);
+    loadPatientInfo($result, $isICU);    
 }
-?>
 
-        </td>
-    </tr>
-</table>    
-
-<table style="margin-top:5px;width:100%">
-<?php
-foreach ($tblDetail as $key => $value) {
-    //除自助冲剂外，数量要除以频次
-    $ChargingNum = round($value["ChargingNum"], 1);
-    $ChargingItemUnit = $value["ChargingItemUnit"];
-    if($result["PreparationMode"] != "自助冲剂"){
-        $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 1);
-    }
-
-    //规格 液 or 粉
-    $ChargingItemSpec = $value["ChargingItemSpec"];
-    //if(strpos($value["ChargingItemName"],'肠内营养液')!==false){
-        if($tblDetail[0]["Unit"] == "ml(液)"){
-            //液 不显示数量、单位
-            $ChargingNum = "";
-            $ChargingItemUnit = "";
-        }else{
-            //粉 不显示规格(隐掉100ml 250ml)
-            $ChargingItemSpec = "";
-        }
-    //}
-
-    echo "<tr>
-    <td>".$value["ChargingItemName"] . $ChargingItemSpec."</td>
-    <td>".$ChargingNum . $ChargingItemUnit."</td>
-    </tr>";
-}
-?>
-</table>    
-
-</div>
-
-<?php
 $nutrients = calc_recipe_nutrients($detailDBKeys);
 ?>
 
@@ -130,7 +80,6 @@ $nutrients = calc_recipe_nutrients($detailDBKeys);
     </tr>
 <?php endif;?>
 </table>
-<div>
 
 <table style="margin-top:5px;">
     <tr>
@@ -146,7 +95,81 @@ $nutrients = calc_recipe_nutrients($detailDBKeys);
 </table>
 
 </div>
+<!--end <div class="labelContent"> -->
+
+
 <?php
+
+//加载患者信息
+function loadPatientInfo($result, $isICU){
+    ?>
+<table style="margin-top:5px;">
+    <tr>
+        <td>
+
+<?php
+if($isICU){
+?>    
+<div>
+<div style="text-align:center;width:100%;font-size:42pt;line-height:44pt">
+<?php echo $result["Bed"] ?>床<br/>
+<?php echo $result["PatientName"] ?>
+</div>    
+住院号：<?php echo $result["HospitalizationNumber"] ?>
+</div>
+<?php
+}else{
+?>    
+<div>
+科室：<?php echo $result["DepartmentName"] ?>&nbsp;&nbsp;&nbsp;床号：<?php echo $result["Bed"] ?><br/>
+姓名：<?php echo $result["PatientName"] ?><br/>
+住院号：<?php echo $result["HospitalizationNumber"] ?>
+</div>
+<?php
+}
+?>
+
+        </td>
+    </tr>
+</table>    
+    <?php
+}
+
+//加载医嘱明细
+function loadAdviceDetail($tblDetail, $result){
+    ?>
+<table >
+<?php
+foreach ($tblDetail as $key => $value) {
+    //除自助冲剂外，数量要除以频次
+    $ChargingNum = round($value["ChargingNum"], 1);
+    $ChargingItemUnit = $value["ChargingItemUnit"];
+    if($result["PreparationMode"] != "自助冲剂"){
+        $ChargingNum = round($value["ChargingNum"] / $value["SysCodeShortName"], 1);
+    }
+
+    //规格 液 or 粉
+    $ChargingItemSpec = $value["ChargingItemSpec"];
+    //if(strpos($value["ChargingItemName"],'肠内营养液')!==false){
+        if($tblDetail[0]["Unit"] == "ml(液)"){
+            //液 不显示数量、单位
+            $ChargingNum = "";
+            $ChargingItemUnit = "";
+        }else{
+            //粉 不显示规格(隐掉100ml 250ml)
+            $ChargingItemSpec = "";
+        }
+    //}
+
+    echo "<tr>
+    <td>".$value["ChargingItemName"] . $ChargingItemSpec."</td>
+    <td>".$ChargingNum . $ChargingItemUnit."</td>
+    </tr>";
+}
+?>
+</table> 
+<?php 
+}
 
 //用法用量
 function usage($tblDetail){
