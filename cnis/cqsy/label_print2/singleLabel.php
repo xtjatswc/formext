@@ -120,7 +120,7 @@ if($isICU){
 <?php
 }else{
 ?>    
-<div>
+<div  style="font-size:12pt;">
 科室：<?php echo $result["DepartmentName"] ?>&nbsp;&nbsp;&nbsp;床号：<?php echo $result["Bed"] ?><br/>
 姓名：<?php echo $result["PatientName"] ?><br/>
 住院号：<?php echo $result["HospitalizationNumber"] ?>
