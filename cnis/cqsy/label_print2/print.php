@@ -55,7 +55,7 @@ function randerBodyCallBack(){
   <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
 </p>
 <p>标签日期： <input type="text" id="datepicker"></p>
-<div id="divLabels" style="width:220px">
+<div id="divLabels" style="width:230px">
          
 </div>
 

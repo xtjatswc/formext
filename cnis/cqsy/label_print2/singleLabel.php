@@ -121,8 +121,8 @@ if($isICU){
 }else{
 ?>    
 <div>
+<font style="font-size:14pt">姓名:<?php echo $result["PatientName"] ?>&nbsp;床号:<?php echo $result["Bed"] ?></font><br/>
 科室：<?php echo $result["DepartmentName"] ?><br/>
-<font style="font-size:12pt">姓名：<?php echo $result["PatientName"] ?>&nbsp;床号：<?php echo $result["Bed"] ?></font><br/>
 住院号：<?php echo $result["HospitalizationNumber"] ?>
 </div>
 <?php
@@ -185,7 +185,7 @@ function usage($tblDetail){
     $result = "";
     if($isLiquid){
         //液体
-        $result = "贮存方法：2-4℃冷藏，未开封冷藏保存48小时";
+        $result = "2-4℃冷藏，未开封冷藏保存48小时";
     }else if($tblDetail[0]["wrapperType"] == "1"){
         //整包装不用显示用法用量，流食也是整包装的
     }else{
@@ -193,7 +193,7 @@ function usage($tblDetail){
         $result = "用法用量：每袋加&nbsp;&nbsp;&nbsp;&nbsp;ml温开水，用清洁工具调配后口服";
     }
 
-    $result = $result . "<br/>重医大附三院临床营养科制&nbsp;60353060";
+    $result = $result . "<br/>重医大附三院临床营养科&nbsp;60353060";
     return $result;  
 }
 
