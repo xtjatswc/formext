@@ -111,59 +111,77 @@ printout.createPrintPage = function (divRecipe) {
 
 }
 
-printout.loadAdviceList = function(){
+;printout.loadAdviceList = (function(){
 
-    var urlParams = util.urlToObject(window.location.search);
+    var loadAdvice = {};
 
-    var url = pageExt.cnisPath + "index.php?r=search&ac=statisticstool/initsearchresult&page=1&limit=1000";
-    $.getJSON(url, urlParams, function (data, status, xhr) {
-        if(data.success){
-            $thead = $("#tblAdviceList thead");  
-            if(data.records.length > 0){
-                var tr = "<tr>";
-                for(var col in data.records[0]){
-                    col && (
-                        tr += "<th>" + col + "</th>"
-                    );
-                }
-                tr += "</tr>"
-                $thead.append(tr);
+    loadAdvice.showList = function(){
+        printout.widthConfig || head.js("printout_widthconfig.js", function(){
+            loadAdvice.load();
+        });    
+    }
 
-                $("#tblAdviceList thead th").first().prop("colspan", Object.keys(data.records[0]).length);
-            }
-
-            $tbody = $("#tblAdviceList tbody");            
-            for (j = 0; j < data.records.length; j++) {
-                var tr = "<tr>";
-                for(var col in data.records[j]){
-                    col && (
-                        tr += "<td>" + data.records[j][col] + "</td>"
-                    );
-                }
-                tr += "</tr>"
-                $tbody.append(tr);
-            }
-
-            // $('#tblAdviceList').tablesMergeCell({
-            //     cols: [0,1,2,3,4,5]
-            // });
-        
-            // $('#process-demo-2').tablesMergeCell({
-            //     automatic: false,
-            //     cols: [0],
-            //     rows: [0,1,2]
-            // });
+    loadAdvice.load = function(){
+        var url = pageExt.cnisPath + "index.php?r=search&ac=statisticstool/initsearchresult&page=1&limit=1000";
+        $.getJSON(url, printout.urlParams, function (data, status, xhr) {
+            if(data.success){
+                $thead = $("#tblAdviceList thead");  
+                if(data.records.length > 0){
+                    var tr = "<tr>";
+                    for(var col in data.records[0]){
+                        col && (
+                            printout.widthConfig[col] ?
+                                tr += "<th style='width:" + printout.widthConfig[col] + "px;'>" + col + "</th>"
+                            :
+                                tr += "<th>" + col + "</th>"
+                            
+                            );
+                    }
+                    tr += "</tr>"
+                    $thead.append(tr);
     
-            // $('#process-demo-3').tablesMergeCell({
-            //     automatic: false,
-            //     cols: [0,3],
-            //     rows: [[3,4,5],[6,7]]
-            // });
+                    $("#tblAdviceList thead th").first().prop("colspan", Object.keys(data.records[0]).length);
+                }
+    
+                $tbody = $("#tblAdviceList tbody");            
+                for (j = 0; j < data.records.length; j++) {
+                    var tr = "<tr>";
+                    for(var col in data.records[j]){
+                        col && (
+                            tr += "<td>" + data.records[j][col] + "</td>"
+                        );
+                    }
+                    tr += "</tr>"
+                    $tbody.append(tr);
+                }
+    
+                // $('#tblAdviceList').tablesMergeCell({
+                //     cols: [0,1,2,3,4,5]
+                // });
+            
+                // $('#process-demo-2').tablesMergeCell({
+                //     automatic: false,
+                //     cols: [0],
+                //     rows: [0,1,2]
+                // });
+        
+                // $('#process-demo-3').tablesMergeCell({
+                //     automatic: false,
+                //     cols: [0,3],
+                //     rows: [[3,4,5],[6,7]]
+                // });
+    
+            }else{            
+                alert("请求错误，请尝试重新打开页面！" + (data.ErrorMessage ? "ErrorMessage => " + data.ErrorMessage : ""));
+            }
+    
+        });
+    
+    }
 
-        }else{            
-            alert("请求错误，请尝试重新打开页面！" + (data.ErrorMessage ? "ErrorMessage => " + data.ErrorMessage : ""));
-        }
+    return loadAdvice.showList;
+}());
 
-    });
 
-}
+
+
