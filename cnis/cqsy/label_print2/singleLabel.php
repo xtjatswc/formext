@@ -182,17 +182,19 @@ function usage($tblDetail){
         }
     }
 
+    $result = "";
     if($isLiquid){
         //液体
-        return "贮存方法：2-4℃冷藏，未开封冷藏保存48小时<br/>电话：60353060<br/>重医大附三院临床营养科制";
+        $result = "贮存方法：2-4℃冷藏，未开封冷藏保存48小时";
     }else if($tblDetail[0]["wrapperType"] == "1"){
         //整包装不用显示用法用量，流食也是整包装的
     }else{
         //粉剂
-        return "用法用量：每袋加&nbsp;&nbsp;&nbsp;&nbsp;ml温开水，用清洁工具调配后口服<br/>电话：60353060<br/>重医大附三院临床营养科制";
+        $result = "用法用量：每袋加&nbsp;&nbsp;&nbsp;&nbsp;ml温开水，用清洁工具调配后口服";
     }
 
-    return "电话：60353060<br/>重医大附三院临床营养科制";
+    $result = $result . "<br/>重医大附三院临床营养科制&nbsp;60353060";
+    return $result;  
 }
 
 function calc_recipe_nutrients($detailDBKeys){
@@ -247,10 +249,10 @@ function calc_recipe_nutrients($detailDBKeys){
     //if(($tblDetail[0]["PreparationMode"] == "组合冲剂" && $singleFlag) || $tblDetail[0]["PreparationMode"] == "自助冲剂"){
 
         $singleNum = $tblDetail[0]["ChargingNum"];
-        $Energy = round($Energy / $singleNum, 2);
-        $Protein = round($Protein / $singleNum, 2);
-        $Fat = round($Fat / $singleNum, 2);
-        $Carbohydrate = round($Carbohydrate / $singleNum, 2);
+        $Energy = round($Energy / $singleNum, 0);
+        $Protein = round($Protein / $singleNum, 0);
+        $Fat = round($Fat / $singleNum, 0);
+        $Carbohydrate = round($Carbohydrate / $singleNum, 0);
     //}
 
     return array(

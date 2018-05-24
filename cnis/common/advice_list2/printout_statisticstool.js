@@ -116,7 +116,7 @@ printout.createPrintPage = function (divRecipe) {
     var loadAdvice = {};
 
     loadAdvice.showList = function(){
-        printout.widthConfig || head.js("printout_widthconfig.js", function(){
+        head.js("printout_widthconfig.js?r=" + Math.random(), function(){
             loadAdvice.load();
         });    
     }
