@@ -28,14 +28,14 @@ $tblDetail = $db->fetch_all($sql);
 <table>
     <tr>
     <td style="border-bottom:none;border-right:none;">住院号：<?php echo $result["HospitalizationNumber"] ?></td>
-    <td style="text-align: right;border-bottom:none;border-left:none;">科室：<?php echo $result["DepartmentName"] ?></td>
+    <td style="text-align: right;border-bottom:none;border-left:none;"><?php echo $result["DepartmentName"] ?></td>
     </tr>
 </table>
 
 <table style="margin-top:-2px;">
     <tr>
     <td style="border-bottom:none;border-right:none;">姓名：<?php echo $result["PatientName"] ?></td>
-    <td style="text-align: right;border-bottom:none;border-left:none;">床号：<?php echo $result["Bed"] ?></td>
+    <td style="text-align: right;border-bottom:none;border-left:none;"><?php echo $result["Bed"] ?>&nbsp;床</td>
     </tr>    
 </table>
 

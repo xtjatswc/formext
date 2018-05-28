@@ -2,13 +2,13 @@ table {width:100%;border-collapse:collapse;}
 table table{ border-style:hidden;}
 table td,th
 {
-    border:1px solid black;font-size: 10pt;padding:1px; 
+    border:1px solid black;font-size: 12pt;padding:3px; 
 }
 
 body
 {
     font-family: verdana,arial,sans-serif;
-    font-size: 9pt;
+    font-size: 12pt;
     word-break:break-all;
 }
 .label

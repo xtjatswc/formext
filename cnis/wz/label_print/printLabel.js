@@ -169,17 +169,19 @@ printLabel.createPrintPage = function (labelInfo) {
     //LODOP.SET_PRINT_STYLEA(0,"Offset2Top","-10mm"); //设置次页偏移把区域向上扩
     //LODOP.SET_PRINT_STYLEA(0,"LinkedItem",-1);
 
-    LODOP.ADD_PRINT_TEXT("95mm", "1.32mm", "21.17mm", "5.29mm", "第#页/共&页");
-    LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
-    LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
-    LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
+    // LODOP.ADD_PRINT_TEXT("95mm", "1.32mm", "21.17mm", "5.29mm", "第#页/共&页");
+    // LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
+    // LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
+    // LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.ADD_PRINT_TEXT("95mm", "23.97mm", "35.45mm", "5.29mm", "制作日期：" + util.getDate());
+    LODOP.SET_PRINT_STYLE("FontSize",12);
+
+    LODOP.ADD_PRINT_TEXT("95mm", "1.22mm", "47.1mm", "5.29mm", "制作日期：" + util.getDate());
     LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
 
-    LODOP.ADD_PRINT_TEXT("95mm","60mm","35.45mm", "5.29mm","签名：");
+    LODOP.ADD_PRINT_TEXT("95mm","53mm","35.45mm", "5.29mm","签名：");
     LODOP.SET_PRINT_STYLEA(0,"Vorient",1);
     LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
     LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -3);
