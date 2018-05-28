@@ -68,17 +68,7 @@ foreach ($tblDetail as $key => $value) {
 <table style="margin-top:-1px;">
     <tr>
     <td><nobr>时间：</nobr><br/><nobr><?php echo $result["TakeOrder"] ?></nobr></td>                        
-    <td>制剂方式：<?php echo $result["PreparationMode"] ?> 备注：
-    室常温保存不超过6小时，4℃保存不超过12小时<br/>
-            <?php
-            $PreparationMode = $result["PreparationMode"];
-            if ($PreparationMode == "粉剂") {
-                echo "用法：温水冲服<br/>";
-            } else if ($PreparationMode == "管饲") {
-                echo "输注速度：<br/>";
-            }
-
-            ?>
+    <td>制剂方式：<?php echo $result["PreparationMode"] ?> 
     </td>
     </tr>
 </table>
