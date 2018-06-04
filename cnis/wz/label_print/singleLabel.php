@@ -21,6 +21,12 @@ INNER JOIN recipeandproduct b on a.RecipeAndProduct_DBKey = b.RecipeAndProduct_D
 left join measureunit c on c.MeasureUnit_DBKey = b.MeasureUnit_DBKey
 where a.NutrientAdviceDetail_DBKEY in ($detailDBKeys)";
 $tblDetail = $db->fetch_all($sql);
+
+$loginUser = "";
+if(isset($_COOKIE["cnisUserLoginId"])){
+    $sql = "select UserName from user where UserLoginID = ".$_COOKIE["cnisUserLoginId"];
+    $loginUser = $db->fetch_var($sql);
+}
 ?>
 
 <div class="labelContent">
@@ -69,6 +75,15 @@ foreach ($tblDetail as $key => $value) {
     <tr>
     <td><nobr>时间：</nobr><br/><nobr><?php echo $result["TakeOrder"] ?></nobr></td>                        
     <td>制剂方式：<?php echo $result["PreparationMode"] ?> 
+    </td>
+    </tr>
+</table>
+
+<table style="margin-top:-1px;">
+    <tr>
+    <td style="border:none;">
+        制作日期：<?php echo date('Y-m-d',time()) ?> &nbsp;&nbsp;
+        签名：<?php echo $loginUser ?>
     </td>
     </tr>
 </table>

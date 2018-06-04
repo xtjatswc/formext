@@ -174,17 +174,17 @@ printLabel.createPrintPage = function (labelInfo) {
     // LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
     // LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.SET_PRINT_STYLE("FontSize",12);
+    // LODOP.SET_PRINT_STYLE("FontSize",12);
 
-    LODOP.ADD_PRINT_TEXT("95mm", "1.22mm", "47.1mm", "5.29mm", "制作日期：" + util.getDate());
-    LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
-    LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
-    LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
+    // LODOP.ADD_PRINT_TEXT("95mm", "1.22mm", "47.1mm", "5.29mm", "制作日期：" + util.getDate());
+    // LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
+    // LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+    // LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
 
-    LODOP.ADD_PRINT_TEXT("95mm","53mm","35.45mm", "5.29mm","签名：");
-    LODOP.SET_PRINT_STYLEA(0,"Vorient",1);
-    LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
-    LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -3);
+    // LODOP.ADD_PRINT_TEXT("95mm","53mm","35.45mm", "5.29mm","签名：");
+    // LODOP.SET_PRINT_STYLEA(0,"Vorient",1);
+    // LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+    // LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -3);
 
     LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);//语句控制显示标尺
     LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED", 1);//横向时的正向显示
