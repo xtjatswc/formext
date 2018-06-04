@@ -24,7 +24,7 @@ $tblDetail = $db->fetch_all($sql);
 
 $loginUser = "";
 if(isset($_COOKIE["cnisUserLoginId"])){
-    $sql = "select UserName from user where UserLoginID = ".$_COOKIE["cnisUserLoginId"];
+    $sql = "select UserName from user where UserLoginID = '".$_COOKIE["cnisUserLoginId"]."'";
     $loginUser = $db->fetch_var($sql);
 }
 ?>
