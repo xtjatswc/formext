@@ -46,6 +46,13 @@ function randerBodyCallBack(){
     <br/>
     <font id="labelTip" color="red"></font>
     <br/>    
+
+<div id="reportTitle" style="font-size:12pt;font-weight:bold;text-align: center;">
+重庆医科大学附属第三医院<br/>
+临床营养科<br/>
+人体成分测定报告<br/>
+</div>
+
 <?php
 $arr = array(
     1 => "1KHz",

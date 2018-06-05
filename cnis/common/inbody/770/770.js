@@ -124,21 +124,15 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(122,268,100,20,"(" + inbody770.patient.DateOfBirth + ")"); //生日
     LODOP.ADD_PRINT_TEXT(108,337,100,20,inbody770.patient.Gender == "M" ? "男" : "女"); //性别
     LODOP.ADD_PRINT_TEXT(112,374,166,20,inbody770.patient.TestTime); //测试时间
-    // LODOP.ADD_PRINT_TEXT(116,389,150,20,inbody770.patient.TestTime.split(" ")[1]);
-    // LODOP.ADD_PRINT_TEXT(209,697,100,20,inbody770.toFixed2(1) + "kg");
-    // LODOP.ADD_PRINT_TEXT(208,617,100,20,inbody770.toFixed2(9) + "kg");
-    // LODOP.ADD_PRINT_TEXT(208,548,100,20,inbody770.toFixed2(8) + "kg");
-    // LODOP.ADD_PRINT_TEXT(191,476,100,20,inbody770.toFixed2(7) + "kg");
-    // LODOP.ADD_PRINT_TEXT(185,304,100,20,inbody770.range(70, 69));
-    // LODOP.ADD_PRINT_TEXT(205,304,100,20,inbody770.range(72, 71));
-    // LODOP.ADD_PRINT_TEXT(226,303,100,20,inbody770.range(74, 73));
-    // LODOP.ADD_PRINT_TEXT(247,303,100,20,inbody770.range(76, 75));
-    // LODOP.ADD_PRINT_TEXT(267,303,100,20,inbody770.range(91, 92));
-    // LODOP.ADD_PRINT_TEXT(184,230,50,20,inbody770.toFixed2(2));
-    // LODOP.ADD_PRINT_TEXT(204,230,50,20,inbody770.toFixed2(3));
-    // LODOP.ADD_PRINT_TEXT(225,229,50,20,inbody770.toFixed2(4));
-    // LODOP.ADD_PRINT_TEXT(246,229,50,20,inbody770.toFixed2(5));
-    // LODOP.ADD_PRINT_TEXT(266,229,50,20,inbody770.toFixed2(6));
+    LODOP.ADD_PRINT_HTML(35,526,254,75,$("#reportTitle")[0].outerHTML); //Title
+    LODOP.ADD_PRINT_TEXT(176,154,150,20,inbody770.report[19].ItemValue); //身体总水分 测量值
+    LODOP.ADD_PRINT_TEXT(189,130,150,20,"(" + inbody770.report[174].ItemValue + "~" + inbody770.report[175].ItemValue + ")"); //身体总水分 范围
+    LODOP.ADD_PRINT_TEXT(181,221,150,20,inbody770.report[19].ItemValue); //身体总水分
+    LODOP.ADD_PRINT_TEXT(203,154,150,20,inbody770.report[16].ItemValue); //蛋白质
+    LODOP.ADD_PRINT_TEXT(216,130,150,20,"(" + inbody770.report[149].ItemValue + "~" + inbody770.report[148].ItemValue + ")"); //蛋白质 范围
+    LODOP.ADD_PRINT_TEXT(229,154,150,20,inbody770.report[17].ItemValue); //无机盐
+    LODOP.ADD_PRINT_TEXT(242,130,150,20,"(" + inbody770.report[151].ItemValue + "~" + inbody770.report[150].ItemValue + ")"); //无机盐 范围
+
     // LODOP.ADD_PRINT_TEXT(338,227,50,20,inbody770.toFixed2(1));
     // LODOP.ADD_PRINT_TEXT(363,227,50,20,inbody770.toFixed2(12));
     // LODOP.ADD_PRINT_TEXT(387,226,50,20,inbody770.toFixed2(6));
