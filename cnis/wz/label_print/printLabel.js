@@ -2,6 +2,8 @@ var printLabel = {};
 
 //页面是否加载完毕
 printLabel.isDomReady = false;
+//打印份数
+printLabel.spinnerPrintCopies;
 
 
 
@@ -85,6 +87,7 @@ GROUP BY \
         }
     }, 500);
 
+    printLabel.spinnerPrintCopies = $( "#spinnerPrintCopies" ).spinner({min:1});
 
 });
 
@@ -118,11 +121,28 @@ printLabel.print = function () {
     }
 
     printLabel.printLoad(4);
-    alert("请等待打印完毕后，再关闭该页面！");
+    //alert("请等待打印完毕后，再关闭该页面！");
 }
 
 printLabel.printLoad = function (flag) {
     // LODOP = getLodop();
+
+    //打印份数
+    var printCopies = 1;
+    if(flag == 4){
+        var printCopies = printLabel.spinnerPrintCopies.spinner( "value" );
+        if(printCopies == null){
+            var dialog = util.initDialog({
+                dialogID:"dialog1",
+                context:"请输入正确的打印份数！",
+                cfg:
+                {closeText:"关闭",title:"消息",modal:true}
+            });
+            dialog.dialog("open");
+            printLabel.spinnerPrintCopies.select();
+            return;
+        }    
+    }
 
     var $labels = $("#divLabels").children(".label");
     $labels.each(function (e) {
@@ -136,8 +156,13 @@ printLabel.printLoad = function (flag) {
         } else if (flag == 3) {
             LODOP.PREVIEW();
             return false;
-        } else if (flag == 4) {
-            LODOP.PRINT();
+        } else if (flag == 4) {            
+            for (var index = 0; index < printCopies; index++) {
+                LODOP.PRINT();   
+                if(printCopies > 1){
+                    printLabel.createPrintPage(this.innerHTML);
+                }
+            }        
         }
     });
 }

@@ -37,10 +37,10 @@ function randerBodyCallBack(){
     <input type="button" value="检测打印插件" onclick="util.CheckLodopIsInstall()" />
     <input type="button" value="设置" onclick="printLabel.printSetting()" />
     <input type="button" value="打印维护" onclick="printLabel.printSetup()" />
-    <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
     <div style="display:none">
         <input type="button" value="打印设计" onclick="printLabel.printDesign()" />
         <input type="button" value="打印预览" onclick="printLabel.preview()" />
+        <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
     </div>
 </div>
 <br/>
@@ -48,7 +48,12 @@ function randerBodyCallBack(){
 <font id="printerName" color="blue"></font>&nbsp;&nbsp;<font id="lsMsg" color="red"></font>
 <br/>
 <font id="labelTip" color="red"></font>
-<br/>
+
+<p>
+  <label for="spinnerPrintCopies">打印份数：</label>
+  <input id="spinnerPrintCopies" name="spinnerPrintCopies" value="1" style="width:50px">
+  <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
+</p>
 
 <div id="divLabels" style="width:350px">
          
