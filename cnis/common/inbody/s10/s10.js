@@ -53,7 +53,7 @@ $(function ($) {
     
 
 s10.printSetting = function () {
-    window.open("../../../../formext/form_rander/printerSet.php");
+    window.open("../../../../form_rander/printerSet.php");
 }
 
 s10.printDesign = function () {
