@@ -142,7 +142,13 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(242,422,150,20,"(" + inbody770.report[155].ItemValue + "~" + inbody770.report[154].ItemValue + ")"); //体重 范围
 
     //肌肉脂肪分析
-    LODOP.ADD_PRINT_SHAPE(4,344,132,inbody770.rangeWidth(6, 155, 154),12,0,1,"#808080");
+    LODOP.ADD_PRINT_SHAPE(4,344,132,inbody770.rangeWidth2(67, 85, 115),12,0,1,"#808080"); //体重 %
+    LODOP.ADD_PRINT_SHAPE(4,376,132,inbody770.rangeWidth2(62, 90, 110),12,0,1,"#808080"); //骨骼肌 %
+    LODOP.ADD_PRINT_SHAPE(4,407,132,inbody770.rangeWidth2(61, 80, 160),12,0,1,"#808080"); //体脂肪 %
+    
+    //肥胖分析
+    LODOP.ADD_PRINT_SHAPE(4,491,132,inbody770.rangeWidth2(23, 18.5, 23.9),12,0,1,"#808080"); //身体质量指数
+    LODOP.ADD_PRINT_SHAPE(4,522,132,inbody770.rangeWidth2(24, 10, 20),12,0,1,"#808080"); //体脂百分比
 
 
     // LODOP.ADD_PRINT_TEXT(338,227,50,20,inbody770.toFixed2(1));
@@ -203,9 +209,14 @@ inbody770.range = function(min, max){
 }
 
 inbody770.rangeWidth = function(value, min, max){
-    var w = inbody770.toFixed2(value);
     var s1 = inbody770.toFixed2(min);
     var s2 =inbody770.toFixed2(max);
+
+    return inbody770.rangeWidth2(value, s1, s2);
+}
+
+inbody770.rangeWidth2 = function(value, s1, s2){
+    var w = inbody770.toFixed2(value);
 
     var dw = 83;//mm 低标准的范围宽度
     var ww = 62;//mm 标准值的范围宽度
