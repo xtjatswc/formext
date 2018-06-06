@@ -132,6 +132,18 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(216,130,150,20,"(" + inbody770.report[149].ItemValue + "~" + inbody770.report[148].ItemValue + ")"); //蛋白质 范围
     LODOP.ADD_PRINT_TEXT(229,154,150,20,inbody770.report[17].ItemValue); //无机盐
     LODOP.ADD_PRINT_TEXT(242,130,150,20,"(" + inbody770.report[151].ItemValue + "~" + inbody770.report[150].ItemValue + ")"); //无机盐 范围
+    LODOP.ADD_PRINT_TEXT(255,154,150,20,inbody770.report[18].ItemValue); //体脂肪
+    LODOP.ADD_PRINT_TEXT(268,130,150,20,"(" + inbody770.report[170].ItemValue + "~" + inbody770.report[171].ItemValue + ")"); //体脂肪 范围
+    LODOP.ADD_PRINT_TEXT(189,300,150,20,inbody770.report[22].ItemValue); //肌肉量
+    LODOP.ADD_PRINT_TEXT(202,276,150,20,"(" + inbody770.report[178].ItemValue + "~" + inbody770.report[179].ItemValue + ")"); //肌肉量 范围
+    LODOP.ADD_PRINT_TEXT(209,375,150,20,inbody770.report[20].ItemValue); //去脂体重
+    LODOP.ADD_PRINT_TEXT(222,351,150,20,"(" + inbody770.report[176].ItemValue + "~" + inbody770.report[177].ItemValue + ")"); //去脂体重 范围
+    LODOP.ADD_PRINT_TEXT(229,446,150,20,inbody770.report[6].ItemValue); //体重
+    LODOP.ADD_PRINT_TEXT(242,422,150,20,"(" + inbody770.report[155].ItemValue + "~" + inbody770.report[154].ItemValue + ")"); //体重 范围
+
+    //肌肉脂肪分析
+    LODOP.ADD_PRINT_SHAPE(4,344,132,inbody770.rangeWidth(6, 155, 154),12,0,1,"#808080");
+
 
     // LODOP.ADD_PRINT_TEXT(338,227,50,20,inbody770.toFixed2(1));
     // LODOP.ADD_PRINT_TEXT(363,227,50,20,inbody770.toFixed2(12));
@@ -195,8 +207,8 @@ inbody770.rangeWidth = function(value, min, max){
     var s1 = inbody770.toFixed2(min);
     var s2 =inbody770.toFixed2(max);
 
-    var dw = 89;//mm 低标准的范围宽度
-    var ww = 68;//mm 标准值的范围宽度
+    var dw = 83;//mm 低标准的范围宽度
+    var ww = 62;//mm 标准值的范围宽度
 
     var width = dw + (w - s1) * ww / (s2 - s1);
 
