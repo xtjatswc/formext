@@ -40,7 +40,6 @@ function randerBodyCallBack(){
     <div style="display:none">
         <input type="button" value="打印设计" onclick="printLabel.printDesign()" />
         <input type="button" value="打印预览" onclick="printLabel.preview()" />
-        <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
     </div>
 </div>
 <br/>
@@ -52,7 +51,7 @@ function randerBodyCallBack(){
 <p>
   <label for="spinnerPrintCopies">打印份数：</label>
   <input id="spinnerPrintCopies" name="spinnerPrintCopies" value="1" style="width:50px">
-  <input id="btnPrint" type="button" value="打印" onclick="printLabel.print()" />    
+  <input id="btnPrint" type="button" value="加载中……" onclick="printLabel.print()" disabled="disabled" style="height:35px;width:150px;"/>    
 </p>
 
 <div id="divLabels" style="width:350px">

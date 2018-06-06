@@ -71,6 +71,8 @@ GROUP BY \
         if ($labels.length == labelCount && $("#printerName").html() != "") {
             //alert("加载完毕");
             printLabel.isDomReady = true;
+            $("#btnPrint").prop("disabled", "");
+            $("#btnPrint").val("打印");
             window.clearInterval(timer3);
 
             $("#labelTip").html("");
@@ -165,6 +167,9 @@ printLabel.printLoad = function (flag) {
             }        
         }
     });
+
+    $("#btnPrint").prop("disabled", "disabled");
+    $("#btnPrint").val("已打印");
 }
 
 printLabel.createPrintPage = function (labelInfo) {
