@@ -141,26 +141,49 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(229,446,150,20,inbody770.report[6].ItemValue); //体重
     LODOP.ADD_PRINT_TEXT(242,422,150,20,"(" + inbody770.report[155].ItemValue + "~" + inbody770.report[154].ItemValue + ")"); //体重 范围
 
+    var leftMargin = 145;
     //肌肉脂肪分析
-    LODOP.ADD_PRINT_SHAPE(4,344,132,inbody770.rangeWidth2(67, 85, 115),12,0,1,"#808080"); //体重 %
-    LODOP.ADD_PRINT_SHAPE(4,376,132,inbody770.rangeWidth2(62, 90, 110),12,0,1,"#808080"); //骨骼肌 %
-    LODOP.ADD_PRINT_SHAPE(4,407,132,inbody770.rangeWidth2(61, 80, 160),12,0,1,"#808080"); //体脂肪 %
-    
+    var w = inbody770.rangeWidth2(67, 85, 115);
+    LODOP.ADD_PRINT_SHAPE(4,344,132,w,12,0,1,"#808080"); //体重 %
+    LODOP.ADD_PRINT_TEXT(344,leftMargin + w,150,20,inbody770.report[6].ItemValue); //体重 kg    
+
+    w = inbody770.rangeWidth2(62, 90, 110);
+    LODOP.ADD_PRINT_SHAPE(4,376,132,w,12,0,1,"#808080"); //骨骼肌 %
+    LODOP.ADD_PRINT_TEXT(376,leftMargin + w,150,20,inbody770.report[21].ItemValue); //骨骼肌 kg    
+
+    w = inbody770.rangeWidth2(61, 80, 160);
+    LODOP.ADD_PRINT_SHAPE(4,407,132,w,12,0,1,"#808080"); //体脂肪 %
+    LODOP.ADD_PRINT_TEXT(407,leftMargin + w,150,20,inbody770.report[18].ItemValue); //体脂肪 kg    
+
     //肥胖分析
-    LODOP.ADD_PRINT_SHAPE(4,491,132,inbody770.rangeWidth2(23, 18.5, 23.9),12,0,1,"#808080"); //身体质量指数
+    w = inbody770.rangeWidth2(23, 18.5, 23.9);
+    LODOP.ADD_PRINT_SHAPE(4,491,132,w,12,0,1,"#808080"); //身体质量指数
+    LODOP.ADD_PRINT_TEXT(491,leftMargin + w,150,20,inbody770.report[23].ItemValue); //身体质量指数 值
+
+    w = inbody770.rangeWidth2(24, 10, 20);
     LODOP.ADD_PRINT_SHAPE(4,522,132,inbody770.rangeWidth2(24, 10, 20),12,0,1,"#808080"); //体脂百分比
+    LODOP.ADD_PRINT_TEXT(522,leftMargin + w,150,20,inbody770.report[24].ItemValue); //体脂百分比 值
 
     //肌肉均衡
-    LODOP.ADD_PRINT_SHAPE(4,617,132,inbody770.rangeWidth2(73, 85, 115),12,0,1,"#808080"); //右上肢 %
+    w = inbody770.rangeWidth2(73, 85, 115);
+    LODOP.ADD_PRINT_SHAPE(4,611,132,inbody770.rangeWidth2(73, 85, 115),12,0,1,"#808080"); //右上肢 %
+    LODOP.ADD_PRINT_TEXT(611,leftMargin + w,150,20,inbody770.report[73].ItemValue); //右上肢 值
 
-    LODOP.ADD_PRINT_SHAPE(4,653,132,inbody770.rangeWidth2(74, 85, 115),12,0,1,"#808080"); //左上肢 %
+    w = inbody770.rangeWidth2(74, 85, 115);
+    LODOP.ADD_PRINT_SHAPE(4,646,132,inbody770.rangeWidth2(74, 85, 115),12,0,1,"#808080"); //左上肢 %
+    LODOP.ADD_PRINT_TEXT(646,leftMargin + w,150,20,inbody770.report[74].ItemValue); //左上肢 值
 
-    LODOP.ADD_PRINT_SHAPE(4,689,132,inbody770.rangeWidth2(75, 90, 110),12,0,1,"#808080"); //躯干 %
+    w = inbody770.rangeWidth2(75, 90, 110);
+    LODOP.ADD_PRINT_SHAPE(4,683,132,inbody770.rangeWidth2(75, 90, 110),12,0,1,"#808080"); //躯干 %
+    LODOP.ADD_PRINT_TEXT(683,leftMargin + w,150,20,inbody770.report[75].ItemValue); //躯干 值
 
-    LODOP.ADD_PRINT_SHAPE(4,726,132,inbody770.rangeWidth2(76, 90, 110),12,0,1,"#808080"); //右下肢 %
+    w = inbody770.rangeWidth2(76, 90, 110);
+    LODOP.ADD_PRINT_SHAPE(4,718,132,inbody770.rangeWidth2(76, 90, 110),12,0,1,"#808080"); //右下肢 %
+    LODOP.ADD_PRINT_TEXT(718,leftMargin + w,150,20,inbody770.report[76].ItemValue); //右下肢 值
 
-    LODOP.ADD_PRINT_SHAPE(4,763,132,inbody770.rangeWidth2(77, 90, 110),12,0,1,"#808080"); //左下肢 %
-
+    w = inbody770.rangeWidth2(77, 90, 110);
+    LODOP.ADD_PRINT_SHAPE(4,754,132,inbody770.rangeWidth2(77, 90, 110),12,0,1,"#808080"); //左下肢 %
+    LODOP.ADD_PRINT_TEXT(754,leftMargin + w,150,20,inbody770.report[77].ItemValue); //左下肢 值
 
     // LODOP.ADD_PRINT_TEXT(338,227,50,20,inbody770.toFixed2(1));
     // LODOP.ADD_PRINT_TEXT(363,227,50,20,inbody770.toFixed2(12));
