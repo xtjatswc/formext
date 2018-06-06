@@ -161,29 +161,41 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(491,leftMargin + w,150,20,inbody770.report[23].ItemValue); //身体质量指数 值
 
     w = inbody770.rangeWidth2(24, 10, 20);
-    LODOP.ADD_PRINT_SHAPE(4,522,132,inbody770.rangeWidth2(24, 10, 20),12,0,1,"#808080"); //体脂百分比
+    LODOP.ADD_PRINT_SHAPE(4,522,132,w,12,0,1,"#808080"); //体脂百分比
     LODOP.ADD_PRINT_TEXT(522,leftMargin + w,150,20,inbody770.report[24].ItemValue); //体脂百分比 值
 
     //肌肉均衡
     w = inbody770.rangeWidth2(73, 85, 115);
-    LODOP.ADD_PRINT_SHAPE(4,611,132,inbody770.rangeWidth2(73, 85, 115),12,0,1,"#808080"); //右上肢 %
+    LODOP.ADD_PRINT_SHAPE(4,611,132,w,12,0,1,"#808080"); //右上肢 %
     LODOP.ADD_PRINT_TEXT(611,leftMargin + w,150,20,inbody770.report[73].ItemValue); //右上肢 值
 
     w = inbody770.rangeWidth2(74, 85, 115);
-    LODOP.ADD_PRINT_SHAPE(4,646,132,inbody770.rangeWidth2(74, 85, 115),12,0,1,"#808080"); //左上肢 %
+    LODOP.ADD_PRINT_SHAPE(4,646,132,w,12,0,1,"#808080"); //左上肢 %
     LODOP.ADD_PRINT_TEXT(646,leftMargin + w,150,20,inbody770.report[74].ItemValue); //左上肢 值
 
     w = inbody770.rangeWidth2(75, 90, 110);
-    LODOP.ADD_PRINT_SHAPE(4,683,132,inbody770.rangeWidth2(75, 90, 110),12,0,1,"#808080"); //躯干 %
+    LODOP.ADD_PRINT_SHAPE(4,683,132,w,12,0,1,"#808080"); //躯干 %
     LODOP.ADD_PRINT_TEXT(683,leftMargin + w,150,20,inbody770.report[75].ItemValue); //躯干 值
 
     w = inbody770.rangeWidth2(76, 90, 110);
-    LODOP.ADD_PRINT_SHAPE(4,718,132,inbody770.rangeWidth2(76, 90, 110),12,0,1,"#808080"); //右下肢 %
+    LODOP.ADD_PRINT_SHAPE(4,718,132,w,12,0,1,"#808080"); //右下肢 %
     LODOP.ADD_PRINT_TEXT(718,leftMargin + w,150,20,inbody770.report[76].ItemValue); //右下肢 值
 
     w = inbody770.rangeWidth2(77, 90, 110);
-    LODOP.ADD_PRINT_SHAPE(4,754,132,inbody770.rangeWidth2(77, 90, 110),12,0,1,"#808080"); //左下肢 %
+    LODOP.ADD_PRINT_SHAPE(4,754,132,w,12,0,1,"#808080"); //左下肢 %
     LODOP.ADD_PRINT_TEXT(754,leftMargin + w,150,20,inbody770.report[77].ItemValue); //左下肢 值
+
+    //细胞外水分比率分析
+    w = inbody770.rangeWidth2(103, 0.36, 0.39);
+    LODOP.ADD_PRINT_SHAPE(4,842,132,w,12,0,1,"#808080"); //细胞外水分比率分析 线
+    LODOP.ADD_PRINT_TEXT(842,leftMargin + w,150,20,inbody770.report[103].ItemValue); //细胞外水分比率分析 值
+
+    //右边栏
+    LODOP.ADD_PRINT_TEXT(163,514,100,20,"Inbody 评分");
+    LODOP.ADD_PRINT_LINE(171,596,172,757,0,1);
+
+    LODOP.ADD_PRINT_TEXT(190,584,100,20,inbody770.patient.HealthScore); //分值
+
 
     // LODOP.ADD_PRINT_TEXT(338,227,50,20,inbody770.toFixed2(1));
     // LODOP.ADD_PRINT_TEXT(363,227,50,20,inbody770.toFixed2(12));
