@@ -150,6 +150,17 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_SHAPE(4,491,132,inbody770.rangeWidth2(23, 18.5, 23.9),12,0,1,"#808080"); //身体质量指数
     LODOP.ADD_PRINT_SHAPE(4,522,132,inbody770.rangeWidth2(24, 10, 20),12,0,1,"#808080"); //体脂百分比
 
+    //肌肉均衡
+    LODOP.ADD_PRINT_SHAPE(4,617,132,inbody770.rangeWidth2(73, 85, 115),12,0,1,"#808080"); //右上肢 %
+
+    LODOP.ADD_PRINT_SHAPE(4,653,132,inbody770.rangeWidth2(74, 85, 115),12,0,1,"#808080"); //左上肢 %
+
+    LODOP.ADD_PRINT_SHAPE(4,689,132,inbody770.rangeWidth2(75, 90, 110),12,0,1,"#808080"); //躯干 %
+
+    LODOP.ADD_PRINT_SHAPE(4,726,132,inbody770.rangeWidth2(76, 90, 110),12,0,1,"#808080"); //右下肢 %
+
+    LODOP.ADD_PRINT_SHAPE(4,763,132,inbody770.rangeWidth2(77, 90, 110),12,0,1,"#808080"); //左下肢 %
+
 
     // LODOP.ADD_PRINT_TEXT(338,227,50,20,inbody770.toFixed2(1));
     // LODOP.ADD_PRINT_TEXT(363,227,50,20,inbody770.toFixed2(12));
