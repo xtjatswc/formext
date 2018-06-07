@@ -102,7 +102,7 @@ inbody770.createPrintPage = function () {
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(util.printerSetting.Orient, util.printerSetting.PageWidth, util.printerSetting.PageHeigth, util.printerSetting.PageName);
 
-    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='../通用模板.jpg'>");
+    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='../通用模板.jpg?v=2'>");
     LODOP.SET_SHOW_MODE("BKIMG_WIDTH","210mm");
     LODOP.SET_SHOW_MODE("BKIMG_HEIGHT","297mm");
     LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);
@@ -191,57 +191,22 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(842,leftMargin + w,150,20,inbody770.report[103].ItemValue); //细胞外水分比率分析 值
 
     //右边栏
-    LODOP.ADD_PRINT_TEXT(163,514,100,20,"Inbody 评分");
-    LODOP.ADD_PRINT_LINE(171,596,172,757,0,1);
+    LODOP.ADD_PRINT_TEXT(197,585,100,20,inbody770.patient.HealthScore); //分值
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",18.5);
 
-    LODOP.ADD_PRINT_TEXT(190,584,100,20,inbody770.patient.HealthScore); //分值
+    //体重控制
+    LODOP.ADD_PRINT_TEXT(720,621,100,20,inbody770.report[204].ItemValue + " kg"); //目标体重
+    LODOP.ADD_PRINT_TEXT(740,621,100,20,inbody770.report[205].ItemValue + " kg"); //体重控制
+    LODOP.ADD_PRINT_TEXT(760,621,100,20,inbody770.report[206].ItemValue + " kg"); //脂肪控制
+    LODOP.ADD_PRINT_TEXT(780,621,100,20,inbody770.report[207].ItemValue + " kg"); //肌肉控制
 
+    //研究项目
+    LODOP.ADD_PRINT_TEXT(819,621,100,20,inbody770.report[28].ItemValue + " kcal"); //基础代谢率
+    LODOP.ADD_PRINT_TEXT(839,621,142,20,inbody770.report[25].ItemValue + " （" + inbody770.report[162].ItemValue + "~" + inbody770.report[163].ItemValue + ")"); //腰臀比
+    LODOP.ADD_PRINT_TEXT(859,621,100,20,inbody770.report[30].ItemValue + " c㎡"); //内脏脂肪面积
+    var itemValue = inbody770.report[20].ItemValue / Math.pow(inbody770.report[4].ItemValue / 100,2)
+    LODOP.ADD_PRINT_TEXT(879,621,100,20,itemValue.toFixed(2) + " kg/㎡"); //去脂体重指数 去脂体重/身高平方
 
-    // LODOP.ADD_PRINT_TEXT(338,227,50,20,inbody770.toFixed2(1));
-    // LODOP.ADD_PRINT_TEXT(363,227,50,20,inbody770.toFixed2(12));
-    // LODOP.ADD_PRINT_TEXT(387,226,50,20,inbody770.toFixed2(6));
-    // LODOP.ADD_PRINT_TEXT(414,226,50,20,inbody770.toFixed2(16));
-    // LODOP.ADD_PRINT_TEXT(443,226,100,20,inbody770.toFixed2(15));
-    // LODOP.ADD_PRINT_TEXT(339,301,100,20,inbody770.range(78, 77));
-    // LODOP.ADD_PRINT_TEXT(364,301,100,20,inbody770.range(80, 79));
-    // LODOP.ADD_PRINT_TEXT(388,300,100,20,inbody770.range(91, 92));
-    // LODOP.ADD_PRINT_TEXT(415,300,100,20,inbody770.range(84, 83));
-    // LODOP.ADD_PRINT_TEXT(444,300,100,20,inbody770.range(82, 81));
-    // LODOP.ADD_PRINT_TEXT(518,227,50,20,inbody770.toFixed2(18));
-    // LODOP.ADD_PRINT_TEXT(544,227,50,20,inbody770.toFixed2(19));
-    // LODOP.ADD_PRINT_TEXT(568,226,50,20,inbody770.toFixed2(20));
-    // LODOP.ADD_PRINT_TEXT(594,226,50,20,inbody770.toFixed2(21));
-    // LODOP.ADD_PRINT_TEXT(623,226,50,20,inbody770.toFixed2(22));
-    // LODOP.ADD_PRINT_TEXT(519,301,100,20,inbody770.range(130, 131));
-    // LODOP.ADD_PRINT_TEXT(545,301,100,20,inbody770.range(130, 131));
-    // LODOP.ADD_PRINT_TEXT(569,300,100,20,inbody770.range(132, 133));
-    // LODOP.ADD_PRINT_TEXT(595,300,100,20,inbody770.range(134, 135));
-    // LODOP.ADD_PRINT_TEXT(624,300,100,20,inbody770.range(134, 135));
-    // LODOP.ADD_PRINT_TEXT(183,169,50,20,"L");
-    // LODOP.ADD_PRINT_TEXT(203,169,50,20,"L");
-    // LODOP.ADD_PRINT_TEXT(224,169,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(246,168,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(267,168,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(338,168,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(363,168,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(387,167,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(414,167,50,20,"%");
-    // LODOP.ADD_PRINT_TEXT(443,167,100,20,"kg/m²");
-    // LODOP.ADD_PRINT_TEXT(519,168,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(545,168,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(569,167,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(595,167,50,20,"kg");
-    // LODOP.ADD_PRINT_TEXT(624,167,50,20,"kg");
-    // LODOP.ADD_PRINT_SHAPE(4,338,385,inbody770.rangeWidth(1, 78, 77),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,362,385,inbody770.rangeWidth(12, 80, 79),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,386,385,inbody770.rangeWidth(6, 91, 92),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,412,385,inbody770.rangeWidth(16, 84, 83),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,441,385,inbody770.rangeWidth(15, 82, 81),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,517,385,inbody770.rangeWidth(18, 130, 131),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,543,385,inbody770.rangeWidth(19, 130, 131),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,567,385,inbody770.rangeWidth(20, 132, 133),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,593,385,inbody770.rangeWidth(21, 134, 135),12,0,1,"#808080");
-    // LODOP.ADD_PRINT_SHAPE(4,621,385,inbody770.rangeWidth(22, 134, 135),12,0,1,"#808080");
     // var dzk = inbody770.loadDZk();
     // LODOP.ADD_PRINT_HTM("174.84mm","5.77mm","131.05mm","85.99mm", dzk);
 }
