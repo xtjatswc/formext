@@ -102,7 +102,7 @@ inbody770.createPrintPage = function () {
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(util.printerSetting.Orient, util.printerSetting.PageWidth, util.printerSetting.PageHeigth, util.printerSetting.PageName);
 
-    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='../通用模板.jpg?v=2'>");
+    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='../通用模板.jpg?v=3'>");
     LODOP.SET_SHOW_MODE("BKIMG_WIDTH","210mm");
     LODOP.SET_SHOW_MODE("BKIMG_HEIGHT","297mm");
     LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);
@@ -194,6 +194,32 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(197,585,100,20,inbody770.patient.HealthScore); //分值
     LODOP.SET_PRINT_STYLEA(0,"FontSize",18.5);
 
+    //内脏脂肪面积
+    var vfa = inbody770.report[30].ItemValue;
+    var age = inbody770.report[5].ItemValue;
+    var xZero = 546;
+    var x100 = 721;
+    var yZero = 386;
+    var y200 = 276;
+    var x = xZero + (x100 - xZero) / 100 * age;
+    var y = yZero + (y200 - yZero) / 200 * vfa;
+    LODOP.ADD_PRINT_TEXT(y,x,100,20,"+"); 
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",18.5);
+
+    //体型
+    var bmi = inbody770.report[23].ItemValue;
+    var PBF = inbody770.report[24].ItemValue;
+    var x10 = 590;
+    var x20 = 696;
+    var y185 = 604;
+    var y239 = 497;
+    var xx = (x20 - x10) / 10; //每个刻度的长度
+    var yy = (y239 - y185) / 5.4; //每个刻度的长度
+    x = (x10 - 10 * xx) + xx * PBF;
+    y = (y185 - 18.5 * yy) + yy * bmi;
+    LODOP.ADD_PRINT_TEXT(y,x,100,20,"+"); 
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",23.5);
+
     //体重控制
     LODOP.ADD_PRINT_TEXT(720,621,100,20,inbody770.report[204].ItemValue + " kg"); //目标体重
     LODOP.ADD_PRINT_TEXT(740,621,100,20,inbody770.report[205].ItemValue + " kg"); //体重控制
@@ -202,7 +228,7 @@ inbody770.createPrintPage = function () {
 
     //研究项目
     LODOP.ADD_PRINT_TEXT(819,621,100,20,inbody770.report[28].ItemValue + " kcal"); //基础代谢率
-    LODOP.ADD_PRINT_TEXT(839,621,142,20,inbody770.report[25].ItemValue + " （" + inbody770.report[162].ItemValue + "~" + inbody770.report[163].ItemValue + ")"); //腰臀比
+    LODOP.ADD_PRINT_TEXT(839,621,142,20,inbody770.report[25].ItemValue + " （" + inbody770.report[163].ItemValue + "~" + inbody770.report[162].ItemValue + ")"); //腰臀比
     LODOP.ADD_PRINT_TEXT(859,621,100,20,inbody770.report[30].ItemValue + " c㎡"); //内脏脂肪面积
     var itemValue = inbody770.report[20].ItemValue / Math.pow(inbody770.report[4].ItemValue / 100,2)
     LODOP.ADD_PRINT_TEXT(879,621,100,20,itemValue.toFixed(2) + " kg/㎡"); //去脂体重指数 去脂体重/身高平方
