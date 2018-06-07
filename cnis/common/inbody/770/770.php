@@ -15,7 +15,7 @@ $page->randerPage();
 //css样式
 function randerStylesheetCallBack(){
     ?>
-	<style id="style1">table,td,th {border-width: 1px;border:1px solid black;border-collapse: collapse;font-size: 12pt;padding:3px;}</style>
+	<style id="style1">table,td,th {border-width: 1px;border:1px solid black;border-collapse: collapse;font-size: 8pt;padding:1px;}</style>
     <?php
 }
 
@@ -55,17 +55,16 @@ function randerBodyCallBack(){
 
 <?php
 $arr = array(
-    1 => "1KHz",
-    5 => "5KHz",
-    50 => "50KHz",
+    1 => "1Khz",
+    5 => "5Khz",
+    50 => "50Khz",
     250 => "250KHz",
     500 => "500KHz",
-    "1M" => "1000KHz"
+    1000 => "1000KHz"
 );
 ?>
-<div id="divDzk" style="display:none">
+<div id="divDzk">
 <table>
-<tr><caption><h3>生物电阻抗</h3></caption></tr>
 <tr>
 <th></th>
 <th>右上肢</th>
@@ -79,11 +78,11 @@ foreach ($arr as $key => $value) {
 ?>
 <tr>
     <td><?php echo $value?></td>
-    <td>{RA<?php echo $key?>}</td>
-    <td>{LA<?php echo $key?>}</td>
-    <td>{TR<?php echo $key?>}</td>
-    <td>{RL<?php echo $key?>}</td>
-    <td>{LL<?php echo $key?>}</td>
+    <td>{<?php echo $key?>khz-RA Impedance}</td>
+    <td>{<?php echo $key?>khz-LA Impedance}</td>
+    <td>{<?php echo $key?>khz-TR Impedance}</td>
+    <td>{<?php echo $key?>khz-RL Impedance}</td>
+    <td>{<?php echo $key?>khz-LL Impedance}</td>
 </tr>
 <?php 
 }

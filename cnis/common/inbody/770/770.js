@@ -207,8 +207,12 @@ inbody770.createPrintPage = function () {
     var itemValue = inbody770.report[20].ItemValue / Math.pow(inbody770.report[4].ItemValue / 100,2)
     LODOP.ADD_PRINT_TEXT(879,621,100,20,itemValue.toFixed(2) + " kg/㎡"); //去脂体重指数 去脂体重/身高平方
 
-    // var dzk = inbody770.loadDZk();
-    // LODOP.ADD_PRINT_HTM("174.84mm","5.77mm","131.05mm","85.99mm", dzk);
+    //全身相位角
+    LODOP.ADD_PRINT_TEXT(914,647,100,20,inbody770.report[487].ItemValue + " °"); 
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",15.5);
+
+    var dzk = inbody770.loadDZk();
+    LODOP.ADD_PRINT_HTM("253mm","138mm","64mm","43mm", dzk);
 }
 
 inbody770.toFixed2 = function(index){
@@ -239,7 +243,7 @@ inbody770.rangeWidth2 = function(value, s1, s2){
 
 inbody770.loadDZk = function(){
     var dzkObj = {};
-    for(var i = 39; i <= 68; i++){
+    for(var i = 344; i <= 383; i++){
         dzkObj[inbody770.report[i].ItemName] = inbody770.toFixed2(i);
     }
     var style = $("#style1")[0].outerHTML;
