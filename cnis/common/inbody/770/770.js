@@ -285,7 +285,7 @@ inbody770.loadDZk = function(){
     var chart = {};
     chart.getChart = function(){
 
-        var weightArr = chart.getData();      
+        var weightArr = chart.getArr();      
         var weightSection = chart.getMaxMin(weightArr);  
         var left = 162; //第一个点的左边距
         var space = 42; //点之间的间隙
@@ -328,32 +328,43 @@ inbody770.loadDZk = function(){
         return {max:max, min:min};
     }
 
+    chart.getArr = function(){
+        var data = chart.getData();
+        var arr1 = [];
+        for (var index = 0; index < data.length; index++) {
+
+            var item = chart.getItem(data, index, 6);    
+            if(item) {arr1.push(item)};
+
+            //最多显示8项
+            if(arr1.length == 8)
+                break;
+        }
+
+        return arr1;
+    }
+
     //获取折线图数据
     chart.getData = function(){
-        var weightArr = [];
+        var d = null;
         $.ajaxSetup({async: false});
         var sql = "select a.TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) order by a.TestTime, b.ItemCode limit 0,32;";
         $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
-            var TestTime = "";
-            for (var index = 0; index < data.length; index++) {
-                if(TestTime == data[index].TestTime)
-                    continue;
-
-                if(data[index].ItemCode == 6){
-                    TestTime = data[index].TestTime;
-                    var item = {};
-                    item.TestTime = TestTime;
-                    item.ItemValue = data[index].ItemValue;
-                    weightArr.push(item);
-                }
-
-                if(weightArr.length == 8)
-                    break;
-            }
+            d = data;
         });
         $.ajaxSetup({async: true});
 
-        return weightArr;
+        return d;
+    }
+
+    chart.getItem = function(data, index, ItemCode){
+        if(data[index].ItemCode == ItemCode){
+            var item = {};
+            item.TestTime = data[index].TestTime;;
+            item.ItemValue = data[index].ItemValue;
+            return item;
+        }
+        return null;
     }
 
     return chart.getChart;
