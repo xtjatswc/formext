@@ -190,6 +190,9 @@ inbody770.createPrintPage = function () {
     LODOP.ADD_PRINT_SHAPE(4,842,132,w,12,0,1,"#808080"); //细胞外水分比率分析 线
     LODOP.ADD_PRINT_TEXT(842,leftMargin + w,150,20,inbody770.report[103].ItemValue); //细胞外水分比率分析 值
 
+    //历史折线图
+    inbody770.loadChart();
+
     //右边栏
     LODOP.ADD_PRINT_TEXT(197,585,100,20,inbody770.patient.HealthScore); //分值
     LODOP.SET_PRINT_STYLEA(0,"FontSize",18.5);
@@ -276,3 +279,82 @@ inbody770.loadDZk = function(){
     var dzk = $("#divDzk").html().format(dzkObj);
     return style + dzk;
 }
+
+//历史折线图
+;inbody770.loadChart = (function(){
+    var chart = {};
+    chart.getChart = function(){
+
+        var weightArr = chart.getData();      
+        var weightSection = chart.getMaxMin(weightArr);  
+        var left = 162; //第一个点的左边距
+        var space = 42; //点之间的间隙
+        var yTop = 922; //最上端点的y轴坐标
+        var yBottom = 939;//最下端点的y轴坐标
+        var previousTop,previousLeft;
+        for (var index = 0; index < weightArr.length; index++) {
+
+            var yk = (yBottom - yTop) / (weightSection.max - weightSection.min); //每个y轴刻度的像素值
+            var top = yTop + (weightSection.max - weightArr[index].ItemValue) * yk;
+
+            LODOP.ADD_PRINT_TEXT(top-10,left-15,100,20,weightArr[index].ItemValue);
+            LODOP.SET_PRINT_STYLEA(0,"FontSize",8.5);
+            //画圆点
+            LODOP.ADD_PRINT_SHAPE(5,top,left,6,7,0,1,"#000000");        
+            if(index > 0){
+                //画折线
+                LODOP.ADD_PRINT_LINE(previousTop+3,previousLeft+3,top+3,left+3,0,1);
+            }
+            previousTop = top;
+            previousLeft = left;
+            left += space;    
+        }
+    }
+    
+    //获取最大值和最小值
+    chart.getMaxMin = function(weightArr){
+        var max = weightArr[0].ItemValue;
+        var min = weightArr[0].ItemValue;
+        for (var index = 0; index < weightArr.length; index++) {
+            if(max < weightArr[index].ItemValue){
+                max = weightArr[index].ItemValue;
+            }            
+
+            if(min > weightArr[index].ItemValue){
+                min = weightArr[index].ItemValue;
+            }
+        }
+
+        return {max:max, min:min};
+    }
+
+    //获取折线图数据
+    chart.getData = function(){
+        var weightArr = [];
+        $.ajaxSetup({async: false});
+        var sql = "select a.TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) order by a.TestTime, b.ItemCode limit 0,32;";
+        $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
+            var TestTime = "";
+            for (var index = 0; index < data.length; index++) {
+                if(TestTime == data[index].TestTime)
+                    continue;
+
+                if(data[index].ItemCode == 6){
+                    TestTime = data[index].TestTime;
+                    var item = {};
+                    item.TestTime = TestTime;
+                    item.ItemValue = data[index].ItemValue;
+                    weightArr.push(item);
+                }
+
+                if(weightArr.length == 8)
+                    break;
+            }
+        });
+        $.ajaxSetup({async: true});
+
+        return weightArr;
+    }
+
+    return chart.getChart;
+}());
