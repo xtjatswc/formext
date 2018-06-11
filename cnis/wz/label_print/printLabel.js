@@ -48,7 +48,7 @@ FROM \
 		a.NutrientAdviceDetail_DBKEY IN (" + urlParams.detailDBKeys + ") \
 	) tb \
 GROUP BY \
-	NutrientAdviceSummary_DBKey, \
+	NutrientAdviceSummary_DBKey desc, \
 	AdviceDate, \
 	TakeOrder, \
     PreparationMode2";        
