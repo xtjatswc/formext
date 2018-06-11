@@ -290,12 +290,15 @@ inbody770.loadDZk = function(){
         var deviation = 0;  //画完一条线之后，整体往下偏离的距离
         for (var index = 0; index < chart.legendArr.length; index++) {
             var arr = legendData[chart.legendArr[index]];
-            chart.DrawLine(arr, deviation);
+            chart.drawLine(arr, deviation);
             deviation += 38;
-        }        
+        }
+        
+        //画日期
+        chart.drawDate(legendData[6]);
     }
 
-    chart.DrawLine = function(arr, deviation){
+    chart.drawLine = function(arr, deviation){
         var weightSection = chart.getMaxMin(arr);  
         var left = 162; //第一个点的左边距
         var space = 42; //点之间的间隙
@@ -318,6 +321,15 @@ inbody770.loadDZk = function(){
             previousTop = top;
             previousLeft = left;
             left += space;    
+        }
+    }
+
+    chart.drawDate = function(arr){
+        var leftMargin = 129;
+        for (var index = 0; index < arr.length; index++) {
+            LODOP.ADD_PRINT_TEXT(1061,leftMargin,100,20,arr[index].TestTime);      
+            LODOP.SET_PRINT_STYLEA(0,"FontSize",8.5);   
+            leftMargin += 46;   
         }
     }
     
@@ -344,7 +356,7 @@ inbody770.loadDZk = function(){
         for (var i = 0; i < chart.legendArr.length; i++) {
             var legend = chart.legendArr[i];
             var arr = [];
-            for (var index = 0; index < data.length; index++) {
+            for (var index = data.length - 1; index >=0 ; index--) {
 
                 var item = chart.getItem(data, index, legend);    
                 if(item) {arr.push(item)};
@@ -363,7 +375,7 @@ inbody770.loadDZk = function(){
     chart.getData = function(){
         var d = null;
         $.ajaxSetup({async: false});
-        var sql = "select a.TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) order by a.TestTime, b.ItemCode limit 0,32;";
+        var sql = "select date_format(a.TestTime,'%y.%m.%d\r\n%H:%m') TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) order by a.TestTime desc, b.ItemCode limit 0,32;";
         $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
             d = data;
         });
@@ -375,7 +387,7 @@ inbody770.loadDZk = function(){
     chart.getItem = function(data, index, ItemCode){
         if(data[index].ItemCode == ItemCode){
             var item = {};
-            item.TestTime = data[index].TestTime;;
+            item.TestTime = data[index].TestTime;
             item.ItemValue = data[index].ItemValue;
             return item;
         }
