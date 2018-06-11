@@ -283,21 +283,31 @@ inbody770.loadDZk = function(){
 //历史折线图
 ;inbody770.loadChart = (function(){
     var chart = {};
-    chart.getChart = function(){
+    chart.legendArr = [6, 21, 24, 103];
 
-        var weightArr = chart.getArr();      
-        var weightSection = chart.getMaxMin(weightArr);  
+    chart.getChart = function(){
+        var legendData = chart.getLegendData();  
+        var deviation = 0;  //画完一条线之后，整体往下偏离的距离
+        for (var index = 0; index < chart.legendArr.length; index++) {
+            var arr = legendData[chart.legendArr[index]];
+            chart.DrawLine(arr, deviation);
+            deviation += 38;
+        }        
+    }
+
+    chart.DrawLine = function(arr, deviation){
+        var weightSection = chart.getMaxMin(arr);  
         var left = 162; //第一个点的左边距
         var space = 42; //点之间的间隙
-        var yTop = 922; //最上端点的y轴坐标
-        var yBottom = 939;//最下端点的y轴坐标
+        var yTop = 922 + deviation; //最上端点的y轴坐标
+        var yBottom = 939 + deviation;//最下端点的y轴坐标
         var previousTop,previousLeft;
-        for (var index = 0; index < weightArr.length; index++) {
+        for (var index = 0; index < arr.length; index++) {
 
             var yk = (yBottom - yTop) / (weightSection.max - weightSection.min); //每个y轴刻度的像素值
-            var top = yTop + (weightSection.max - weightArr[index].ItemValue) * yk;
+            var top = yTop + (weightSection.max - arr[index].ItemValue) * yk;
 
-            LODOP.ADD_PRINT_TEXT(top-10,left-15,100,20,weightArr[index].ItemValue);
+            LODOP.ADD_PRINT_TEXT(top-10,left-15,100,20,arr[index].ItemValue);
             LODOP.SET_PRINT_STYLEA(0,"FontSize",8.5);
             //画圆点
             LODOP.ADD_PRINT_SHAPE(5,top,left,6,7,0,1,"#000000");        
@@ -313,35 +323,40 @@ inbody770.loadDZk = function(){
     
     //获取最大值和最小值
     chart.getMaxMin = function(weightArr){
-        var max = weightArr[0].ItemValue;
-        var min = weightArr[0].ItemValue;
+        var max = parseFloat(weightArr[0].ItemValue);
+        var min = parseFloat(weightArr[0].ItemValue);
         for (var index = 0; index < weightArr.length; index++) {
-            if(max < weightArr[index].ItemValue){
-                max = weightArr[index].ItemValue;
+            if(max < parseFloat(weightArr[index].ItemValue)){
+                max = parseFloat(weightArr[index].ItemValue);
             }            
 
-            if(min > weightArr[index].ItemValue){
-                min = weightArr[index].ItemValue;
+            if(min > parseFloat(weightArr[index].ItemValue)){
+                min = parseFloat(weightArr[index].ItemValue);
             }
         }
 
         return {max:max, min:min};
     }
 
-    chart.getArr = function(){
+    chart.getLegendData = function(){
         var data = chart.getData();
-        var arr1 = [];
-        for (var index = 0; index < data.length; index++) {
+        var legendData = {};
+        for (var i = 0; i < chart.legendArr.length; i++) {
+            var legend = chart.legendArr[i];
+            var arr = [];
+            for (var index = 0; index < data.length; index++) {
 
-            var item = chart.getItem(data, index, 6);    
-            if(item) {arr1.push(item)};
-
-            //最多显示8项
-            if(arr1.length == 8)
-                break;
+                var item = chart.getItem(data, index, legend);    
+                if(item) {arr.push(item)};
+    
+                //最多显示8项
+                if(arr.length == 8)
+                    break;
+            }
+            legendData[legend] = arr;
         }
 
-        return arr1;
+        return legendData;
     }
 
     //获取折线图数据
