@@ -15,7 +15,10 @@ $page->randerPage();
 //css样式
 function randerStylesheetCallBack(){
     ?>
-	<style id="style1">table,td,th {border-width: 1px;border:1px solid black;border-collapse: collapse;font-size: 8pt;padding:1px;}</style>
+	<style id="style1">
+    table,td,th {border-width: 1px;border:1px solid black;border-collapse: collapse;font-size: 8pt;padding:1px;}
+    body{text-align: center;}
+    </style>
     <?php
 }
 
@@ -34,10 +37,10 @@ function randerBodyCallBack(){
         <input type="button" value="检测打印插件" onclick="util.CheckLodopIsInstall()" />
         <input type="button" value="设置" onclick="inbody770.printSetting()" />
         <input type="button" value="打印维护" onclick="inbody770.printSetup()" />
-        <div style="display:none2">
+        <input type="button" value="打印预览" onclick="inbody770.preview()" />
+        <input id="btnPrint" type="button" value="打印" onclick="inbody770.print()" />
+        <div style="display:none">
             <input type="button" value="打印设计" onclick="inbody770.printDesign()" />
-            <input type="button" value="打印预览" onclick="inbody770.preview()" />
-            <input id="btnPrint" type="button" value="打印" onclick="inbody770.print()" />
         </div>
     </div>
     <br/>
@@ -46,6 +49,8 @@ function randerBodyCallBack(){
     <br/>
     <font id="labelTip" color="red"></font>
     <br/>    
+
+<div style="display:none">
 
 <div id="reportTitle" style="font-size:12pt;font-weight:bold;text-align: center;">
 重庆医科大学附属第三医院<br/>
@@ -89,5 +94,8 @@ foreach ($arr as $key => $value) {
 ?>
 </table>
 </div>
+
+</div>
+
     <?php
 }
