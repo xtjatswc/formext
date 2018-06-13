@@ -104,7 +104,7 @@ inbody770.createPrintPage = function () {
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(util.printerSetting.Orient, util.printerSetting.PageWidth, util.printerSetting.PageHeigth, util.printerSetting.PageName);
 
-    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='../通用模板.jpg?v=7'>");
+    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='770模板.jpg?v=7'>");
     LODOP.SET_SHOW_MODE("BKIMG_WIDTH","210mm");
     LODOP.SET_SHOW_MODE("BKIMG_HEIGHT","297mm");
     LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);

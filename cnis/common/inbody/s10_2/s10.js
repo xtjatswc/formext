@@ -102,7 +102,7 @@ s10.createPrintPage = function () {
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(util.printerSetting.Orient, util.printerSetting.PageWidth, util.printerSetting.PageHeigth, util.printerSetting.PageName);
 
-    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='../通用模板.jpg?v=7'>");
+    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='s10模板.jpg?v=7'>");
     LODOP.SET_SHOW_MODE("BKIMG_WIDTH","210mm");
     LODOP.SET_SHOW_MODE("BKIMG_HEIGHT","297mm");
     LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);
@@ -200,10 +200,10 @@ s10.createPrintPage = function () {
     LODOP.ADD_PRINT_TEXT(761,leftMargin + w,150,20,s10.toFixed2(27)); //左下肢 值
     LODOP.ADD_PRINT_TEXT(761,457,150,20,s10.toFixed2(32)); //细胞外水分比率 左下肢
 
-    // //细胞外水分比率分析
-    // w = s10.rangeWidth2(103, 0.36, 0.39);
-    // LODOP.ADD_PRINT_SHAPE(4,849,132,w,9,0,1,"#808080"); //细胞外水分比率分析 线
-    // LODOP.ADD_PRINT_TEXT(849,leftMargin + w,150,20,s10.report[103].ItemValue); //细胞外水分比率分析 值
+    //细胞外水分比率分析
+    w = s10.rangeWidth2(33, 0.36, 0.39);
+    LODOP.ADD_PRINT_SHAPE(4,849,132,w,9,0,1,"#808080"); //细胞外水分比率分析 线
+    LODOP.ADD_PRINT_TEXT(849,leftMargin + w,150,20,s10.toFixed2(33)); //细胞外水分比率分析 值
 
     // //历史折线图
     // s10.loadChart();
