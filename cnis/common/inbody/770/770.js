@@ -38,7 +38,7 @@ $(function ($) {
     $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
         inbody770.patient = data[0];
     });
-
+    
     sql = "select a.*,b.ItemName from inbodyresult a inner join inbodyitem b on a.ItemCode = b.ItemCode and b.InbodyModel = '770' where InBodyReport_DBKey = " + inbody770.urlParams.reportId + ";";
     $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
         inbody770.report = data;
@@ -352,6 +352,11 @@ inbody770.loadDZk = function(){
             }
         }
 
+        if(max == min){
+            max++;
+            min--;
+        }
+
         return {max:max, min:min};
     }
 
@@ -380,7 +385,7 @@ inbody770.loadDZk = function(){
     chart.getData = function(){
         var d = null;
         $.ajaxSetup({async: false});
-        var sql = "select date_format(a.TestTime,'%y.%m.%d\r\n%H:%m') TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) order by a.TestTime desc, b.ItemCode limit 0,32;";
+        var sql = "select date_format(a.TestTime,'%y.%m.%d\r\n%H:%m') TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) and a.PatientHospitalize_DBKey=" +  inbody770.patient.PatientHospitalize_DBKey + " order by a.TestTime desc, b.ItemCode limit 0,32;";
         $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
             d = data;
         });

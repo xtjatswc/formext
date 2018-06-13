@@ -51,9 +51,14 @@ function randerBodyCallBack(){
     <br/>    
 
 <div style="display:none">
-
+<?php
+    global $db;
+    //取医院名称
+    $sql = "select SysConfigValue from sysconfig where SysConfigCode = 'SystemPrint'";
+    $printTitle = $db->fetch_var($sql);
+?>
 <div id="reportTitle" style="font-size:12pt;font-weight:bold;text-align: center;">
-重庆医科大学附属第三医院<br/>
+<?php echo $printTitle;?><br/>
 临床营养科<br/>
 人体成分测定报告<br/>
 </div>
