@@ -604,3 +604,8 @@ util.uuid = function(len, radix) {
  
     return uuid.join('');
 }
+
+util.round = function (f, digit) {
+    var m = Math.pow(10, digit);
+    return Math.round(f * m, 10) / m;
+}
