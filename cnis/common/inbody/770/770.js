@@ -387,7 +387,7 @@ inbody770.loadDZk = function(){
     chart.getData = function(){
         var d = null;
         $.ajaxSetup({async: false});
-        var sql = "select date_format(a.TestTime,'%y.%m.%d\r\n%H:%m') TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) and a.PatientHospitalize_DBKey=" +  inbody770.patient.PatientHospitalize_DBKey + " order by a.TestTime desc, b.ItemCode limit 0,32;";
+        var sql = "select date_format(a.TestTime,'%y.%m.%d\r\n%H:%i') TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) and a.PatientHospitalize_DBKey=" +  inbody770.patient.PatientHospitalize_DBKey + " order by a.TestTime desc, b.ItemCode limit 0,32;";
         $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
             d = data;
         });

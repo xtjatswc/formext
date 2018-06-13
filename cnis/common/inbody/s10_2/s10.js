@@ -205,8 +205,8 @@ s10.createPrintPage = function () {
     LODOP.ADD_PRINT_SHAPE(4,849,132,w,9,0,1,"#808080"); //细胞外水分比率分析 线
     LODOP.ADD_PRINT_TEXT(849,leftMargin + w,150,20,s10.toFixed2(33)); //细胞外水分比率分析 值
 
-    // //历史折线图
-    // s10.loadChart();
+    //历史折线图
+    s10.loadChart();
 
     // //右边栏
     // LODOP.ADD_PRINT_TEXT(197,585,100,20,s10.patient.HealthScore); //分值
@@ -300,7 +300,7 @@ s10.loadDZk = function(){
 //历史折线图
 ;s10.loadChart = (function(){
     var chart = {};
-    chart.legendArr = [6, 21, 24, 103];
+    chart.legendArr = [1, 12, 14, 33];
 
     chart.getChart = function(){
         var legendData = chart.getLegendData();  
@@ -312,7 +312,7 @@ s10.loadDZk = function(){
         }
         
         //画日期
-        chart.drawDate(legendData[6]);
+        chart.drawDate(legendData[1]);
     }
 
     chart.drawLine = function(arr, deviation){
@@ -364,6 +364,11 @@ s10.loadDZk = function(){
             }
         }
 
+        if(max == min){
+            max++;
+            min--;
+        }
+
         return {max:max, min:min};
     }
 
@@ -392,7 +397,7 @@ s10.loadDZk = function(){
     chart.getData = function(){
         var d = null;
         $.ajaxSetup({async: false});
-        var sql = "select date_format(a.TestTime,'%y.%m.%d\r\n%H:%m') TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = '770' and b.ItemCode in (6, 21, 24, 103) order by a.TestTime desc, b.ItemCode limit 0,32;";
+        var sql = "select date_format(a.TestTime,'%y.%m.%d\r\n%H:%i') TestTime,b.* from inbodyreport a inner join inbodyresult b on a.InBodyReport_DBKey = b.InBodyReport_DBKey where a.InbodyModel = 's10' and b.ItemCode in (1, 12, 14, 33) and a.PatientHospitalize_DBKey=" +  s10.patient.PatientHospitalize_DBKey + " order by a.TestTime desc, b.ItemCode limit 0,32;";
         $.getJSON(pageExt.libPath + "query.php", { sql: sql }, function (data, status, xhr) {
             d = data;
         });
@@ -405,7 +410,7 @@ s10.loadDZk = function(){
         if(data[index].ItemCode == ItemCode){
             var item = {};
             item.TestTime = data[index].TestTime;
-            item.ItemValue = data[index].ItemValue;
+            item.ItemValue = util.round(data[index].ItemValue,2);
             return item;
         }
         return null;
