@@ -50,7 +50,7 @@ function randerBodyCallBack(){
     <font id="labelTip" color="red"></font>
     <br/>    
 
-<div style="display:none2">
+<div style="display:none">
 
 <div id="reportTitle" style="font-size:12pt;font-weight:bold;text-align: center;">
 重庆医科大学附属第三医院<br/>
