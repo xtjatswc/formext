@@ -50,7 +50,7 @@ function randerBodyCallBack(){
     <font id="labelTip" color="red"></font>
     <br/>    
 
-<div style="display:none">
+<div style="display:none2">
 
 <div id="reportTitle" style="font-size:12pt;font-weight:bold;text-align: center;">
 重庆医科大学附属第三医院<br/>
@@ -60,12 +60,12 @@ function randerBodyCallBack(){
 
 <?php
 $arr = array(
-    1 => "1Khz",
-    5 => "5Khz",
-    50 => "50Khz",
+    1 => "1KHz",
+    5 => "5KHz",
+    50 => "50KHz",
     250 => "250KHz",
     500 => "500KHz",
-    1000 => "1000KHz"
+    "1M" => "1000KHz"
 );
 ?>
 <div id="divDzk">
@@ -83,17 +83,38 @@ foreach ($arr as $key => $value) {
 ?>
 <tr>
     <td><?php echo $value?></td>
-    <td>{<?php echo $key?>khz-RA Impedance}</td>
-    <td>{<?php echo $key?>khz-LA Impedance}</td>
-    <td>{<?php echo $key?>khz-TR Impedance}</td>
-    <td>{<?php echo $key?>khz-RL Impedance}</td>
-    <td>{<?php echo $key?>khz-LL Impedance}</td>
+    <td>{RA<?php echo $key?>}</td>
+    <td>{LA<?php echo $key?>}</td>
+    <td>{TR<?php echo $key?>}</td>
+    <td>{RL<?php echo $key?>}</td>
+    <td>{LL<?php echo $key?>}</td>
 </tr>
-<?php 
+<?php  
 }
 ?>
 </table>
 </div>
+
+<br>
+<table id="divXwj">
+<tr>
+<th></th>
+<th>右上肢</th>
+<th>左上肢</th>
+<th>躯干</th>
+<th>右下肢</th>
+<th>左下肢</th>
+</tr>
+<tr>
+<td>50KHz</td>
+<td id="RA50"></td>
+<td id="LA50"></td>
+<td id="TR50"></td>
+<td id="RL50"></td>
+<td id="LL50"></td>
+</tr>
+</table>
+
 
 </div>
 

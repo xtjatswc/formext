@@ -102,7 +102,7 @@ s10.createPrintPage = function () {
     //LODOP.SET_PRINT_PAGESIZE(0,0,0,getSelectedPageSize());
     LODOP.SET_PRINT_PAGESIZE(util.printerSetting.Orient, util.printerSetting.PageWidth, util.printerSetting.PageHeigth, util.printerSetting.PageName);
 
-    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='s10模板.jpg?v=7'>");
+    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='s10模板.jpg?v=9'>");
     LODOP.SET_SHOW_MODE("BKIMG_WIDTH","210mm");
     LODOP.SET_SHOW_MODE("BKIMG_HEIGHT","297mm");
     LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);
@@ -209,54 +209,58 @@ s10.createPrintPage = function () {
     s10.loadChart();
 
     // //右边栏
-    // LODOP.ADD_PRINT_TEXT(197,585,100,20,s10.patient.HealthScore); //分值
-    // LODOP.SET_PRINT_STYLEA(0,"FontSize",18.5);
-
-    // //内脏脂肪面积
-    // var vfa = s10.report[30].ItemValue;
-    // var age = s10.report[5].ItemValue;
-    // var xZero = 546;
-    // var x100 = 721;
-    // var yZero = 386;
-    // var y200 = 276;
-    // var x = xZero + (x100 - xZero) / 100 * age;
-    // var y = yZero + (y200 - yZero) / 200 * vfa;
-    // LODOP.ADD_PRINT_TEXT(y,x,100,20,"+"); 
-    // LODOP.SET_PRINT_STYLEA(0,"FontSize",18.5);
-
-    // //体型
-    // var bmi = s10.report[23].ItemValue;
-    // var PBF = s10.report[24].ItemValue;
-    // var x10 = 590;
-    // var x20 = 696;
-    // var y185 = 604;
-    // var y239 = 497;
-    // var xx = (x20 - x10) / 10; //每个刻度的长度
-    // var yy = (y239 - y185) / 5.4; //每个刻度的长度
-    // x = (x10 - 10 * xx) + xx * PBF;
-    // y = (y185 - 18.5 * yy) + yy * bmi;
-    // LODOP.ADD_PRINT_TEXT(y,x,100,20,"+"); 
-    // LODOP.SET_PRINT_STYLEA(0,"FontSize",23.5);
-
     // //体重控制
     // LODOP.ADD_PRINT_TEXT(720,621,100,20,s10.report[204].ItemValue + " kg"); //目标体重
     // LODOP.ADD_PRINT_TEXT(740,621,100,20,s10.report[205].ItemValue + " kg"); //体重控制
     // LODOP.ADD_PRINT_TEXT(760,621,100,20,s10.report[206].ItemValue + " kg"); //脂肪控制
     // LODOP.ADD_PRINT_TEXT(780,621,100,20,s10.report[207].ItemValue + " kg"); //肌肉控制
 
+    //节段水分分析
+    var jd = s10.toFixed2(93) + " L （" + s10.range(136, 137) + "）";
+    LODOP.ADD_PRINT_TEXT(275,608,150,20,jd); //右上肢
+    jd = s10.toFixed2(94) + " L （" + s10.range(136, 137) + "）";
+    LODOP.ADD_PRINT_TEXT(293,608,150,20,jd); //左上肢
+    jd = s10.toFixed2(95) + " L （" + s10.range(138, 139) + "）";
+    LODOP.ADD_PRINT_TEXT(310,608,150,20,jd); //躯干
+    jd = s10.toFixed2(96) + " L （" + s10.range(140, 141) + "）";
+    LODOP.ADD_PRINT_TEXT(327,608,150,20,jd); //右下肢
+    jd = s10.toFixed2(97) + " L （" + s10.range(140, 141) + "）";
+    LODOP.ADD_PRINT_TEXT(344,608,150,20,jd); //左下肢
+
     // //研究项目
-    // LODOP.ADD_PRINT_TEXT(819,621,100,20,s10.report[28].ItemValue + " kcal"); //基础代谢率
-    // LODOP.ADD_PRINT_TEXT(839,621,142,20,s10.report[25].ItemValue + " （" + s10.report[163].ItemValue + "~" + s10.report[162].ItemValue + ")"); //腰臀比
-    // LODOP.ADD_PRINT_TEXT(859,621,100,20,s10.report[30].ItemValue + " c㎡"); //内脏脂肪面积
-    // var itemValue = s10.report[20].ItemValue / Math.pow(s10.report[4].ItemValue / 100,2)
-    // LODOP.ADD_PRINT_TEXT(879,621,100,20,itemValue.toFixed(2) + " kg/㎡"); //去脂体重指数 去脂体重/身高平方
+    var yjxm = s10.toFixed2(2) + " L （" + s10.range(70, 69) + "）";
+    LODOP.ADD_PRINT_TEXT(593,608,170,20,yjxm); //细胞内水分
+    yjxm = s10.toFixed2(3) + " L （" + s10.range(72, 71) + "）";
+    LODOP.ADD_PRINT_TEXT(610,608,170,20,yjxm); //细胞外水分
+    yjxm = s10.toFixed2(12) + " kg （" + s10.range(80, 79) + "）";
+    LODOP.ADD_PRINT_TEXT(627,608,170,20,yjxm); //骨骼肌
+    yjxm = s10.toFixed2(35) + " kcal";
+    LODOP.ADD_PRINT_TEXT(644,608,170,20,yjxm); //基础代谢率
+    // yjxm = s10.toFixed2(35) + " cm";
+    // LODOP.ADD_PRINT_TEXT(661,608,170,20,yjxm); //腹围
+    yjxm = s10.toFixed2(38) + " cm²";
+    LODOP.ADD_PRINT_TEXT(674,608,170,20,yjxm); //内脏脂肪面积
+    yjxm = s10.toFixed2(10) + " kg （" + s10.range(90, 89) + "）";
+    LODOP.ADD_PRINT_TEXT(691,608,170,20,yjxm); //骨矿物质含量
+    yjxm = s10.toFixed2(34) + " kg （" + s10.range(88, 87) + "）";
+    LODOP.ADD_PRINT_TEXT(708,608,170,20,yjxm); //身体细胞量
+    yjxm = s10.toFixed2(34) + " cm";
+    LODOP.ADD_PRINT_TEXT(725,608,170,20,yjxm); //上臂围度
+    yjxm = s10.toFixed2(144) + " %";
+    LODOP.ADD_PRINT_TEXT(742,608,170,20,yjxm); //TBW/FFM
 
-    // //全身相位角
-    // LODOP.ADD_PRINT_TEXT(914,647,100,20,s10.report[487].ItemValue + " °"); 
-    // LODOP.SET_PRINT_STYLEA(0,"FontSize",15.5);
+    //全身相位角
+    var style = $("#style1")[0].outerHTML;
+    $("#RA50").html(s10.toFixed2(121));
+    $("#LA50").html(s10.toFixed2(118));
+    $("#TR50").html(s10.toFixed2(120));
+    $("#RL50").html(s10.toFixed2(122));
+    $("#LL50").html(s10.toFixed2(119));
+    LODOP.ADD_PRINT_HTM("237mm","139mm","64mm","12mm",style + $("#divXwj")[0].outerHTML); 
 
-    // var dzk = s10.loadDZk();
-    // LODOP.ADD_PRINT_HTM("253mm","138mm","64mm","43mm", dzk);
+    //电阻抗
+    var dzk = s10.loadDZk();
+    LODOP.ADD_PRINT_HTM("253mm","139mm","64mm","43mm", dzk);
 }
 
 s10.toFixed2 = function(index){
@@ -289,7 +293,7 @@ s10.rangeWidth2 = function(value, s1, s2){
 
 s10.loadDZk = function(){
     var dzkObj = {};
-    for(var i = 344; i <= 383; i++){
+    for(var i = 39; i <= 68; i++){
         dzkObj[s10.report[i].ItemName] = s10.toFixed2(i);
     }
     var style = $("#style1")[0].outerHTML;
