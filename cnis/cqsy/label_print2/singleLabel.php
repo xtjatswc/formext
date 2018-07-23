@@ -68,17 +68,20 @@ $nutrients = calc_recipe_nutrients($detailDBKeys);
 <tr>
     <td>能量</td>
     <td><?php echo $nutrients["Energy"] ?>kcal</td>
+<?php if($isICU):?>    
+    <td>含氮量</td>
+    <td><?php echo round($nutrients["Protein"] / 6.25, 2) ?>g</td>
+<?php else:?>	   
     <td>蛋白质</td>
     <td><?php echo $nutrients["Protein"] ?>g</td>
-    </tr>
-<?php if(!$isICU):?>    
-    <tr>
+<?php endif;?>	    
+</tr>
+<tr>
     <td>脂肪</td>
     <td><?php echo $nutrients["Fat"] ?>g</td>
     <td>碳水化合物</td>
     <td><?php echo $nutrients["Carbohydrate"] ?>g</td>
-    </tr>
-<?php endif;?>
+</tr>
 </table>
 
 <table style="margin-top:5px;">
