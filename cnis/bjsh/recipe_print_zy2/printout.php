@@ -122,7 +122,7 @@ if($baseInfo["Height"] != 0 && $baseInfo["Weight"] != 0){
             <th>金额</th>
         </tr>
         <tr>
-        <td colspan="8"><hr style="margin:0px"/></td>
+        <td colspan="6"><hr style="margin:0px"/></td>
         </tr>
         <?php
 $sql = "select d.RecipeAndProductName, concat( c.Specification, f.MeasureUnitName,'/' ,g.MeasureUnitName, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）') 
@@ -131,10 +131,13 @@ case c.Directions when 1 then '口服' else '管饲' end Directions, c.AdviceAmo
 case d.wrapperType when 1 then c.AdviceAmount * e.SysCodeShortName else c.AdviceAmount / c.Specification * e.SysCodeShortName end Dose,
 case d.wrapperType when 1 then c.AdviceAmount * c.CurrentPrice * e.SysCodeShortName else c.AdviceAmount / c.Specification * c.CurrentPrice * e.SysCodeShortName end TotalMoney
 , f.MeasureUnitName, g.MeasureUnitName minUnitName,d.wrapperType
+,i.Energy,c.netContent,c.TakeOrder,i.Protein,i.Fat,i.Carbohydrate,i.Ca,i.K,i.Na,i.P
 from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
 inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
+inner join recipefoodrelation h on h.RecipeAndProduct_DBKey = d.RecipeAndProduct_DBKey
+inner join chinafoodcomposition i on i.ChinaFoodComposition_DBKey = h.ChinaFoodComposition_DBKey
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 left join measureunit f on f.MeasureUnit_DBKey = d.MeasureUnit_DBKey
 left join measureunit g on g.MeasureUnit_DBKey = d.minUnit_DBKey
@@ -142,6 +145,19 @@ where c.Directions is not null and a.NutrientAdviceSummary_DBKey = $recipeNo";
 $recipeRecords = $db->fetch_all($sql);
 
         $TMoney = 0.0;
+        $Energy = 0;
+        $Protein = 0;
+        $Fat = 0;
+        $Carbohydrate = 0;    
+        $ProteinRgb = 0;
+        $FatRgb = 0;
+        $CarbohydrateRgb = 0;    
+        $Ca = 0;    
+        $K = 0;    
+        $Na = 0;    
+        $P = 0;    
+        $nitrogen = 0; //氮 = 蛋白质 / 6.25
+        $nitrogenEnergy; //氮/能量 = 总能量 / 氮
         foreach ($recipeRecords as $key => $value) {
             $unit = "";
             if($value["wrapperType"] == "1"){
@@ -162,7 +178,37 @@ $recipeRecords = $db->fetch_all($sql);
             <td>".round($value["TotalMoney"], 3)." 元</td>
             </tr>";   
             $TMoney = $TMoney + $value["TotalMoney"];
-        }       
+
+            //计算能量、蛋脂糖
+            $nutrientsNum = $value["netContent"];  //总g数 ml数
+            $nutrientsNum = $nutrientsNum * count(explode(',', $value["TakeOrder"]));
+
+            $Energy += $nutrientsNum * $value["Energy"] / 100;
+            $Protein += $nutrientsNum * $value["Protein"] / 100;
+            $Fat += $nutrientsNum * $value["Fat"] / 100;
+            $Carbohydrate += $nutrientsNum * $value["Carbohydrate"] / 100;
+            $Ca += $nutrientsNum * $value["Ca"] / 100;
+            $K += $nutrientsNum * $value["K"] / 100;
+            $Na += $nutrientsNum * $value["Na"] / 100;
+            $P += $nutrientsNum * $value["P"] / 100;
+        }      
+        $Energy = round($Energy, 2);
+        $Protein = round($Protein, 2);
+        $Fat = round($Fat, 2);
+        $Carbohydrate = round($Carbohydrate, 2);
+        $Ca = round($Ca, 2);
+        $K = round($K, 2);
+        $Na = round($Na, 2);
+        $P = round($P, 2);
+
+        $ProteinRgb = $Protein * 4 / ($Protein * 4 + $Fat * 9 + $Carbohydrate * 4) * 100;
+        $ProteinRgb = round($ProteinRgb, 2);
+        $FatRgb = $Fat * 9 / ($Protein * 4 + $Fat * 9 + $Carbohydrate * 4) * 100;
+        $FatRgb = round($FatRgb, 2);
+        $CarbohydrateRgb = $Carbohydrate * 4 / ($Protein * 4 + $Fat * 9 + $Carbohydrate * 4) * 100;
+        $CarbohydrateRgb = round($CarbohydrateRgb, 2);
+        $nitrogen = round($Protein / 6.25, 2);
+        $nitrogenEnergy = round($Energy / $nitrogen, 2);
         ?>
         <tr>
             <th colspan="4"></th>
@@ -175,25 +221,25 @@ $recipeRecords = $db->fetch_all($sql);
     <hr/>
     <table>
     <tr>
-    <td>总能量：2000kcal</td>
-    <td>蛋白质供热比：30%</td>
-    <td>脂肪供能比：20%</td>
-    <td>碳水化合物供热比：50%</td>
+    <td>总能量：<?php echo $Energy?>kcal</td>
+    <td>蛋白质供热比：<?php echo $ProteinRgb?>%</td>
+    <td>脂肪供能比：<?php echo $FatRgb?>%</td>
+    <td>碳水化合物供热比：<?php echo $CarbohydrateRgb?>%</td>
     </tr>
     <tr>
-    <td>总氮：</td>
-    <td>蛋白质摄入量：30g</td>
-    <td>脂肪摄入量：40g</td>
-    <td>碳水化合物摄入量：50g</td>
+    <td>总氮：<?php echo $nitrogen?>g</td>
+    <td>蛋白质摄入量：<?php echo $Protein?>g</td>
+    <td>脂肪摄入量：<?php echo $Fat?>g</td>
+    <td>碳水化合物摄入量：<?php echo $Carbohydrate?>g</td>
     </tr>
     <tr>
-    <td>钙：30mg</td>
-    <td>钾：20mg</td>
-    <td>钠：10mg</td>
-    <td>磷：10mg</td>
+    <td>钙：<?php echo $Ca?>mg</td>
+    <td>钾：<?php echo $K?>mg</td>
+    <td>钠：<?php echo $Na?>mg</td>
+    <td>磷：<?php echo $P?>mg</td>
     </tr>
     <tr>
-    <td>氮/能量：</td>
+    <td>氮/能量：1：<?php echo $nitrogenEnergy?></td>
     <td></td>
     <td></td>
     <td></td>
