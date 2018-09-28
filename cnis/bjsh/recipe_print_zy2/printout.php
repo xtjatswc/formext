@@ -126,10 +126,9 @@ if($baseInfo["Height"] != 0 && $baseInfo["Weight"] != 0){
 $sql = "select d.RecipeAndProductName, concat( c.Specification, f.MeasureUnitName,'/' ,g.MeasureUnitName, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）') 
 Specification, c.SingleMetering, e.SysCodeName,
 case c.Directions when 1 then '口服' else '管饲' end Directions, c.AdviceAmount, c.CurrentPrice, 
-case d.wrapperType when 1 then c.AdviceAmount * e.SysCodeShortName else c.AdviceAmount / c.Specification * e.SysCodeShortName end Dose,
-case d.wrapperType when 1 then c.AdviceAmount * c.CurrentPrice * e.SysCodeShortName else c.AdviceAmount / c.Specification * c.CurrentPrice * e.SysCodeShortName end TotalMoney
+c.TotalMoney
 , f.MeasureUnitName, g.MeasureUnitName minUnitName,d.wrapperType
-,i.Energy,c.netContent,c.TakeOrder,i.Protein,i.Fat,i.Carbohydrate,i.Ca,i.K,i.Na,i.P
+,i.Energy,c.netContent,c.TakeOrder,i.Protein,i.Fat,i.Carbohydrate,i.Ca,i.K,i.Na,i.P,c.PreparationMode
 from nutrientadvicesummary a 
 inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
 inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
@@ -158,18 +157,24 @@ $recipeRecords = $db->fetch_all($sql);
         $nitrogenEnergy; //氮/能量 = 总能量 / 氮
         foreach ($recipeRecords as $key => $value) {
             $unit = "";
-            if($value["wrapperType"] == "1"){
-                $unit = $value["minUnitName"];
-            }else{
-                $unit = $value["MeasureUnitName"];
+            $nutrientsNum = $value["netContent"];  //总g数 ml数
+            if($value["PreparationMode"] == "自助冲剂"){
+                $nutrientsNum = $nutrientsNum * count(explode(',', $value["TakeOrder"]));
             }
+    
+            // if($value["wrapperType"] == "1"){
+            //     $unit = $value["minUnitName"];
+            // }else{
+            //     $unit = $value["MeasureUnitName"];
+            // }
+            $unit = $value["MeasureUnitName"];
 
             echo "<tr>
             <td>".$value["RecipeAndProductName"]."</td>
             <td style='display:none'>".$value["Specification"]."</td>
             <td style='display:none'>".$value["SysCodeName"]."</td>
             <td style='display:none'>".$value["AdviceAmount"]."</td>
-            <td>".$value["Dose"]."</td>
+            <td>".$nutrientsNum."</td>
             <td>".$value["Directions"]."</td>
             <td>".$unit."</td>
             <td>".$value["CurrentPrice"]." 元/".$value["minUnitName"]."</td>
@@ -178,9 +183,6 @@ $recipeRecords = $db->fetch_all($sql);
             $TMoney = $TMoney + $value["TotalMoney"];
 
             //计算能量、蛋脂糖
-            $nutrientsNum = $value["netContent"];  //总g数 ml数
-            $nutrientsNum = $nutrientsNum * count(explode(',', $value["TakeOrder"]));
-
             $Energy += $nutrientsNum * $value["Energy"] / 100;
             $Protein += $nutrientsNum * $value["Protein"] / 100;
             $Fat += $nutrientsNum * $value["Fat"] / 100;
