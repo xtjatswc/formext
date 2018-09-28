@@ -17,8 +17,8 @@ function randerStylesheetCallBack(){
     ?>
 	<style id="style1">
     body {font-family:微软雅黑;}
-    table {width:100%}
-    td,th {font-size: 10.5pt;padding:3px;text-align:left}
+    table {width:100%;}
+    td,th {font-size: 10.5pt;padding:1px;text-align:left}
     h3,h4 {margin:0px;}
     </style>
     <?php
@@ -81,17 +81,17 @@ if($baseInfo["Height"] != 0 && $baseInfo["Weight"] != 0){
 ?>
 <div style="width:800px;border:1px solid black;padding:5px">
     <div id="divRecipe" style="padding:10px;padding-top:5px">
-    <h2 style="text-align:center">
+    <h2 style="text-align:center;margin:8px;">
     <?php echo $printTitle ?>
     </h2>
     <div style="text-align:center;font-size:16pt">肠内营养医嘱单首页</div>
-    <hr/>
-    <table>
+    <br/>
+    <table cellspacing="0">
         <tr>
-            <td>姓名：<?php echo $baseInfo["PatientName"] ?></td>
-            <td>科室：<?php echo $baseInfo["DepartmentName"] ?></td>
-            <td>性别：<?php echo $baseInfo["Gender"] ?></td>
-            <td>日期：<?php echo $baseInfo["CreateTime"] ?></td>
+            <td style="border-top:1px solid black">姓名：<?php echo $baseInfo["PatientName"] ?></td>
+            <td style="border-top:1px solid black">科室：<?php echo $baseInfo["DepartmentName"] ?></td>
+            <td style="border-top:1px solid black">性别：<?php echo $baseInfo["Gender"] ?></td>
+            <td style="border-top:1px solid black">日期：<?php echo $baseInfo["CreateTime"] ?></td>
         </tr>
         <tr>
             <td>年龄：<?php echo $baseInfo["Age"] ?>岁</td>
@@ -109,20 +109,18 @@ if($baseInfo["Height"] != 0 && $baseInfo["Weight"] != 0){
     </table>
     <!-- 疾病及诊断：<?php echo $baseInfo["DiseaseListVal"] ?>
     <hr/> -->
-    <table>
+    <br/>
+    <table cellspacing="0">
         <tr>
-            <th>制剂名称</th>
+            <th style="border-bottom:1px solid black">制剂名称</th>
             <th style="display:none">规格</th>
             <th style="display:none">频次</th>
             <th style="display:none">每次数量</th>
-            <th>剂量</th>
-            <th>输注方式</th>
-            <th>单位</th>
-            <th>单价</th>
-            <th>金额</th>
-        </tr>
-        <tr>
-        <td colspan="6"><hr style="margin:0px"/></td>
+            <th style="border-bottom:1px solid black">剂量</th>
+            <th style="border-bottom:1px solid black">输注方式</th>
+            <th style="border-bottom:1px solid black">单位</th>
+            <th style="border-bottom:1px solid black">单价</th>
+            <th style="border-bottom:1px solid black">金额</th>
         </tr>
         <?php
 $sql = "select d.RecipeAndProductName, concat( c.Specification, f.MeasureUnitName,'/' ,g.MeasureUnitName, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）') 
@@ -218,13 +216,12 @@ $recipeRecords = $db->fetch_all($sql);
     </table>
 
     营养计算
-    <hr/>
-    <table>
+    <table cellspacing="0">
     <tr>
-    <td>总能量：<?php echo $Energy?>kcal</td>
-    <td>蛋白质供热比：<?php echo $ProteinRgb?>%</td>
-    <td>脂肪供能比：<?php echo $FatRgb?>%</td>
-    <td>碳水化合物供热比：<?php echo $CarbohydrateRgb?>%</td>
+    <td style="border-top:1px solid black">总能量：<?php echo $Energy?>kcal</td>
+    <td style="border-top:1px solid black">蛋白质供热比：<?php echo $ProteinRgb?>%</td>
+    <td style="border-top:1px solid black">脂肪供能比：<?php echo $FatRgb?>%</td>
+    <td style="border-top:1px solid black">碳水化合物供热比：<?php echo $CarbohydrateRgb?>%</td>
     </tr>
     <tr>
     <td>总氮：<?php echo $nitrogen?>g</td>
@@ -245,7 +242,7 @@ $recipeRecords = $db->fetch_all($sql);
     <td></td>
     </tr>
     </table>
-
+<br/>
     <table>
         <tr>
             <td>营养医生（师）签字：</td>

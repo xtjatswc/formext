@@ -100,17 +100,17 @@ printout.createPrintPage = function (divRecipe) {
     LODOP.SET_PRINT_STYLE("FontName", "微软雅黑");
     LODOP.SET_PRINT_STYLE("FontSize", "10.5");
 
-    LODOP.ADD_PRINT_TEXT("153.07mm","108.74mm","31.49mm","5.29mm","第#页/共&页");
-    LODOP.SET_PRINT_STYLEA(0,"Horient",1);
-    LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
-    LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
-    LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
+    // LODOP.ADD_PRINT_TEXT("153.07mm","108.74mm","31.49mm","5.29mm","第#页/共&页");
+    // LODOP.SET_PRINT_STYLEA(0,"Horient",1);
+    // LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
+    // LODOP.SET_PRINT_STYLEA(0, "ItemType", 2);
+    // LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -1);
 
-    LODOP.ADD_PRINT_TEXT("153.07mm","45.64mm","60.85mm","5.29mm","打印时间：" + util.getTime());
-    LODOP.SET_PRINT_STYLEA(0,"Horient",1);
-    LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
-    LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
-    LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
+    // LODOP.ADD_PRINT_TEXT("153.07mm","45.64mm","60.85mm","5.29mm","打印时间：" + util.getTime());
+    // LODOP.SET_PRINT_STYLEA(0,"Horient",1);
+    // LODOP.SET_PRINT_STYLEA(0, "Vorient", 1);
+    // LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+    // LODOP.SET_PRINT_STYLEA(0, "LinkedItem", -2);
 
     LODOP.SET_SHOW_MODE("SHOW_SCALEBAR",true);//语句控制显示标尺
     LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED", 1);//横向时的正向显示
