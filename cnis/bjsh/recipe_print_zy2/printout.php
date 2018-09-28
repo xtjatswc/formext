@@ -58,7 +58,8 @@ $sql = "select SysConfigValue from sysconfig where SysConfigCode = 'SystemPrint'
 $printTitle = $db->fetch_var($sql);
 
 $recipeNo = $_GET["recipeNo"];
-$sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, b.HospitalizationNumber, c.PatientName, c.PatientNo,b.Height,b.Weight,
+$sql = "select a.NutrientAdviceSummary_DBKey, DATE_FORMAT(a.CreateTime, '%Y-%m-%d') CreateTime, 
+DATE_FORMAT(SYSDATE(), '%Y-%m-%d') PrintTime,b.HospitalizationNumber, c.PatientName, c.PatientNo,b.Height,b.Weight,
 c.Age, case c.Gender when 'M' then '男' else '女' end Gender,
  d.DepartmentName, e.UserName, b.DiseaseListVal, f.BedCode, DATE_FORMAT(a.AdviceBeginDate, '%Y-%m-%d') AdviceBeginDate, DATE_FORMAT(a.AdviceEndDate, '%Y-%m-%d') AdviceEndDate  
  , datediff(a.AdviceEndDate, a.AdviceBeginDate) + 1 AdviceDays
@@ -106,7 +107,6 @@ if($baseInfo["Height"] != 0 && $baseInfo["Weight"] != 0){
         </tr>
 
     </table>
-    <hr/>
     <!-- 疾病及诊断：<?php echo $baseInfo["DiseaseListVal"] ?>
     <hr/> -->
     <table>
@@ -120,6 +120,9 @@ if($baseInfo["Height"] != 0 && $baseInfo["Weight"] != 0){
             <th>单位</th>
             <th>单价</th>
             <th>金额</th>
+        </tr>
+        <tr>
+        <td colspan="8"><hr style="margin:0px"/></td>
         </tr>
         <?php
 $sql = "select d.RecipeAndProductName, concat( c.Specification, f.MeasureUnitName,'/' ,g.MeasureUnitName, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）') 
@@ -160,39 +163,51 @@ $recipeRecords = $db->fetch_all($sql);
             </tr>";   
             $TMoney = $TMoney + $value["TotalMoney"];
         }       
-
-        $remaining = 5 - count($recipeRecords);
-        if($remaining > 0){
-            for($i = 0; $i < $remaining; $i++){
-                echo "<tr><td>&nbsp;	</td></tr>
-                ";
-            }
-        }
-
         ?>
-    </table>
-    <table>
         <tr>
-            <td>医师：<?php echo $baseInfo["UserName"] ?></td>
-            <td style="width:40%">签章：</td>
-            <td>日期：<?php echo $baseInfo["CreateTime"] ?></td>
+            <th colspan="4"></th>
+            <th>合计：</th>
+            <th><?php echo round($TMoney * $baseInfo["AdviceDays"], 2) ?> 元（<?php echo $baseInfo["AdviceDays"]?>天）</th>
         </tr>
     </table>
+
+    营养计算
     <hr/>
     <table>
+    <tr>
+    <td>总能量：2000kcal</td>
+    <td>蛋白质供热比：30%</td>
+    <td>脂肪供能比：20%</td>
+    <td>碳水化合物供热比：50%</td>
+    </tr>
+    <tr>
+    <td>总氮：</td>
+    <td>蛋白质摄入量：30g</td>
+    <td>脂肪摄入量：40g</td>
+    <td>碳水化合物摄入量：50g</td>
+    </tr>
+    <tr>
+    <td>钙：30mg</td>
+    <td>钾：20mg</td>
+    <td>钠：10mg</td>
+    <td>磷：10mg</td>
+    </tr>
+    <tr>
+    <td>氮/能量：</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+    </table>
+
+    <table>
         <tr>
-            <td>药费：<?php echo round($TMoney * $baseInfo["AdviceDays"], 2) ?> 元（共<?php echo $baseInfo["AdviceDays"]?>天）</td>
-            <td>审核/收费：</td>
-            <td>审核/调配：</td>
-            <td>核对/发药：</td>
+            <td>营养医生（师）签字：</td>
+            <td style="width:40%"></td>
+            <td>打印日期：<?php echo $baseInfo["PrintTime"] ?></td>
         </tr>
     </table>
-    <font style="font-size:10pt">
-    根据《中国食药局》相关要求：为保障患者食品安全，除食品质量原因外，食品一经发出，不得退换。
-    </font>
-    <h4>
-    注：价格以收费时为准 当天交费，过期无效
-    </h4>
+
     </div>
 </div>
     <?php
