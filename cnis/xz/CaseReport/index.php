@@ -1,6 +1,8 @@
 <?php
 require "../../../autoload.php";
 
+//http://localhost/formext_svn/cnis/xz/CaseReport/index.php?zyh=782061
+
 //患者信息
 $zyh = $_GET["zyh"];
 $sql = "select *,DATE_FORMAT(b.InHospitalData, '%Y-%m-%d') InHospitalDate
