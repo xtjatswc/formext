@@ -101,8 +101,75 @@ $nrs = $db->fetch_row($sql);
         <td> <?php echo $nrs["NSR2002Score"]."分"?></td>    
     </tr>
 </table>
+<br/>
+<h4>营养医嘱</h4>
+<?php 
+$sql = "select NutrientAdviceSummary_DBKey,DATE_FORMAT(AdviceBeginDate, '%Y-%m-%d') AdviceBeginDate,DATE_FORMAT(AdviceEndDate, '%Y-%m-%d') AdviceEndDate from nutrientadvicesummary where PatientHospitalize_DBKey = $PatientHospitalize_DBKey order by AdviceBeginDate desc";
+$recipeRecords = $db->fetch_all($sql);
+foreach ($recipeRecords as $key => $value) {
+    showAdiveDetail($value["NutrientAdviceSummary_DBKey"], $value["AdviceBeginDate"], $value["AdviceEndDate"]); 
+}
+?>
+
 </div>
 </body>
 </html>
 
 <?php
+function showAdiveDetail($recipeNo, $AdviceBeginDate, $AdviceEndDate){
+global $db;
+$sql = "select d.RecipeAndProductName, concat( c.Specification, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）') 
+Specification, e.SysCodeName,
+c.AdviceAmount, c.CurrentPrice, 
+case d.wrapperType when 1 then c.AdviceAmount * c.CurrentPrice * c.Specification * e.SysCodeShortName / 100 else c.AdviceAmount * c.CurrentPrice * c.Specification * e.SysCodeShortName / 100 end TotalMoney
+, f.MeasureUnitName,d.wrapperType
+from nutrientadvicesummary a 
+inner join nutrientadvice b on a.NutrientAdviceSummary_DBKey = b.NutrientAdviceSummary_DBKey
+inner join nutrientadvicedetail c on b.NutrientAdvice_DBKey = c.NutrientAdvice_DBKey
+inner join recipeandproduct d on d.RecipeAndProduct_DBKey = c.RecipeAndProduct_DBKey
+left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
+left join measureunit f on f.MeasureUnit_DBKey = d.MeasureUnit_DBKey
+where a.NutrientAdviceSummary_DBKey = $recipeNo  and c.CreateProgram is not null";
+$recipeRecords = $db->fetch_all($sql);
+if(count($recipeRecords) > 0){
+?>
+<br/>
+医嘱单号：<?php echo $recipeNo ?>&nbsp;&nbsp;&nbsp;
+开始日期：<?php echo $AdviceBeginDate ?>&nbsp;&nbsp;&nbsp;
+结束日期：<?php echo $AdviceEndDate ?>&nbsp;&nbsp;&nbsp;
+<table class="gridtable">
+    <tr>
+        <th>药品名称</th>
+        <th>规格</th>
+        <th>频次</th>
+        <th>每次数量</th>
+        <!-- <th>单位</th> -->
+        <th>单价</th>
+        <th>金额</th>
+    </tr>
+<?php
+}
+$TMoney = 0.0;
+foreach ($recipeRecords as $key => $value) {
+$unit = "";
+if($value["wrapperType"] == "1"){
+    $unit = $value["MeasureUnitName"];
+}else{
+    $unit = $value["MeasureUnitName"];
+}
+
+echo "<tr>
+<td>".$value["RecipeAndProductName"]."</td>
+<td>".$value["Specification"]."</td>
+<td>".$value["SysCodeName"]."</td>
+<td>".$value["AdviceAmount"]."</td>            
+<td>".round($value["CurrentPrice"]*$value["Specification"]/100, 2)." 元</td>
+<td>".round($value["TotalMoney"], 3)." 元</td>
+</tr>";   
+$TMoney = $TMoney + $value["TotalMoney"];
+}       
+
+?>
+</table>
+<?php
+}
