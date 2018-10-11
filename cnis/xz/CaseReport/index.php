@@ -8,10 +8,8 @@ $sql = "select *,DATE_FORMAT(b.InHospitalData, '%Y-%m-%d') InHospitalDate
  from patientbasicinfo a inner join patienthospitalizebasicinfo b on a.PATIENT_DBKEY = b.PATIENT_DBKEY
 left join department c on c.Department_DBKey = b.Department_DBKey
 left join bednumber d on d.BedNumber_DBKey = b.BedNumber_DBKey
-where b.HospitalizationNumber = '$zyh'";
-$patientInfo = $db->fetch_all($sql);
-
-foreach ($patientInfo as $key => $value) {
+where b.HospitalizationNumber = '$zyh' order by b.InHospitalData desc limit 0,1";
+$patientInfo = $db->fetch_row($sql);
 ?>
 <!DOCTYPE html>    
 <html>
@@ -41,43 +39,70 @@ foreach ($patientInfo as $key => $value) {
         font-weight:bold;
     }    
 </style>
-<h3>患者基本信息</h3>
+<h3>营养病历报告</h3>
+<br/>
 <table class="gridtable" style="margin-top:-1px;">
 <tr>
         <td class="td_field">姓名</td>                        
-        <td> <?php echo $value["PatientName"] ?></td>    
+        <td> <?php echo $patientInfo["PatientName"] ?></td>    
         <td class="td_field">性别</td>                        
-        <td> <?php echo $value["Gender"] == "M" ? "男" : "女" ?></td>    
+        <td> <?php echo $patientInfo["Gender"] == "M" ? "男" : "女" ?></td>    
         <td class="td_field">年龄</td>                        
-        <td> <?php echo $value["Age"]."岁"?></td>    
+        <td> <?php echo $patientInfo["Age"]."岁"?></td>    
         <td class="td_field">身高</td>                        
-        <td> <?php echo $value["Height"]."cm"?></td>    
+        <td> <?php echo $patientInfo["Height"]."cm"?></td>    
     </tr>
     <tr>
         <td class="td_field">住院号</td>                        
-        <td> <?php echo $value["HospitalizationNumber"] ?></td>    
+        <td> <?php echo $patientInfo["HospitalizationNumber"] ?></td>    
         <td class="td_field">科室</td>                        
-        <td> <?php echo $value["DepartmentName"] ?></td>    
+        <td> <?php echo $patientInfo["DepartmentName"] ?></td>    
         <td class="td_field">床号</td>                        
-        <td> <?php echo $value["BedCode"] ?></td>    
+        <td> <?php echo $patientInfo["BedCode"] ?></td>    
         <td class="td_field">体重</td>                        
-        <td> <?php echo $value["Weight"]."kg" ?></td>    
+        <td> <?php echo $patientInfo["Weight"]."kg" ?></td>    
     </tr>
     <tr>
         <td class="td_field">入院日期</td>                        
-        <td> <?php echo $value["InHospitalDate"] ?></td>    
+        <td> <?php echo $patientInfo["InHospitalDate"] ?></td>    
         <td class="td_field">出生年月</td>                        
-        <td> <?php echo $value["DateOfBirth2"] ?></td>    
+        <td> <?php echo $patientInfo["DateOfBirth2"] ?></td>    
         <td class="td_field"></td>                        
         <td></td>    
         <td class="td_field"></td>                        
         <td></td>    
     </tr>
 </table>
-
+<table class="gridtable" style="margin-top:-1px;">
+    <tr>
+        <td class="td_field"><nobr>主诉</nobr></td>                        
+        <td> <?php echo $patientInfo["ChiefComplaint"] ?></td>    
+    </tr>
+    <tr>
+        <td class="td_field"><nobr>现病史</nobr></td>                        
+        <td> <?php echo $patientInfo["MedicalHistory"] ?></td>    
+    </tr>
+    <tr>
+        <td class="td_field"><nobr>临床诊断</nobr></td>                        
+        <td> <?php echo $patientInfo["ClinicalDiagnosis"] ?></td>    
+    </tr>
+</table>
+<?php
+$PatientHospitalize_DBKey = $patientInfo["PatientHospitalize_DBKey"];
+$sql = "select ScreeningDate, NSR2002Score from patientquestionnaire where PatientHospitalize_DBKey = $PatientHospitalize_DBKey and NSR2002Score is not null order by ScreeningDate desc limit 0,1";
+$nrs = $db->fetch_row($sql);
+?>
+<br/>
+<table class="gridtable" style="margin-top:-1px;">
+    <tr>
+        <td class="td_field">NRS2002（最近一次）</td>                        
+        <td> <?php echo $nrs["ScreeningDate"] ?></td>    
+        <td class="td_field">分数</td>                        
+        <td> <?php echo $nrs["NSR2002Score"]."分"?></td>    
+    </tr>
+</table>
 </div>
 </body>
 </html>
 
 <?php
-}
