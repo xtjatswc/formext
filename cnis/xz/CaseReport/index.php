@@ -10,6 +10,9 @@ left join department c on c.Department_DBKey = b.Department_DBKey
 left join bednumber d on d.BedNumber_DBKey = b.BedNumber_DBKey
 where b.HospitalizationNumber = '$zyh' order by b.InHospitalData desc limit 0,1";
 $patientInfo = $db->fetch_row($sql);
+if($patientInfo == null){
+    echo "未查询到住院号为：$zyh 的患者信息！";exit;
+}
 ?>
 <!DOCTYPE html>    
 <html>
