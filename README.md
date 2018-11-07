@@ -1,0 +1,103 @@
+
+## 表单配置
+只需要简单的配置就能实现数据的增删改查，该框架适用于一些个性化的报表、数据编辑需求，其中蓝色字体是可以直接编辑的，失去焦点后保存
+
+![image](http://xtjatswc.320.io/image/formext/QQ%E6%88%AA%E5%9B%BE20181107155513.jpg)
+
+部分配置代码如下
+
+```
+<?php
+require "../../../autoload.php";
+
+form_rander\form::$_pageCfg = array(
+    'rootPath' => "..\\..\\..\\",
+    'libPath' => "..\\..\\..\\form_rander\\",
+    'Title' => "收费项目点选列表",
+    'version' => $globalCfg["version"], //系统版本，变动时，js等缓存文件也会刷新
+    'isPrintNo' => "0", //是否打印序号列
+    'primaryKey' => "ChargingItemID", //主键，复选框对应的值
+    'EnableDel' => "1", //是否启用删除按钮
+    'pageSize' => 200, //每页显示记录条数
+    'debug' => $globalCfg["debug"],
+);
+
+$form = new form_rander\form($db);
+
+$form->_sqlCfg = array(
+    'deleteSql' => "delete from chargingitems where ChargingItemID in ({0})", //删除sql
+    'editSql1' => "update chargingitems set {columnName} = :value where
+    ChargingItemID = :ChargingItemID",
+
+);
+
+$form->_listColumnCfg = array(
+    'ChargingItemID' => array('isDisplay' => '1','displayName' => '项目ID','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
+    'ChargingItemCode' => array('isDisplay' => '1','displayName' => '项目编码','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemName' => array('isDisplay' => '1','displayName' => '项目名称','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemSpec' => array('isDisplay' => '1','displayName' => '规格','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemUnit' => array('isDisplay' => '1','displayName' => '单位','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemPrice1' => array('isDisplay' => '1','displayName' => '单价1','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'ChargingItemPrice2' => array('isDisplay' => '1','displayName' => '单价2','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'SortNo' => array('isDisplay' => '1','displayName' => '排序编号','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '1','editKey' => 'ChargingItemID', 'editSqlKey' => 'editSql1'),
+    'Enabled' => array('isDisplay' => '0','displayName' => '状态','width' => '','maxLength' => '','isPrint' => '1','allowEdit' => '0','editKey' => '', 'editSqlKey' => ''),
+
+);
+
+$form->_listDisplayCfg = array(
+    'Enabled' => array('1' => '启用','0' => '禁用'),
+);
+
+//Y-m-d H:i:s
+$form->_searcher->_searchCfg = array(
+);
+
+$sql = 'select * from chargingitems order by SortNo asc,ChargingItemID desc '.$form->_pager->getLimit();
+
+$rows = $form->randerForm($sql);
+//$form->getColumns($rows);
+
+function randerSearchCallBack(){
+    // include_once("includeRanderSearchCallBack.php");
+}
+
+function randerSearchWhereCallBack($sql){
+    // return include_once("includeRanderSearchWhereCallBack.php");
+    return $sql;
+}
+
+function randerToolBarCallBack(){
+    ?>
+    
+    <input type="button" value="新增" onclick="charging.newChargingItem()"/>
+    <br>
+    <font id="productName" color="blue"></font>
+    <div style="text-align:left;"><input type="button" value="保存对应关系" onclick="charging.saveRelation()" /></div>
+<?php
+}
+
+function randerScriptCallBack(){
+    echo '<script src="charging_items.js?v='.form_rander\form::$_pageCfg["version"].'"></script>';
+}
+
+function randerCellCallBack($row, $key, $value){
+
+    return $value;
+}
+
+
+
+
+
+```
+## 打印机设置
+
+一台电脑可能连接多个打印机，各个 标签、报表可能需要输出到不同的打印机，这样就需要正在的设置界面，可能设置每个报表对应的打印机及参数
+
+![image](http://xtjatswc.320.io/image/formext/QQ截图20181107160335.jpg)
+
+## 打印效果
+
+基于Lodop开发的打印效果，文字还可以直接编辑后再打印
+
+![image](http://xtjatswc.320.io/image/formext/QQ截图20181107155649.jpg)
