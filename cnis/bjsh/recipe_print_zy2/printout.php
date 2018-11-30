@@ -118,6 +118,7 @@ if($baseInfo["Height"] != 0 && $baseInfo["Weight"] != 0){
             <th style="display:none">每次数量</th>
             <th style="border-bottom:1px solid black">剂量</th>
             <th style="border-bottom:1px solid black">输注方式</th>
+			<th style="border-bottom:1px solid black">数量</th>
             <th style="border-bottom:1px solid black">单位</th>
             <th style="border-bottom:1px solid black">单价</th>
             <th style="border-bottom:1px solid black">金额</th>
@@ -158,10 +159,17 @@ $recipeRecords = $db->fetch_all($sql);
         foreach ($recipeRecords as $key => $value) {
             $unit = "";
             $nutrientsNum = $value["netContent"];  //总g数 ml数
-            if($value["PreparationMode"] == "自助冲剂"){
-                $nutrientsNum = $nutrientsNum * count(explode(',', $value["TakeOrder"]));
-            }
-    
+			$takeOrder = count(explode(',', $value["TakeOrder"]));//每天几次
+			$dayNum = $value["AdviceAmount"];//每天数量
+			
+			//自助冲剂
+            if($value["PreparationMode"] == "3"){
+                
+            }else{
+				$nutrientsNum = $nutrientsNum * $takeOrder;
+				$dayNum = $dayNum * $takeOrder;
+			}
+
             // if($value["wrapperType"] == "1"){
             //     $unit = $value["minUnitName"];
             // }else{
@@ -176,6 +184,7 @@ $recipeRecords = $db->fetch_all($sql);
             <td style='display:none'>".$value["AdviceAmount"]."</td>
             <td>".$nutrientsNum."</td>
             <td>".$value["Directions"]."</td>
+			<td>".$dayNum."</td>
             <td>".$unit."</td>
             <td>".$value["CurrentPrice"]." 元/".$value["minUnitName"]."</td>
             <td>".round($value["TotalMoney"], 3)." 元</td>
