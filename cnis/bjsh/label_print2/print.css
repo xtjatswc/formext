@@ -1,0 +1,16 @@
+table {width:100%;border-collapse:collapse;}
+table table{ border-style:hidden;}
+table td,th
+{
+    border:1px solid black;font-size: 10pt;padding:1px; 
+}
+body
+{
+    font-family: verdana,arial,sans-serif;
+    font-size: 9pt;
+    word-break:break-all;
+}
+.label
+{
+    border:1px solid black;padding:5px
+}

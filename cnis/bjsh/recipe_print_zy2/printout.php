@@ -124,7 +124,7 @@ if($baseInfo["Height"] != 0 && $baseInfo["Weight"] != 0){
             <th style="border-bottom:1px solid black">金额</th>
         </tr>
         <?php
-$sql = "select d.RecipeAndProductName, concat( c.Specification, f.MeasureUnitName,'/' ,g.MeasureUnitName, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）') 
+$sql = "select c.Unit,c.netContentUnit,d.RecipeAndProductName, concat( c.Specification, f.MeasureUnitName,'/' ,g.MeasureUnitName, '（', case d.wrapperType when 1 then '整包装' else '拆分包装' end,'）') 
 Specification, c.SingleMetering, e.SysCodeName,
 case c.Directions when 1 then '口服' else '管饲' end Directions, c.AdviceAmount, c.CurrentPrice, 
 c.TotalMoney
@@ -139,7 +139,7 @@ inner join chinafoodcomposition i on i.ChinaFoodComposition_DBKey = h.ChinaFoodC
 left join syscode e on e.SysCode = c.AdviceDoTimeSegmental and e.SystemCodeTypeName = 'ENTime'
 left join measureunit f on f.MeasureUnit_DBKey = d.MeasureUnit_DBKey
 left join measureunit g on g.MeasureUnit_DBKey = d.minUnit_DBKey
-where c.Directions is not null and a.NutrientAdviceSummary_DBKey = $recipeNo";
+where c.CreateProgram is not null and a.NutrientAdviceSummary_DBKey = $recipeNo";
 $recipeRecords = $db->fetch_all($sql);
 
         $TMoney = 0.0;
@@ -159,30 +159,18 @@ $recipeRecords = $db->fetch_all($sql);
         foreach ($recipeRecords as $key => $value) {
             $unit = "";
             $nutrientsNum = $value["netContent"];  //总g数 ml数
+            $nutrientsUnit = $value["netContentUnit"];  //总g数 ml数
 			$takeOrder = count(explode(',', $value["TakeOrder"]));//每天几次
 			$dayNum = $value["AdviceAmount"];//每天数量
 			
-			//自助冲剂
-            if($value["PreparationMode"] == "3"){
-                
-            }else{
-				$nutrientsNum = $nutrientsNum * $takeOrder;
-				$dayNum = $dayNum * $takeOrder;
-			}
-
-            // if($value["wrapperType"] == "1"){
-            //     $unit = $value["minUnitName"];
-            // }else{
-            //     $unit = $value["MeasureUnitName"];
-            // }
-            $unit = $value["MeasureUnitName"];
+            $unit = $value["Unit"];
 
             echo "<tr>
             <td>".$value["RecipeAndProductName"]."</td>
             <td style='display:none'>".$value["Specification"]."</td>
             <td style='display:none'>".$value["SysCodeName"]."</td>
             <td style='display:none'>".$value["AdviceAmount"]."</td>
-            <td>".$nutrientsNum."</td>
+            <td>".$nutrientsNum." ".$nutrientsUnit."</td>
             <td>".$value["Directions"]."</td>
 			<td>".$dayNum."</td>
             <td>".$unit."</td>

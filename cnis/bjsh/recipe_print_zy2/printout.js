@@ -13,7 +13,7 @@ $(function ($) {
 
         if ($("#printerName").html() == "#未设置#") {
             if (confirm("未设置打印机，是否输出到默认打印机？")) {
-                $("#btnPrint").click();
+                //$("#btnPrint").click();
             }
         } else {
             //$("#btnPrint").click();
